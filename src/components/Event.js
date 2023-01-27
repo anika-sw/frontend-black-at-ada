@@ -1,19 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Event = (props) => {
-
   return (
     <div>
       <section  className="cardFlex">
-        <p className="fullName">{title}</p>
-        <p className="fullName">{description}</p>
-        <p className="fullName">{location}</p>
-        <p className="fullName">{organizerFirstName, organizerLastName}</p>
-        <p className="fullName">{organizerEmail}</p>
-        <p className="fullName">{targetAudience}</p>
+        <p className="fullName">Title: {props.event.title}</p>
+        <p className="fullName">Description: {props.event.description}</p>
+        <p className="fullName">Location: {props.event.location}</p>
+        <p className="fullName">Organized by: {props.event.organizer_first_name} {props.event.organizer_last_name}</p>
+        <p className="fullName">Contact: {props.event.organizer_email}</p>
+        <p className="fullName">{props.event.target_audience}</p>
         <div className="tinyFlexWrapper">
           <p>Flag Event</p>
         </div>
+        <br />
+        <br />
       </section>
     </div>
   );
@@ -22,13 +24,14 @@ const Event = (props) => {
 Event.propTypes = {
   event: PropTypes.shape({
     eventId: PropTypes.number,
-    cards: PropTypes.arrayOf(PropTypes.shape({
-      card_id: PropTypes.number,
-      likes: PropTypes.number,
-      message: PropTypes.string
-    })),
     title: PropTypes.string,
-    owner: PropTypes.string
-  }),  }
+    description: PropTypes.string,
+    location: PropTypes.string,
+    organizerFirstName: PropTypes.string,
+    organizerLastName: PropTypes.string,
+    organizerEmail: PropTypes.string,
+    targetAudience: PropTypes.string
+  }),  
+};
 
 export default Event;

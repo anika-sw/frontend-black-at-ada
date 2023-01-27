@@ -1,25 +1,25 @@
-import React from "react";
+// import React from "react";
 
-const EventsList = (props) => {
+// const EventsList = (props) => {
 
-  return (
-    <section className="lowerGrid">
-      <section>
-        <h2 className="eventsHeader">
-        Upcoming Events
-        </h2>
-        <div className="cardsListInnerGrid">
-          {eventsList}
-        </div>
-      </section>
-      <section>  
-        <NewEventForm createNewEvent={props.addNewCard}></NewEventForm>
-      </section>
-    </section>
-  );
-  };
+//   return (
+//     <section className="lowerGrid">
+//       <section>
+//         <h2 className="eventsHeader">
+//         Upcoming Events
+//         </h2>
+//         <div className="cardsListInnerGrid">
+//           {eventsList}
+//         </div>
+//       </section>
+//       <section>  
+//         <NewEventForm createNewEvent={props.addNewCard}></NewEventForm>
+//       </section>
+//     </section>
+//   );
+//   };
 
-// EventsList.propTypes
+// // EventsList.propTypes
 
 
-export default EventsList;
+// export default EventsList;

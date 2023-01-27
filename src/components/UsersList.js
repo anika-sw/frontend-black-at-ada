@@ -1,30 +1,30 @@
-import React from "react";
+// import React from "react";
 
-const UsersList = (props) => {
+// const UsersList = {
 
-  const usersList = props.users.map((user, index) => {
-    return (
-      <div key={index}>
-        <User
-        user={user}
-        ></User>
-      </div>
-    );
-  });
+//   const usersList = users.map((user, index) => {
+//     return (
+//       <div key={index}>
+//         <User
+//         user={user}
+//         ></User>
+//       </div>
+//     );
+//   });
 
-  return (
-    <section className="lowerGrid">
-      <h2 className="directoryHeader">
-      Black Adie Directory
-      </h2>
-      <div className="directory">
-        {usersList}
-      </div>
-    </section>
-    );
-  };
+//   return (
+//     <section className="lowerGrid">
+//       <h2 className="directoryHeader">
+//       Black Adie Directory
+//       </h2>
+//       <div className="directory">
+//         {usersList}
+//       </div>
+//     </section>
+//     );
+//   };
 
-// UsersList.propTypes
+// // UsersList.propTypes
 
 
-export default UsersList;
+// export default UsersList;

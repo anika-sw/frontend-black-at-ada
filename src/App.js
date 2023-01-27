@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Event from  "./components/Event"
 
 
 function App() {
 
-  const [eventsData, setEventsData] = useState({})
+  const [eventsData, setEventsData] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/events", {})
+      .then((response) => {
+        console.log(response.data)
+        setEventsData(response.data);
+    });
+  }, []);
   
   const eventsList = eventsData.map((event, index) => {
     return (
@@ -26,9 +36,9 @@ function App() {
         <h2>Recently Added Events</h2>
         <ol>{eventsList}</ol>
       </section>
-      <sectiom>
+      <section>
         <h2>My Events</h2>
-      </sectiom>
+      </section>
       <section>
         <h2>All Events</h2>
       </section>
