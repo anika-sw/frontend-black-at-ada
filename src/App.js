@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Event from  "./components/Event"
+
 
 function App() {
+
+  const [eventsData, setEventsData] = useState({})
+  
+  const eventsList = eventsData.map((event, index) => {
+    return (
+      <div key={index}>
+        <Event
+        event={event}
+        ></Event>
+      </div>
+    );
+  });
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      <h1 className="header">
+        Black@Ada
+      </h1>
+      <section>
+        <h2>Recently Added Events</h2>
+        <ol>{eventsList}</ol>
+      </section>
+      <sectiom>
+        <h2>My Events</h2>
+      </sectiom>
+      <section>
+        <h2>All Events</h2>
+      </section>
+      <section>
+        <h2>Black Adie Directory</h2>
+      </section>
+      <footer>
+        <h2>About</h2>
+        <h2>Contact</h2>
+      </footer>
+    </main>
   );
-}
+};
 
 export default App;
