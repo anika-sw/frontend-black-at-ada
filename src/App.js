@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Event from  "./components/Event"
-
+import Event from  "./components/Event";
+import User from  "./components/User";
 
 function App() {
 
   const [eventsData, setEventsData] = useState([])
+  const [usersData, setUsersData] = useState([])
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/events", {})
       .then((response) => {
-        console.log(response.data)
         setEventsData(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/users", {})
+      .then((response) => {
+        setUsersData(response.data);
+      });
+  }, []);
   
-  const eventsList = eventsData.map((event, index) => {
+  const eventsList = eventsData.map((event) => {
     return (
-      <div key={index}>
+      <div key={event.id}>
         <Event
         event={event}
         ></Event>
@@ -26,6 +34,15 @@ function App() {
     );
   });
 
+  const usersList = usersData.map((user) => {
+    return (
+      <div key={user.id}>
+        <User
+        user={user}
+        ></User>
+      </div>
+    );
+  });
 
   return (
     <main className="App">
@@ -34,7 +51,7 @@ function App() {
       </h1>
       <section>
         <h2>Recently Added Events</h2>
-        <ol>{eventsList}</ol>
+        <ul>{eventsList}</ul>
       </section>
       <section>
         <h2>My Events</h2>
@@ -44,6 +61,7 @@ function App() {
       </section>
       <section>
         <h2>Black Adie Directory</h2>
+        <ul>{usersList}</ul>
       </section>
       <footer>
         <h2>About</h2>

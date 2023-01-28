@@ -1,5 +1,8 @@
 import React from "react";
+import Map from "./Map"
 import PropTypes from "prop-types";
+import "../styles/Event.css";
+
 
 const Event = (props) => {
   return (
@@ -13,6 +16,9 @@ const Event = (props) => {
         <p className="fullName">{props.event.target_audience}</p>
         <div className="tinyFlexWrapper">
           <p>Flag Event</p>
+        </div>
+        <div className="map">
+          <Map />
         </div>
         <br />
         <br />
@@ -31,7 +37,8 @@ Event.propTypes = {
     organizerLastName: PropTypes.string,
     organizerEmail: PropTypes.string,
     targetAudience: PropTypes.string
-  }),  
+  }), 
+  createMap: PropTypes.func
 };
 
 export default Event;
