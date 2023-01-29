@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import EventMap from "./EventMap";
 import PropTypes from 'prop-types';
 import "../styles/NewForms.css";
 
@@ -108,6 +109,11 @@ const NewEventForm = (props) => {
         className={!organizerEmail ? "error" : ""}
         onChange={addOrganizerEmail}
       ></input>
+      <section>
+        <div className="map">
+          <EventMap />
+        </div>
+      </section>
       <section className="buttonGrid">  
         <input
           type="submit"

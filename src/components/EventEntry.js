@@ -1,7 +1,7 @@
 import React from "react";
-import Map from "./Map"
+import EventMap from "./EventMap";
 import PropTypes from "prop-types";
-import "../styles/Event.css";
+import "../styles/EventEntry.css";
 
 
 const Event = (props) => {
@@ -17,8 +17,8 @@ const Event = (props) => {
         <div className="tinyFlexWrapper">
           <p>Flag Event</p>
         </div>
-        <div className="map">
-          <Map />
+        <div className="eventEntryMap">
+          <EventMap />
         </div>
         <br />
         <br />
