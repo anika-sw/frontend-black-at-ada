@@ -17,11 +17,11 @@ const EventsList = () => {
 
   const eventsList = eventsData.map((event) => {
     return (
-      <div key={event.id}>
+      <li key={event.id}>
         <EventEntry
         event={event}
         ></EventEntry>
-      </div>
+      </li>
     );
   });
 

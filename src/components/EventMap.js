@@ -4,15 +4,16 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
-
+import '../styles/EventMap.css'
 
 const EventMap = () => {
 
+  const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ['places'],
+    libraries: ['places']
   })
-
   const [eventAddress, setEventAddress] = useState('')
 
   const [mapCenter, setMapCenter] = useState({
@@ -46,6 +47,7 @@ const EventMap = () => {
     )
   }
 
+
   return (
     <div>
       <div>
@@ -70,7 +72,7 @@ const EventMap = () => {
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                     : { backgroundColor: '#ffffff', cursor: 'pointer' };
                   return (
-                    <div
+                    <div 
                       {...getSuggestionItemProps(suggestion, {
                         className,
                         style,
@@ -94,10 +96,12 @@ const EventMap = () => {
               mapTypeControl: false,
               // fullscreenControl: false,
             }}
+            onLoad={map => setMap(map)}
             >
             <div>
-              <Marker 
-                  position={markerPosition}
+              <Marker className='marker'
+                position={markerPosition}
+                map={map}
               > 
               </Marker>
             </div>

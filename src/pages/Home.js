@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import User from  "../components/User";
+import UserEntry from  "../components/UserEntry";
 import EventEntry from  "../components/EventEntry";
 import { Outlet, Link } from "react-router-dom";
 
@@ -39,9 +39,9 @@ const Home = () => {
   const usersList = usersData.map((user) => {
     return (
       <div key={user.id}>
-        <User
+        <UserEntry
         user={user}
-        ></User>
+        ></UserEntry>
       </div>
     );
   });

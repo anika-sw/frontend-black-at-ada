@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import User from  "../components/User";
+import UserEntry from  "../components/UserEntry";
 
 
 const Directory = () => {
@@ -18,9 +18,9 @@ const Directory = () => {
   const usersList = usersData.map((user) => {
     return (
       <div key={user.id}>
-        <User
+        <UserEntry
         user={user}
-        ></User>
+        ></UserEntry>
       </div>
     );
   });
