@@ -4,7 +4,6 @@ import UserEntry from  "../components/UserEntry";
 
 
 const Directory = () => {
-
   const [usersData, setUsersData] = useState([])
 
   useEffect(() => {
