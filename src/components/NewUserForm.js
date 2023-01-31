@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AutocompleteAddressBar from  "../components/AutocompleteAddressBar";
 import PropTypes from 'prop-types';
 import "../styles/NewForms.css";
 
@@ -19,8 +20,10 @@ const NewUserForm = (props) => {
   const [linkedIn, setLinkedIn] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [salary, setSalary] = useState("");
-  const [yearsExperienc, setYearsExperience] = useState("");
+  const [yearsExperience, setYearsExperience] = useState("Less than 1");
   const [userLastUpdated, setUserLastUpdated] = useState("");
+
+  console.log(yearsExperience)
   
   const addFirstName = (event) => {
     setFirstName(event.target.value);
@@ -59,8 +62,11 @@ const NewUserForm = (props) => {
       setSalary(event.target.value);
     };
   const addYearsExperience = (event) => {
-      setYearsExperience(event.target.value);
-    };
+    if (yearsExperience !== event.target.value) {
+      setYearsExperience((yearsExperience) => event.target.value);
+    }
+  };
+
   const addUserLastUpdated = (event) => {
       setUserLastUpdated(event.target.value);
     };
@@ -106,14 +112,7 @@ const NewUserForm = (props) => {
       <br />
       <br />
       <label htmlFor="location">Location</label>
-      <input
-        type="text"
-        minLength={1}
-        maxLength={60}
-        value={location}
-        className={!location ? "error" : ""}
-        onChange={addLocation}
-      ></input>
+      <AutocompleteAddressBar />
       <br />
       <br />
       <label htmlFor="email">Email</label>
@@ -179,12 +178,12 @@ const NewUserForm = (props) => {
       <br />
       <br />
       <label htmlFor="input">Years of Experience:
-        <select className="experience">
-          <option value="underOneYear">Less than 1</option>
-          <option value="oneToThree">1 - 3</option>
-          <option value="threeToFive">3 - 5</option>
-          <option value="threeToFive">5 - 10</option>
-          <option value="threeToFive">10+</option>
+        <select className="experience" onChange={addYearsExperience}>
+          <option className="experience" value="Less than 1">Less than 1</option>
+          <option className="experience" value="1 - 3">1 - 3</option>
+          <option className="experience" value="3 - 5">3 - 5</option>
+          <option className="experience" value="5 - 10">5 - 10</option>
+          <option className="experience" value="10+">10+</option>
         </select>
       </label>
       <br />

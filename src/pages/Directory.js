@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserEntry from  "../components/UserEntry";
 
-
 const Directory = () => {
   const [usersData, setUsersData] = useState([])
 

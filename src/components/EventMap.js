@@ -6,13 +6,15 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import '../styles/EventMap.css'
 
+const libraries = ['places']
+
 const EventMap = () => {
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null))
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ['places']
+    libraries
   })
   const [eventAddress, setEventAddress] = useState('')
 
@@ -47,7 +49,6 @@ const EventMap = () => {
     )
   }
 
-
   return (
     <div>
       <div>
@@ -63,7 +64,7 @@ const EventMap = () => {
                   className: 'location-search-input',
               })}/>
               <div className="autocomplete-dropdown-container">
-                {suggestions.map(suggestion => {
+                {suggestions.map((suggestion, index) => {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
                     : 'suggestion-item';
@@ -72,7 +73,7 @@ const EventMap = () => {
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                     : { backgroundColor: '#ffffff', cursor: 'pointer' };
                   return (
-                    <div 
+                    <div key={index}
                       {...getSuggestionItemProps(suggestion, {
                         className,
                         style,
@@ -90,7 +91,7 @@ const EventMap = () => {
           <GoogleMap 
             mapContainerStyle={{ width: '300px', height: '300px' }}
             center={mapCenter} 
-            zoom={13}
+            zoom={12}
             options={{
               streetViewControl: false,
               mapTypeControl: false,
