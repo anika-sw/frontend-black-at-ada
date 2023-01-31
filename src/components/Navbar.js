@@ -1,6 +1,9 @@
+import { useAuth } from '../hooks/useAuth';
 import "../styles/Navbar.css";
 
 const Navbar = () => {
+  const { logout, user } = useAuth();
+
   return (
     <div className="navbar">
       {/* <div class="fixed-top">
@@ -29,6 +32,7 @@ const Navbar = () => {
             </ul>
         </nav>
       </header>
+      {user && <button onClick={logout}>Logout</button>}
       <div>
         <span>Black@Ada</span>
       </div>

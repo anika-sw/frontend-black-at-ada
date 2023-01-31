@@ -111,7 +111,7 @@ const NewUserForm = (props) => {
       ></input>
       <br />
       <br />
-      <label htmlFor="location">Location</label>
+      <label htmlFor="location">Location (Enter your current city and state/country, zip code, or post code)</label>
       <AutocompleteAddressBar />
       <br />
       <br />

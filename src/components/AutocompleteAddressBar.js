@@ -52,8 +52,8 @@ const AutocompleteAddressBar = () => {
           <div>
             <input
               {...getInputProps({
-                placeholder: 'Enter address or location name',
                 className: 'location-search-input',
+                placeholder: 'Start typing...'
             })}/>
             <div className="autocomplete-dropdown-container">
               {suggestions.map((suggestion, index) => {

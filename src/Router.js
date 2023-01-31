@@ -9,11 +9,14 @@ import UserInfo from "./pages/UserInfo";
 import EventInfo from "./pages/EventInfo";
 import SalaryData from "./pages/SalaryData";
 import FourOhFour from "./pages/FourOhFour";
+import { AuthProvider } from "./hooks/useAuth";
 
 const MainLayout = () => (
-  <Layout>
-    <Outlet />
-  </Layout>
+  <AuthProvider>
+    <Layout>
+      <Outlet />
+    </Layout>
+  </AuthProvider>
 )
 
 export const routes = [
