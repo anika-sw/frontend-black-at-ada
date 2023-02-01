@@ -2,12 +2,12 @@ import NewEventForm from "../components/NewEventForm";
 import "../styles/EventInfo.css";
 
 
-const EventInfo = () => {
+const NewEvent = () => {
   return (
     <div>
-      <NewEventForm />   
+      <NewEventForm />
     </div>
   )
 };  
 
-export default EventInfo;
+export default NewEvent;

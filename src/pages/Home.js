@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserEntry from  "../components/UserEntry";
 import EventEntry from  "../components/EventEntry";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 
 const Home = () => {
 
-  const [usersData, setUsersData] = useState([])
   const [eventsData, setEventsData] = useState([])
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/users", {})
-      .then((response) => {
-        setUsersData(response.data);
-      });
-  }, []);
   
   useEffect(() => {
     axios
@@ -26,7 +16,7 @@ const Home = () => {
     });
   }, []);
 
-  const eventsList = eventsData.map((event) => {
+  const recentEventsList = eventsData.map((event) => {
     return (
       <div key={event.id}>
         <EventEntry
@@ -36,15 +26,10 @@ const Home = () => {
     );
   });
 
-  const usersList = usersData.map((user) => {
-    return (
-      <div key={user.id}>
-        <UserEntry
-        user={user}
-        ></UserEntry>
-      </div>
-    );
-  });
+  const navigate = useNavigate();
+  const routeChange = (event) => {
+    navigate('/directory');
+  }
 
   return (
     <main className="App">
@@ -52,8 +37,11 @@ const Home = () => {
         Welcome
       </h1>
       <section>
+        <h2>Announcements</h2>
+      </section>
+      <section>
         <h2>Recently Added Events</h2>
-        {/* <ul>{eventsList}</ul> */}
+        {/* <ul>{recentEventsList}</ul> */}
       </section>
       <section>
         <h2>My Events</h2>
@@ -62,7 +50,7 @@ const Home = () => {
         <h2>All Events</h2>
       </section>
       <section>
-        <button id="directory"><span>Black Adie Directory</span></button>
+        <button id="directory" onClick={routeChange}><span>Black Adie Directory</span></button>
       </section>
     </main>
   );

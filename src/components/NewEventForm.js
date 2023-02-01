@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import EventMap from "./EventMap";
+// import DatePicker from "react-date-picker";
+import DateTimePicker from "react-datetime-picker";
 import PropTypes from 'prop-types';
 import "../styles/NewForms.css";
 
+// save draft and delete event capabilities for user creating event
+
 const NewEventForm = (props) => {
   
+  const [value, onChange] = useState(new Date());
+  console.log(value)
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [videoConfLink, setVideoConfLink] = useState("");
@@ -16,6 +22,8 @@ const NewEventForm = (props) => {
     locationLon:""
   });   
   const [organizerFirstName, setOrganizerFirstName] = useState(""); //look up what validation needs to happen with this
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
   const [organizerLastName, setOrganizerLastName] = useState("");
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [targetAudience, setTargetAudience] = useState("Everyone");
@@ -39,6 +47,10 @@ const NewEventForm = (props) => {
 
   const addLocation = (event) => {
       setLocation(event.target.value);
+    };
+
+  const addDate = (event) => {
+      setDate(event.target.value);
     };
 
   const addOrganizerFirstName = (event) => {
@@ -131,6 +143,9 @@ const NewEventForm = (props) => {
       ></input>
       <br />
       <br />
+      <DateTimePicker onChange={onChange} value={value} />
+      <br />
+      <br />
       <label htmlFor="organizerFirstName">Organizer's First Name</label>
       <input
         type="text"
@@ -203,6 +218,9 @@ const NewEventForm = (props) => {
           className="button"
           disabled={!title || !description || !location || !organizerFirstName || !organizerLastName || !organizerEmail}
         ></input>
+
+        <button>Save Draft</button>
+        <button>Delete Event</button>
       </section>
     </form>
   );

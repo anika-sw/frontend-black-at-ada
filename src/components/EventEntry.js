@@ -1,27 +1,14 @@
 import React from "react";
-import EventMap from "./EventMap";
 import PropTypes from "prop-types";
 import "../styles/EventEntry.css";
 
+// include image date, time, and target audience, location
 
-const Event = (props) => {
+const EventEntry = (props) => {
   return (
     <div>
       <section  className="cardFlex">
         <p className="fullName">Title: {props.event.title}</p>
-        <p className="fullName">Description: {props.event.description}</p>
-        <p className="fullName">Location: {props.event.location}</p>
-        <p className="fullName">Organized by: {props.event.organizer_first_name} {props.event.organizer_last_name}</p>
-        <p className="fullName">Contact: {props.event.organizer_email}</p>
-        <p className="fullName">{props.event.target_audience}</p>
-        <div className="tinyFlexWrapper">
-          <p>Flag Event</p>
-        </div>
-        <div className="eventEntryMap">
-          <EventMap />
-        </div>
-        <br />
-        <br />
       </section>
     </div>
   );
@@ -38,7 +25,6 @@ Event.propTypes = {
     organizerEmail: PropTypes.string,
     targetAudience: PropTypes.string
   }), 
-  createMap: PropTypes.func
 };
 
-export default Event;
+export default EventEntry;

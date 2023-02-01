@@ -44,14 +44,15 @@ const EventsList = () => {
         <br />
         <br />
         <br />
-        <label htmlFor="filter">Filter: (checkboxes)
-          <select className="filter">
-              <option value="location">Near Me Online</option>
-              <option value="targetAudience">Anyone Classroom Adies Internship Adies Alum</option>
-              <option value="location">Show Past Events</option>
-          </select>
-        </label>
-      </section>  
+        <input type="checkbox" /><label htmlFor="checkbox">Near Me</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Online</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Anyone</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Classroom Adies</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Internship Adies</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Adie Alum</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Show All Past Events</label>
+        <input type="checkbox" /><label htmlFor="checkbox">Show My Past Events</label>
+      </section>
     </div>
   )
 };  

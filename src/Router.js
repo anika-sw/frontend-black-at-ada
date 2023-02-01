@@ -4,10 +4,11 @@ import Layout from "./components/Layout"
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import EventsList from "./pages/EventsList";
+import EventDetails from "./pages/EventDetails";
+import AddEvent from "./pages/AddEvent";
 import Directory from "./pages/Directory";
-import UserInfo from "./pages/UserInfo";
-import EventInfo from "./pages/EventInfo";
-import SalaryData from "./pages/SalaryData";
+import UserDetails from "./pages/UserDetails";
+import SalaryList from "./pages/SalaryList";
 import FourOhFour from "./pages/FourOhFour";
 import { AuthProvider } from "./hooks/useAuth";
 
@@ -24,25 +25,29 @@ export const routes = [
     element: <MainLayout />,
     children: [
       {
+        element: <Login />,
+        path: "/login",
+      },
+      {
         element: <Home />,
-        path: "/home",
-        children: [
-          {
-          // element: <Cat />,
-          // path: ":catName"
-          },
-        ]
+        path: "/home"
       },
       {
         element: <EventsList />,
         path: "/events",
+        children: [
+          {
+            element: <EventDetails />,
+            path: ":eventId",
+          },
+          {
+            element: <AddEvent />,
+            path: ":new-event",
+          }
+        ]
       },
       {
-        element: <EventInfo />,
-        path: "/event-info",
-      },
-      {
-        element: <SalaryData />,
+        element: <SalaryList />,
         path: "/salary-data",
       },
       {
@@ -68,11 +73,7 @@ export const routes = [
     ]
   },
   {
-    element: <Login />,
-    path: "/login",
-  },
-  {
-    element: <UserInfo />,
+    element: <UserDetails />,
     path: "/user-info",
   }
 ]
