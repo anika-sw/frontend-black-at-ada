@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventMap from  "../components/EventMap";
+import { AddToCalendar } from "react-add-to-calendar";
 import "../styles/EventInfo.css";
 
 //get one event
 //pass the map location detail props
 
-const EventInfo = (props) => {
+const EventDetails = (props) => {
+
+  const currentEvent = {
+    title: 'Sample Event',
+    description: 'This is the sample event provided as an example only',
+    location: 'Portland, OR',
+    startTime: '2016-09-16T20:15:00-04:00',
+    endTime: '2016-09-16T21:45:00-04:00'
+  };
+
+/*
+   startTime and endTime can use any datetime
+   string that is acceptable by MomentJS
+*/
 
   const [eventsData, setEventsData] = useState([])
 
@@ -37,8 +51,9 @@ const EventInfo = (props) => {
         <br />
       </section>
       <button>RSVP</button>
+      <AddToCalendar event={currentEvent} />
     </div>
   )
 };  
 
-export default EventInfo;
+export default EventDetails;

@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.5",
     "react": "^18.2.0",
-    "react-date-picker": "^9.2.0",
+    "react-add-to-calendar": "^0.1.5",
     "react-datetime-picker": "^4.2.0",
     "react-dom": "^18.2.0",
     "react-places-autocomplete": "^7.3.0",
