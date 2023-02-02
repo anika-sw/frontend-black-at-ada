@@ -7,8 +7,11 @@ import EventsList from "./pages/EventsList";
 import EventDetails from "./pages/EventDetails";
 import AddEvent from "./pages/AddEvent";
 import Directory from "./pages/Directory";
-import UserDetails from "./pages/UserDetails";
+import Attestation from "./pages/Attestation";
+import AddUser from "./pages/AddUser";
 import SalaryList from "./pages/SalaryList";
+import UserProfile from "./pages/UserProfile";
+import About from "./pages/About";
 import FourOhFour from "./pages/FourOhFour";
 import { AuthProvider } from "./hooks/useAuth";
 
@@ -33,18 +36,23 @@ export const routes = [
         path: "/home"
       },
       {
+        element: <UserProfile />,
+        path: "/profile"
+      },
+      {
         element: <EventsList />,
         path: "/events",
         children: [
-          {
-            element: <EventDetails />,
-            path: ":eventId",
-          },
-          {
-            element: <AddEvent />,
-            path: ":new-event",
-          }
+
         ]
+      },
+      {
+        element: <EventDetails />,
+        path: "/eventId",
+      },
+      {
+        element: <AddEvent />,
+        path: "/new-event",
       },
       {
         element: <SalaryList />,
@@ -53,6 +61,10 @@ export const routes = [
       {
         element: <Directory />,
         path: "/directory",
+      },
+      {
+        element: <About />,
+        path: "/about",
       },
       {
         path: '/404',
@@ -73,7 +85,11 @@ export const routes = [
     ]
   },
   {
-    element: <UserDetails />,
-    path: "/user-info",
+    element: <Attestation />,
+    path: "/attest",
+  },
+  {
+    element: <AddUser />,
+    path: "/signup",
   }
 ]

@@ -4,11 +4,13 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import PropTypes from 'prop-types';
+
 
 
 const libraries = ["places"]
 
-const AutocompleteAddressBar = () => {
+const AutocompleteAddressBar = (props) => {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries
@@ -17,16 +19,6 @@ const AutocompleteAddressBar = () => {
 
   const handleChange = (location) => {
     setLocation(location);
-  };
-
-  const handleSelect = (location) => {
-    geocodeByAddress(location)
-    .then(results => getLatLng(results[0]))
-    .then(latLng => {
-      console.log('Success', latLng);
-      setLocation(location);
-    })
-    .catch(error => console.error('Error', error));
   };
 
   const options = {
@@ -43,43 +35,47 @@ const AutocompleteAddressBar = () => {
 
   return (
     <div>
-      <PlacesAutocomplete
-        value={location}
-        onChange={handleChange}
-        onSelect={handleSelect}
-        searchOptions={options}>
-        {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-          <div>
-            <input
-              {...getInputProps({
-                className: 'location-search-input',
-                placeholder: 'Start typing...'
-            })}/>
-            <div className="autocomplete-dropdown-container">
-              {suggestions.map((suggestion, index) => {
-                const className = suggestion.active
-                  ? 'suggestion-item--active'
-                  : 'suggestion-item';
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                return (
-                  <div key={index}
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style,
-                    })}>
-                    <span>{suggestion.description}</span>
-                  </div>
-                );
-              })}
+        <PlacesAutocomplete
+          value={location}
+          onChange={handleChange}
+          onSelect={() => props.selectLocation(location)}
+          searchOptions={options}>
+          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+            <div>
+              <input
+                {...getInputProps({
+                  placeholder: 'Start typing...',
+                  className: 'location-search-input',
+              })}/>
+              <div className="autocomplete-dropdown-container">
+                {suggestions.map((suggestion, index) => {
+                  const className = suggestion.active
+                    ? 'suggestion-item--active'
+                    : 'suggestion-item';
+                  // inline style for demonstration purpose
+                  const style = suggestion.active
+                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                  return (
+                    <div key={index}
+                      {...getSuggestionItemProps(suggestion, {
+                        className,
+                        style,
+                      })}>
+                      <span>{suggestion.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
+          )}
+        </PlacesAutocomplete>
     </div>
   );
+};
+
+AutocompleteAddressBar.propTypes = {
+  selectLocation: PropTypes.func
 };
 
 export default AutocompleteAddressBar;

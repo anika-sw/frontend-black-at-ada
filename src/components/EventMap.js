@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import '../styles/EventMap.css'
+import PropTypes from 'prop-types';
+
 
 const libraries = ['places']
 
-const EventMap = () => {
+const EventMap = (props) => {
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null))
 
@@ -29,17 +28,17 @@ const EventMap = () => {
     setEventAddress(eventAddress);
   };
 
-  const handleSelect = (eventAddress) => {
-    geocodeByAddress(eventAddress)
-    .then(results => getLatLng(results[0]))
-    .then(latLng => {
-      console.log('Success', latLng);
-      setEventAddress(eventAddress);
-      setMapCenter(latLng);
-      setMarkerPosition(latLng);
-    })
-    .catch(error => console.error('Error', error));
-  };
+  // const handleSelect = (eventAddress) => {
+  //   geocodeByAddress(eventAddress)
+  //   .then(results => getLatLng(results[0]))
+  //   .then(latLng => {
+  //     console.log('Success', latLng);
+  //     setEventAddress(eventAddress);
+  //     setMapCenter(latLng);
+  //     setMarkerPosition(latLng);
+  //   })
+  //   .catch(error => console.error('Error', error));
+  // };
 
   if (!isLoaded) {
     return (
@@ -55,7 +54,7 @@ const EventMap = () => {
         <PlacesAutocomplete
           value={eventAddress}
           onChange={handleChange}
-          onSelect={handleSelect}>
+          onSelect={() => props.selectLocation(eventAddress)}>
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
               <input
@@ -110,6 +109,11 @@ const EventMap = () => {
       </div>
     </div>
   )
+};
+
+
+EventMap.propTypes = {
+  selectLocation: PropTypes.func
 };
 
 export default React.memo(EventMap);

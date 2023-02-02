@@ -5,7 +5,7 @@ import { AddToCalendar } from "react-add-to-calendar";
 import "../styles/EventInfo.css";
 
 //get one event
-//pass the map location detail props
+//pass the map location details to Event Map
 
 const EventDetails = (props) => {
 
@@ -24,23 +24,23 @@ const EventDetails = (props) => {
 
   const [eventsData, setEventsData] = useState([])
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/events", {})
-      .then((response) => {
-        setEventsData(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/events", {})
+  //     .then((response) => {
+  //       setEventsData(response.data);
+  //   });
+  // }, []);
 
   return (
     <div>
       <section  className="cardFlex">
-        <p className="fullName">Title: {props.event.title}</p>
+        {/* <p className="fullName">Title: {props.event.title}</p>
         <p className="fullName">Description: {props.event.description}</p>
         <p className="fullName">Location: {props.event.location}</p>
         <p className="fullName">Organized by: {props.event.organizer_first_name} {props.event.organizer_last_name}</p>
         <p className="fullName">Contact: {props.event.organizer_email}</p>
-        <p className="fullName">{props.event.target_audience}</p>
+        <p className="fullName">{props.event.target_audience}</p> */}
         <div className="tinyFlexWrapper">
           <p>Flag Event</p>
         </div>
@@ -51,7 +51,7 @@ const EventDetails = (props) => {
         <br />
       </section>
       <button>RSVP</button>
-      <AddToCalendar event={currentEvent} />
+      {/* <AddToCalendar event={currentEvent} /> */}
     </div>
   )
 };  

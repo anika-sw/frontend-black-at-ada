@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import EventMap from "./EventMap";
-// import DatePicker from "react-date-picker";
 import DateTimePicker from "react-datetime-picker";
 import PropTypes from 'prop-types';
+import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import "../styles/NewForms.css";
 
 // save draft and delete event capabilities for user creating event
@@ -16,11 +16,9 @@ const NewEventForm = (props) => {
   const [videoConfLink, setVideoConfLink] = useState("");
   const [radioSelection, setRadioSelection] = useState("Online");
   const [isMapShowing, setIsMapShowing] = useState(false);
-  const [location, setLocation] = useState({
-    locationName: "",
-    locationLat: "",
-    locationLon:""
-  });   
+  const [locationAddress, setLocationAddress] = useState(""); 
+  const [locationLat, setLocationLat] = useState("");
+  const [locationLng, setLocationLng] = useState("");
   const [organizerFirstName, setOrganizerFirstName] = useState(""); //look up what validation needs to happen with this
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -28,7 +26,19 @@ const NewEventForm = (props) => {
   const [organizerEmail, setOrganizerEmail] = useState("");
   const [targetAudience, setTargetAudience] = useState("Everyone");
 
-  console.log(radioSelection, isMapShowing)
+  const handleSelect = (location) => {
+    geocodeByAddress(location)
+    .then(results => getLatLng(results[0]))
+    .then(latLng => {
+      console.log('Success', latLng);
+      setLocationAddress(location);
+      const latStr = latLng['lat'].toString();
+      const lngStr = latLng['lng'].toString();
+      setLocationLat(latStr);
+      setLocationLng(lngStr);
+    })
+    .catch(error => console.error('Error', error));
+  };
   
   const addTitle = (event) => {
     setTitle(event.target.value);
@@ -44,10 +54,6 @@ const NewEventForm = (props) => {
       setIsMapShowing((isMapShowing) => !isMapShowing)
     }
   }
-
-  const addLocation = (event) => {
-      setLocation(event.target.value);
-    };
 
   const addDate = (event) => {
       setDate(event.target.value);
@@ -74,7 +80,7 @@ const NewEventForm = (props) => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    props.addNewUser({ title, description, location, organizerFirstName, organizerLastName, organizerEmail });
+    props.addNewUser({ title, description, locationAddress, organizerFirstName, organizerLastName, organizerEmail });
   };
 
   return (
@@ -129,19 +135,10 @@ const NewEventForm = (props) => {
       <br />
       {isMapShowing && (
           <div className="map">
-            <EventMap />
+            <EventMap 
+            selectLocation={handleSelect}/>
           </div>
         )}
-      <br />
-      <input
-        type="text"
-        minLength={1}
-        maxLength={40}
-        value={location}
-        className={!location ? "error" : ""}
-        onChange={addLocation}
-      ></input>
-      <br />
       <br />
       <DateTimePicker onChange={onChange} value={value} />
       <br />
@@ -216,7 +213,7 @@ const NewEventForm = (props) => {
           type="submit"
           value="Submit"
           className="button"
-          disabled={!title || !description || !location || !organizerFirstName || !organizerLastName || !organizerEmail}
+          disabled={!title || !description || !organizerFirstName || !organizerLastName || !organizerEmail}
         ></input>
 
         <button>Save Draft</button>
@@ -224,10 +221,6 @@ const NewEventForm = (props) => {
       </section>
     </form>
   );
-};
-
-NewEventForm.propTypes = {
-  addNewEvent: PropTypes.func
 };
 
 export default NewEventForm;
