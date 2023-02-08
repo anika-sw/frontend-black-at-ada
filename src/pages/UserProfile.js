@@ -4,10 +4,12 @@ import UpdateUser from "../components/UpdateUser";
 
 const kBaseUrl = "http://localhost:5000";
 
+
 const UserProfile = () => {
+
 	const [userData, setUserData] = useState([]);
 
-	const convertFromApi = (apiUser) => {
+  const convertFromApi = (apiUser) => {
 		// const {id, name, color, personality, pet_count, caretaker} = apiCat;
 		const { first_name, ...rest } = apiUser;
 
@@ -23,6 +25,8 @@ const UserProfile = () => {
 			locationName,
 			locationLat,
 			locationLng,
+      // profilePic,
+      includeNameSalary,
 			jobTitle,
 			yearsExperience,
 			...rest
@@ -33,6 +37,8 @@ const UserProfile = () => {
 			location_name: locationName,
 			location_lat: locationLat,
 			location_lng: locationLng,
+      // profile_pic: profilePic,
+      include_name_salary: includeNameSalary,
 			job_title: jobTitle,
 			years_experience: yearsExperience,
 			...rest,
@@ -53,7 +59,8 @@ const UserProfile = () => {
 	};
 
 	useEffect(() => {
-		axios.get("http://localhost:5000/users/<id>", {}).then((response) => {
+		axios.get("http://localhost:5000/users/<id>", {})
+    .then((response) => {
 			setUserData(response.data);
 		});
 	}, []);

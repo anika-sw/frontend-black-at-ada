@@ -1,3 +1,14 @@
 form {
     color: white;
 };
+
+.btn {
+    border-radius: 10px;
+    border-color: black;
+    border-width: 2px;
+    background-color: aqua;
+    text-align: center;
+    padding: 10px;
+    display: inline-block;
+    cursor: pointer;
+}

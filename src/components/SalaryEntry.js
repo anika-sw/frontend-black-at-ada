@@ -5,23 +5,27 @@ const SalaryEntry = (props) => {
   return (
     <div>
       <section  className="cardFlex">
-        <p className="fullName">Salary Details: {props.event.title}</p>
+        <p className="fullName">Salary Details:</p>
+        <p>Salary: ${props.salary}</p>
+        <p>Company: {props.company}</p>
+        <p>Job Title: {props.jobTitle}</p>
+        <p>Years of Experience: {props.yearsExperience}</p>
+        {props.includeNameSalary === "Yes" && <p>{props.firstName} {props.lastName}, {props.pronouns}</p>}
+        <p>************************************</p>
       </section>
     </div>
   );
 };
 
-Event.propTypes = {
-  event: PropTypes.shape({
-    eventId: PropTypes.number,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    location: PropTypes.string,
-    organizerFirstName: PropTypes.string,
-    organizerLastName: PropTypes.string,
-    organizerEmail: PropTypes.string,
-    targetAudience: PropTypes.string
-  }), 
+SalaryEntry.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  pronouns: PropTypes.string,
+  salary: PropTypes.number,
+  company: PropTypes.string,
+  jobTitle: PropTypes.string,
+  yearsExperience: PropTypes.string,
+  includeNameSalary: PropTypes.string 
 };
 
 export default SalaryEntry;

@@ -7,7 +7,6 @@ import EventsList from "./pages/EventsList";
 import EventDetails from "./pages/EventDetails";
 import AddEvent from "./pages/AddEvent";
 import Directory from "./pages/Directory";
-import Attestation from "./pages/Attestation";
 import AddUser from "./pages/AddUser";
 import SalaryList from "./pages/SalaryList";
 import UserProfile from "./pages/UserProfile";
@@ -56,7 +55,7 @@ export const routes = [
       },
       {
         element: <SalaryList />,
-        path: "/salary-data",
+        path: "/salaries",
       },
       {
         element: <Directory />,
@@ -83,10 +82,6 @@ export const routes = [
         element: <Navigate to="/home" replace />
       }
     ]
-  },
-  {
-    element: <Attestation />,
-    path: "/attest",
   },
   {
     element: <AddUser />,

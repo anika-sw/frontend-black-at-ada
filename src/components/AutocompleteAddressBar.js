@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { useJsApiLoader } from '@react-google-maps/api';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-
 
 
 const libraries = ["places"]
@@ -15,10 +11,15 @@ const AutocompleteAddressBar = (props) => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries
   })
+
   const [location, setLocation] = useState('')
 
   const handleChange = (location) => {
     setLocation(location);
+  };
+
+  const handleSelect = (location) => {
+    props.selectLocation(location);
   };
 
   const options = {
@@ -33,12 +34,13 @@ const AutocompleteAddressBar = (props) => {
     )
   };
 
+
   return (
     <div>
         <PlacesAutocomplete
           value={location}
           onChange={handleChange}
-          onSelect={() => props.selectLocation(location)}
+          onSelect={handleSelect}
           searchOptions={options}>
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
@@ -54,8 +56,8 @@ const AutocompleteAddressBar = (props) => {
                     : 'suggestion-item';
                   // inline style for demonstration purpose
                   const style = suggestion.active
-                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    ? { backgroundColor: '#fafafa', cursor: 'pointer', color: '#000000' }
+                    : { backgroundColor: '#ffffff', cursor: 'pointer', color: '#000000' };
                   return (
                     <div key={index}
                       {...getSuggestionItemProps(suggestion, {

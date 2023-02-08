@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 import PlacesAutocomplete from 'react-places-autocomplete';
+import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import '../styles/EventMap.css'
 import PropTypes from 'prop-types';
 
@@ -33,12 +34,25 @@ const EventMap = (props) => {
   //   .then(results => getLatLng(results[0]))
   //   .then(latLng => {
   //     console.log('Success', latLng);
-  //     setEventAddress(eventAddress);
-  //     setMapCenter(latLng);
   //     setMarkerPosition(latLng);
+  //     setMapCenter(latLng);
   //   })
   //   .catch(error => console.error('Error', error));
   // };
+
+
+  const handleSelect = (eventAddress) => {
+    geocodeByAddress(eventAddress)
+    .then(results => getLatLng(results[0]))
+    .then(latLng => {
+      console.log('Success', latLng);
+      setEventAddress(eventAddress);
+      setMapCenter(latLng);
+      setMarkerPosition(latLng);
+      props.selectLocation(eventAddress);
+    })
+    .catch(error => console.error('Error', error));
+  };
 
   if (!isLoaded) {
     return (
@@ -48,13 +62,14 @@ const EventMap = (props) => {
     )
   }
 
+  // {() => props.selectLocation(eventAddress)}
   return (
     <div>
       <div>
         <PlacesAutocomplete
           value={eventAddress}
           onChange={handleChange}
-          onSelect={() => props.selectLocation(eventAddress)}>
+          onSelect={handleSelect}>
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
               <input
@@ -69,8 +84,8 @@ const EventMap = (props) => {
                     : 'suggestion-item';
                   // inline style for demonstration purpose
                   const style = suggestion.active
-                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    ? { backgroundColor: '#fafafa', cursor: 'pointer', color: '#000000' }
+                    : { backgroundColor: '#ffffff', cursor: 'pointer', color: '#000000' };
                   return (
                     <div key={index}
                       {...getSuggestionItemProps(suggestion, {
