@@ -16,9 +16,6 @@ const AutocompleteAddressBar = (props) => {
 
   const handleChange = (location) => {
     setLocation(location);
-  };
-
-  const handleSelect = (location) => {
     props.selectLocation(location);
   };
 
@@ -40,7 +37,6 @@ const AutocompleteAddressBar = (props) => {
         <PlacesAutocomplete
           value={location}
           onChange={handleChange}
-          onSelect={handleSelect}
           searchOptions={options}>
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>

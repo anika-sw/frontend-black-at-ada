@@ -40,9 +40,7 @@ const Login = () => {
     });
   };
 
-  const togglePassword = () => {
-    // When the handler is invoked
-    // inverse the boolean state of passwordShown
+  const showHidePassword = () => {
     setPasswordShown(!passwordShown);
   };
 
@@ -73,7 +71,7 @@ const Login = () => {
           className={!email ? "error" : ""}
           onChange={addPassword}
         ></input>
-        <button type="button" onClick={togglePassword}>Show Password</button>
+        <button type="button" onClick={showHidePassword}>Show/Hide Password</button>
         <section className="buttonGrid">  
           <button type="submit" value="Login">Login</button>
           <button type="button" onClick={routeChange}>Sign Up</button>

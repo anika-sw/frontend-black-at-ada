@@ -1,4 +1,4 @@
-import '../ImagePreview.css';
+import '../styles/ImagePreview.css';
 
 const ImagePreview = (props) => {
   const { src, alt } = props;

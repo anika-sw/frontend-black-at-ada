@@ -4,7 +4,7 @@ import axios from 'axios';
 import DateTimePicker from "react-datetime-picker";
 import PropTypes from 'prop-types';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import ImagePreview from './components/ImagePreview';
+import ImagePreview from '../components/ImagePreview';
 import "../styles/NewForms.css";
 
 const kBaseUrl = 'http://localhost:5000';
