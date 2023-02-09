@@ -3,17 +3,20 @@ import PropTypes from "prop-types";
 
 
 const UserEntry = (props) => {
-  const url = props.user.linkedin
-  const connectLink = <a href={url}>Connect with me on LinkedIn</a>
+
+  const url = props.user.linkedin;
+  const connectLink = <a href={url}>Connect with me on LinkedIn</a>;
+  const mailTo = <a href={`mailto:${props.user.email}`}>{props.user.email}</a>;
 
 
   return (
     <div>
+      <img src={props.user.profilePicUrl} alt='' height="200" />
       <section className="directoryEntry">
-        <p>{props.user.firstName} {props.user.lastName}, {props.user.pronouns}</p>
+        <span>{props.user.firstName} {props.user.lastName}</span>{props.user.pronouns && <span>, {props.user.pronouns}</span>}
         <p>Cohort {props.user.cohort}</p>
         <p>{props.user.company}</p>
-        <p>{props.user.email}</p>
+        <p>{mailTo}</p>
         {url && connectLink}
         <p>*********************************</p>
       </section>
@@ -33,7 +36,7 @@ UserEntry.propTypes = {
     locationLng: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
-    // profilePic: PropTypes.any,
+    profilePicUrl: PropTypes.string,
     company: PropTypes.string,
     linkedin: PropTypes.string,
     jobTitle: PropTypes.string,
