@@ -30,8 +30,12 @@ const Login = () => {
   const authUser = async (requestBody) => {
     await axios.post(`${kBaseUrl}/login`, requestBody)
       .then(response => {
-        console.log('Login: success');
-        login(response.data);
+        if (Number.isInteger(response.data)) {
+          login(response.data);
+        } else {
+          console.log(response.data);
+          return response.data;
+        }
       }
     )
       .catch(error => {

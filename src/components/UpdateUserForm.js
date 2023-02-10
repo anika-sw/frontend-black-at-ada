@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
 import AutocompleteAddressBar from "./AutocompleteAddressBar";
-import ImagePreview from '../components/ImagePreview';
+import ImagePreview from './ImagePreview';
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import "../styles/NewForms.css";
 
@@ -21,11 +21,31 @@ const UpdateUser = () => {
     navigate('/home')
   };
 
-  const [userData, setUserData] = useState({});
-  const [tempUserData, setTempUserData] = useState({});
-  const [password, setPassword] = useState();
+  const [newPassword, setNewPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
   const [image, setImage] = useState('');
+  const [imageSaved, setImageSaved] = useState(true);
+  const [userData, setUserData] = useState({});
+  const [tempUserData, setTempUserData] = useState({
+    firstName: '', 
+    lastName: '',
+    pronouns: '', 
+    cohort: '', 
+    locationName: '',
+    locationLat: '',
+    locationLng: '',
+    email: '',
+    password: '',
+    profilePicUrl: '',
+    includeNameSalary: '',
+    company: '',
+    linkedin: '',
+    jobTitle: '',
+    salary: '',
+    yearsExperience: ''
+  });
+
+  const tempObj = useRef({...tempUserData});
 
   const updateUserInApi = (jsUser) => {
     const {
@@ -106,7 +126,7 @@ const UpdateUser = () => {
       }
     );
   }, [user]);
-
+    
   const deleteUser = () => {
     axios.delete(`${kBaseUrl}/users/${userData.id}`)
       .then(response => {
@@ -119,7 +139,7 @@ const UpdateUser = () => {
       }
     );
   };
-
+    
   const updateLocation = (location) => {
     geocodeByAddress(location)
     .then(results => getLatLng(results[0]))
@@ -138,11 +158,6 @@ const UpdateUser = () => {
     .catch(error => console.error('Error', error));
   };
 
-  const changePassword = (event) => {
-    setPassword(event.target.value);
-    setTempUserData({...tempUserData, password: event.target.value});
-  };
-
   //update profile pic in cloud storage
   const handleImageUpload = () => {
     const formData = new FormData();
@@ -156,6 +171,7 @@ const UpdateUser = () => {
       .then(response => {
         console.log('Image URL: success');
         setTempUserData({...tempUserData, profilePicUrl: response.data});
+        setImageSaved(true);
       }
     )
       .catch(error => {
@@ -167,6 +183,8 @@ const UpdateUser = () => {
   const ref = useRef();
 
   const resetImage = (event) => {
+    setTempUserData({...tempUserData, profilePicUrl: ''});
+    setImageSaved(false);
     ref.current.value = "";
   };
 
@@ -174,21 +192,24 @@ const UpdateUser = () => {
     setPasswordShown(!passwordShown);
   };
 
+  const changePassword = (event) => {
+    const eventValue = event.target.value
+    setNewPassword(eventValue);
+    setTempUserData({...tempUserData, password: eventValue});
+  };
+
   const updateYearsExperience = (event) => {
-    if (tempUserData.yearsExperience !== event.target.value) {
-      setTempUserData({...tempUserData, yearsExperience: event.target.value});
-    }
+    setTempUserData({...tempUserData, yearsExperience: event.target.value});
   };
 
   const onRadioSelection = (event) => {
-    if (tempUserData.includeNameSalary !== event.target.value) {
-      setTempUserData({...tempUserData, includeNameSalary: event.target.value})
-    };
+    setTempUserData({...tempUserData, includeNameSalary: event.target.value})
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    updateUserInApi(tempUserData);
+    const merge = Object.assign(tempObj.current, tempUserData)
+    updateUserInApi(merge);
   };
 
 	return (
@@ -289,9 +310,9 @@ const UpdateUser = () => {
         type={passwordShown ? "text" : "password"} 
         minLength={8}
 				maxLength={15}
-				value={password}
+				value={newPassword}
 				onChange={changePassword}
-				placeholder={"Enter a new password"}
+				placeholder={"Type new password"}
 			></input>
       <button type="button" onClick={showHidePassword}>
         Show/Hide Password
@@ -300,9 +321,9 @@ const UpdateUser = () => {
 			<br />
       <div>
       <label htmlFor="image">*Profile Pic</label>
-      {image && (
+      {(tempUserData.profilePicUrl || image) && (
         <>
-          <ImagePreview src={image} alt="" />
+          <ImagePreview src={tempUserData.profilePicUrl || image} alt='' />
           <button type="button" onClick={resetImage}>Remove</button>
           <button type="button" onClick={handleImageUpload}>Save</button>
         </>
@@ -361,7 +382,7 @@ const UpdateUser = () => {
       ></input>
       <br />
       <br />
-      <p>Years of Experience (saved): {tempUserData.yearsExperience}</p>
+      <p>Years of Experience (saved): {userData.yearsExperience}</p>
       <label htmlFor="experience">Years of Experience:
         <select className="experience" onChange={updateYearsExperience}>
           <option className="experience" value="N/A">N/A</option>
@@ -409,8 +430,7 @@ const UpdateUser = () => {
             !tempUserData.cohort ||
             !tempUserData.locationName ||
             !tempUserData.email ||
-            !password ||
-            !image
+            !imageSaved
           }
         ></input>
         <button type="button" onClick={deleteUser}>

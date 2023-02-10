@@ -20,6 +20,8 @@ const SalaryList = () => {
 			include_name_salary,
 			job_title,
 			years_experience,
+      user_first_created,
+      user_last_updated,
 			...rest
 		} = apiUser;
 
@@ -33,6 +35,8 @@ const SalaryList = () => {
 			includeNameSalary: include_name_salary,
 			jobTitle: job_title,
 			yearsExperience: years_experience,
+      userFirstCreated: user_first_created,
+      userLastUpdated: user_last_updated,
 			...rest,
 		};
     return jsUser;
@@ -49,6 +53,14 @@ const SalaryList = () => {
       });
   }, []);
 
+  const dateReformat = (string) => {
+    if (!string) {
+      return
+    }
+    const dateArray = string.split(' ');
+    return `${dateArray[2]} ${dateArray[3]}`
+  };
+
   const usersWithSalary = usersData.filter(user => user.salary > 0)
   
   const salaryList = usersWithSalary.map((user) => {
@@ -63,6 +75,8 @@ const SalaryList = () => {
         jobTitle={user.jobTitle}
         yearsExperience={user.yearsExperience}
         includeNameSalary={user.includeNameSalary}
+        created={dateReformat(user.userFirstCreated)}
+        updated={dateReformat(user.userFirstCreated)}
         ></SalaryEntry>
       </li>
     )

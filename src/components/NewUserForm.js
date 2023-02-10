@@ -20,8 +20,9 @@ const NewUserForm = () => {
   const [ada, setAda] = useState(false);
   const [black, setBlack] = useState(false);
 
-  const [passwordShown, setPasswordShown] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [imageSaved, setImageSaved] = useState(false);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -145,6 +146,7 @@ const NewUserForm = () => {
       .then(response => {
         console.log('Image URL: success');
         setProfilePicUrl(response.data);
+        setImageSaved(true);
       }
     )
       .catch(error => {
@@ -162,10 +164,8 @@ const NewUserForm = () => {
   };
 
   const onRadioSelection = (event) => {
-    if (includeNameSalary !== event.target.value) {
-      setIncludeNameSalary((includeNameSalary) => event.target.value);
-    }
-  }
+    setIncludeNameSalary(event.target.value);
+  };
 
   const addJobTitle = (event) => {
     setJobTitle(event.target.value);
@@ -174,11 +174,8 @@ const NewUserForm = () => {
   const addSalary = (event) => {
     setSalary(parseInt(event.target.value));
   };
-
   const addYearsExperience = (event) => {
-    if (yearsExperience !== event.target.value) {
-      setYearsExperience((yearsExperience) => event.target.value);
-    }
+    setYearsExperience(event.target.value);
   };
 
   const showHidePassword = (event) => {
@@ -192,12 +189,12 @@ const NewUserForm = () => {
   const ref = useRef();
 
   const resetImage = (event) => {
+    setImageSaved(false)
     ref.current.value = "";
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    console.log('submit', profilePicUrl)
     addNewUserToApi({  
       firstName, 
       lastName,
@@ -448,7 +445,7 @@ const NewUserForm = () => {
 									!locationName ||
 									!email ||
 									!password ||
-									!image
+									!imageSaved
 								}
 							></input>
 						</section>

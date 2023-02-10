@@ -1,10 +1,10 @@
-import UpdateUser from "../components/UpdateUser";
+import UpdateUserForm from "../components/UpdateUserForm";
 
 
 const UserProfile = () => {
   return (
     <div>
-      <UpdateUser />   
+      <UpdateUserForm />   
     </div>
   )
 };  
