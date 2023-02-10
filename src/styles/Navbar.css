@@ -4,4 +4,46 @@
     display: flex;
     color: #f7b402;
     font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+li{
+    font-size: small;
+    font-weight: bold;
+    display: block;
+}
+
+[href]:hover {
+    color: #f7b402;
+}
+
+[href] {
+    color: black;
+}
+
+button {
+    align-items: right;
+}
+
+span {
+    justify-content: right;
+}
+
+#flex-box-container {
+    background-image: linear-gradient(#008d80, white);
+    width: 90%;
+    max-height: 450px;
+    padding-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }

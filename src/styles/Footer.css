@@ -4,4 +4,7 @@
     display: flex;
     color: #f7b402;
     font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

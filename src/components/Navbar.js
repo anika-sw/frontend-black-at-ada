@@ -24,16 +24,27 @@ const Navbar = () => {
         <nav>
             <ul>
                 <li>
-                    <a href="/pages/about.html">About Me</a>
+                    <a href="/profile">My Profile</a>
                 </li>
                 <li>
-                    <a href="/pages/portfolio.html">Projects</a>
+                    <a href="/events">Events</a>
+                </li>
+                <li>
+                    <a href="https://drive.google.com/drive/folders/1yh8ynUL9_izYYc4UKLrgrNpwaE2hk2Dp?usp=sharing">B@A Google Drive</a>
+                </li>
+                <li>
+                    <a href="/salaries">Salaries</a>
+                </li>
+                <li>
+                    <a href="/home">Home</a>
                 </li>
             </ul>
         </nav>
       </header>
-      {user && <button onClick={logout}>Logout</button>}
       <div>
+        {user && <button onClick={logout}>Logout</button>}
+      </div>
+      <div className="blackAt">
         <span>Black@Ada</span>
       </div>
     </div>  

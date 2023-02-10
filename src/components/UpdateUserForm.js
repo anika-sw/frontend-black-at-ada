@@ -45,8 +45,6 @@ const UpdateUser = () => {
     yearsExperience: ''
   });
 
-  const tempObj = useRef({...tempUserData});
-
   const updateUserInApi = (jsUser) => {
     const {
       firstName,
@@ -92,10 +90,14 @@ const UpdateUser = () => {
 		const {
 			first_name,
 			last_name,
+      pronouns,
 			location_name,
 			location_lat,
 			location_lng,
       profile_pic_url,
+      company,
+      linkedin,
+      salary,
 			include_name_salary,
 			job_title,
 			years_experience,
@@ -103,30 +105,34 @@ const UpdateUser = () => {
 		} = apiUser;
 
 		const jsUser = {
-			firstName: first_name,
-			lastName: last_name,
-			locationName: location_name,
-			locationLat: location_lat,
-			locationLng: location_lng,
-      profilePicUrl: profile_pic_url,
-			includeNameSalary: include_name_salary,
-			jobTitle: job_title,
-			yearsExperience: years_experience,
+			firstName: first_name || '',
+			lastName: last_name || '',
+      pronouns: pronouns || '',
+			locationName: location_name || '',
+			locationLat: location_lat || '',
+			locationLng: location_lng || '',
+      profilePicUrl: profile_pic_url || '',
+      company: company || '',
+      linkedin: linkedin || '', 
+			jobTitle: job_title || '',
+      salary: salary || null,
+			includeNameSalary: include_name_salary || '',
+			yearsExperience: years_experience || '',
 			...rest,
-		};
+		}; 
     return jsUser;
 	};
 
   useEffect(() => {
     axios.get(`${kBaseUrl}/users/${user}`, {})
-      .then((response) => {
-        const convertedData = convertFromApi(response.data.user);
-        setUserData(convertedData);
-        setTempUserData(convertedData);
-      }
+    .then((response) => {
+      const convertedData = convertFromApi(response.data.user);
+      setUserData(convertedData);
+      setTempUserData(convertedData);
+    }
     );
   }, [user]);
-    
+  
   const deleteUser = () => {
     axios.delete(`${kBaseUrl}/users/${userData.id}`)
       .then(response => {
@@ -208,8 +214,7 @@ const UpdateUser = () => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    const merge = Object.assign(tempObj.current, tempUserData)
-    updateUserInApi(merge);
+    updateUserInApi(tempUserData);
   };
 
 	return (
