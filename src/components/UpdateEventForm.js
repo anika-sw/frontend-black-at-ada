@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 import EventMap from "./EventMap";
 import axios from 'axios';
 import DateTimePicker from "react-datetime-picker";
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { getItemFromLocalStorage } from "../utils";
 import ImagePreview from '../components/ImagePreview';
 import "../styles/NewForms.css";
 
@@ -14,28 +16,58 @@ const NewEventForm = () => {
 
   const user = localStorage.getItem('user')
 
-  const [userData, setUserData] = useState({});
-  const [organizerData, setOrganizerData] = useState({})
-  const [imageSaved, setImageSaved] = useState(false);
-  
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const eventId = getItemFromLocalStorage('event')
+
+  console.log(eventId)
+
+
+  const navigate = useNavigate();
+  const routeChange = () => {
+    navigate('/events')
+  };
+
   const [image, setImage] = useState('');
-  const [imageUrl, setImageUrl] = useState('')
+  const [imageSaved, setImageSaved] = useState(false);
   const [dateTimeStart, onChangeStart] = useState(new Date());
   const [dateTimeStop, onChangeStop] = useState(new Date());
-  const [timezone, setTimezone] = useState("");
-  const [videoConfLink, setVideoConfLink] = useState("");
-  const [meetingKey, setMeetingKey] = useState('');
-  const [radioSelection, setRadioSelection] = useState("Online");
-  const [isMapShowing, setIsMapShowing] = useState(false);
-  const [locationAddress, setLocationAddress] = useState(""); 
-  const [locationLat, setLocationLat] = useState("");
-  const [locationLng, setLocationLng] = useState("");
-  const [targetAudience, setTargetAudience] = useState("Everyone");
+  const [userData, setUserData] = useState({});
+  const [organizerData, setOrganizerData] = useState({})
+  const [event, setEventData] = useState({});
+  const [tempEventData, setTempEventData] = useState({
+    title: '',
+    description: '',
+    image: '',
+    imageUrl: '',
+    dateTimeStart: '',
+    dateTimeStop: '',
+    timezone: '',
+    videoConfLink: '',
+    meetingKey: '',
+    radioSelection: '',
+    isMapShowing: '',
+    locationAddress: '',
+    locationLat: '',
+    locationLng: '',
+    targetAudience: ''
+  });
+  
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [image, setImage] = useState('');
+  // const [imageUrl, setImageUrl] = useState('')
+  // const [dateTimeStart, onChangeStart] = useState(new Date());
+  // const [dateTimeStop, onChangeStop] = useState(new Date());
+  // const [timezone, setTimezone] = useState("");
+  // const [videoConfLink, setVideoConfLink] = useState("");
+  // const [meetingKey, setMeetingKey] = useState('');
+  // const [radioSelection, setRadioSelection] = useState("Online");
+  // const [isMapShowing, setIsMapShowing] = useState(false);
+  // const [locationAddress, setLocationAddress] = useState(""); 
+  // const [locationLat, setLocationLat] = useState("");
+  // const [locationLng, setLocationLng] = useState("");
+  // const [targetAudience, setTargetAudience] = useState("Everyone");
 
-  const addNewEventToApi = (jsEvent) => {
-    console.log(jsEvent)
+  const updateEventInApi = (jsEvent) => {
     const {
       imageUrl,
       dateTimeStart,
@@ -78,43 +110,89 @@ const NewEventForm = () => {
 
     const requestBody = {...apiEvent};
 
-    axios.post(`${kBaseUrl}/events`, requestBody)
-      .then(response => {
-        console.log('New event created: success');
-      }
-    )
-      .catch(error => {
-        console.log(error);
-      }
-    );
+  //   axios.patch(`${kBaseUrl}/events/${eventId}`, requestBody)
+  //     .then(response => {
+  //       console.log('Event update: success');
+  //       routeChange();
+  //     }
+  //   )
+  //     .catch(error => {
+  //       console.log(error);
+  //     }
+  //   );
   };
 
   const convertUserFromApi = (apiUser) => {
 		const {
 			first_name,
 			last_name,
-			location_name,
-			location_lat,
-			location_lng,
-			include_name_salary,
-			job_title,
-			years_experience,
-			...rest
+      pronouns,
+      email
 		} = apiUser;
 
 		const jsUser = {
-			firstName: first_name,
-			lastName: last_name,
-			locationName: location_name,
-			locationLat: location_lat,
-			locationLng: location_lng,
-			includeNameSalary: include_name_salary,
-			jobTitle: job_title,
-			yearsExperience: years_experience,
-			...rest,
+			firstName: first_name || '',
+			lastName: last_name || '',
+      pronouns: pronouns || '',
+			email: email || ''
 		};
     return jsUser;
 	};
+
+  const convertFromApi = (apiEvent) => {
+		const {
+      image_url,
+      date_time_start,
+      date_time_stop,
+      video_conf_link,
+      meeting_key,
+      radio_selection,
+      is_map_showing,
+      location_address,
+      location_lat,
+      location_lng,
+      organizer_first_name,
+      organizer_last_name,
+      organizer_pronouns,
+      organizer_email,
+      target_audience,
+      created_by_id,
+      date_time_created,
+      users,
+			...rest
+		} = apiEvent;
+
+		const jsEvent = {
+      imageUrl: image_url || '',
+      dateTimeStart: date_time_start || '',
+      dateTimeStop: date_time_stop || '',
+      videoConfLink: video_conf_link || '',
+      meetingKey: meeting_key || '',
+      radioSelection: radio_selection || '',
+      isMapShowing: is_map_showing || '',
+      locationAddress: location_address || '',
+      locationLat: location_lat || '',
+      locationLng: location_lng || '',
+      organizerFirstName: organizer_first_name || '',
+      organizerLastName: organizer_last_name || '',
+      organizerPronouns: organizer_pronouns || '',
+      organizerEmail: organizer_email || '',
+      targetAudience: target_audience || '',
+      createdById: created_by_id || null,
+      dateTimeCreated: date_time_created || '',
+      users: users || '',
+			...rest,
+		}; 
+    return jsEvent;
+	};
+
+  useEffect(() => {
+    axios.get(`${kBaseUrl}/events/${eventId}`, {})
+      .then((response) => {
+        const convertedData = convertFromApi(response.data.event);
+        setEventData(convertedData);
+      });
+    }, [eventId]);
 
   useEffect(() => {
     axios.get(`${kBaseUrl}/users/${user}`, {})
@@ -130,6 +208,19 @@ const NewEventForm = () => {
       });
   }, [user]);
 
+  // const deleteEvent = () => {
+  //   axios.delete(`${kBaseUrl}/users/${userData.id}`)
+  //     .then(response => {
+  //       console.log('Event deleted: succss');
+  //       routeChange();
+  //     }
+  //   )
+  //     .catch(error => {
+  //       console.log(error);
+  //     }
+  //   );
+  // };
+
   //upload profile pic to cloud storage
   const handleImageUpload = () => {
     const formData = new FormData();
@@ -140,66 +231,70 @@ const NewEventForm = () => {
       } 
     }
   )
-      .then(response => {
-        console.log('Image URL: success');
-        setImageUrl(response.data);
-        setImageSaved(true);
-      }
-    )
-      .catch(error => {
-        console.log(error);
-      }
-    )
-  };
+    .then(response => {
+      console.log('Image URL: success');
+      setTempEventData({...tempEventData, imageUrl: response.data});
+      setImageSaved(true);
+    }
+  )
+    .catch(error => {
+      console.log(error);
+    }
+  )
+};
 
   const ref = useRef();
 
   const resetImage = (event) => {
-    setImageSaved(false)
+    setTempEventData({...tempEventData, imageUrl: ''});
+    setImageSaved(false);
     ref.current.value = "";
   };
 
-  const addLocation = (location) => {
+  const updateLocation = (location) => {
     geocodeByAddress(location)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
-      console.log('Success', latLng);
-      setLocationAddress(location);
+      console.log('Set location: success');
       const latStr = latLng['lat'].toString();
       const lngStr = latLng['lng'].toString();
-      setLocationLat(latStr);
-      setLocationLng(lngStr);
+      setTempEventData({
+        ...tempEventData,
+        locationAddress: location,
+        locationLat: latStr,
+        locationLng: lngStr,
+    });
     })
     .catch(error => console.error('Error', error));
   };
   
-  const addTitle = (event) => {
-    setTitle(event.target.value);
+  const updateTitle = (event) => {
+    setTempEventData({...tempEventData, title: event.target.value});
   };
   
-  const addDescription = (event) => {
-    setDescription(event.target.value);
+  const updateDescription = (event) => {
+    setTempEventData({...tempEventData, description: event.target.value});
   };
 
-  const addTimezone = (event) => {
-    setTimezone(event.target.value);
+  const updateTimezone = (event) => {
+    setTempEventData({...tempEventData, timezone: event.target.value});
   };
 
   const onRadioSelection = (event) => {
-    setRadioSelection(event.target.value);
-    setIsMapShowing(!isMapShowing);
+    setTempEventData({...tempEventData, radioSelection: event.target.value});
+    // setTempEventData({...tempEventData, isMapShowing: !isMapShowing});
   };
 
-  const addVideoConfLink = (event) => {
-    setVideoConfLink(event.target.value);
+  const updateVideoConfLink = (event) => {
+    setTempEventData({...tempEventData, videoConfLink: event.target.value});
   };
 
-  const addMeetingKey = (event) => {
-    setMeetingKey(event.target.value);
+  const updateMeetingKey = (event) => {
+    setTempEventData({...tempEventData, meetingKey: event.target.value});
   };
 
-  const handleAudience = (event) => {
-    setTargetAudience((targetAudience) => event.target.value);
+  const updateAudience = (event) => {
+    setTempEventData({...tempEventData, targetAudience: event.target.value});
   };
 
   const createdByName = `${userData.firstName} ${userData.lastName}`
@@ -207,33 +302,13 @@ const NewEventForm = () => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    const {
-      organizerFirstName,
-      organizerLastName,
-      organizerPronouns,
-      organizerEmail,
-    } = organizerData;
-    addNewEventToApi({
-      title,
-      description,
-      imageUrl, 
-      dateTimeStart,
-      dateTimeStop,
-      timezone,
-      videoConfLink,
-      meetingKey,
-      radioSelection, 
-      isMapShowing, 
-      locationAddress,  
-      locationLat, 
-      locationLng,
-      organizerFirstName,
-      organizerLastName,
-      organizerPronouns,
-      organizerEmail,
-      targetAudience,
-      createdById
-    });
+    // const {
+    //   organizerFirstName,
+    //   organizerLastName,
+    //   organizerPronouns,
+    //   organizerEmail,
+    // } = organizerData;
+    updateEventInApi(tempEventData);
   };
   
 
@@ -244,8 +319,8 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={100}
-				value={title}
-				onChange={addTitle}
+				value={tempEventData.title}
+				onChange={updateTitle}
 			></input>
 			<br />
 			<br />
@@ -254,27 +329,27 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={300}
-				value={description}
-				onChange={addDescription}
+				value={tempEventData.description}
+				onChange={updateDescription}
 			></input>
 			<br />
 			<br />
       <div>
-        <label htmlFor="image">Upload Event Image</label>
-        {image && (
-          <>
-            <ImagePreview src={image} alt="" />
-            <button type="button" onClick={resetImage}>Remove</button>
-            <button type="button" onClick={handleImageUpload}>Save</button>
-          </>
-        )}
-        <br />
-        <br />
-        <input
-          type="file"
-          ref={ref}
-          onChange={(event) => {setImage(event.target.files[0])}}
-        />
+      <label htmlFor="image">Upload Event Image</label>
+      {(tempEventData.imageUrl || image) && (
+        <>
+          <ImagePreview src={tempEventData.profilePicUrl || image} alt='' />
+          <button type="button" onClick={resetImage}>Remove</button>
+          <button type="button" onClick={handleImageUpload}>Save</button>
+        </>
+      )}
+      <br />
+      <br />
+      <input
+        type="file"
+        ref={ref}
+        onChange={(event) => {setImage(event.target.files[0])}}
+      />
       </div>
 			<br />
 			<br />
@@ -282,7 +357,7 @@ const NewEventForm = () => {
 				type="radio"
 				className="location"
 				value="Online"
-				checked={radioSelection === "Online"}
+				checked={tempEventData.radioSelection === "Online"}
 				onChange={onRadioSelection}
 			/>
 			<label htmlFor="online"> Online</label>
@@ -292,45 +367,49 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={60}
-				value={videoConfLink}
-				onChange={addVideoConfLink}
+				value={tempEventData.videoConfLink}
+				onChange={updateVideoConfLink}
 			></input>
 			<p>Key, if any</p>
 			<input
 				type="text"
 				minLength={1}
 				maxLength={40}
-				value={meetingKey}
-				onChange={addMeetingKey}
+				value={tempEventData.meetingKey}
+				onChange={updateMeetingKey}
 			></input>
 			<br />
 			<input
 				type="radio"
 				className="location"
 				value="In-Person"
-				checked={radioSelection === "In-Person"}
+				checked={tempEventData.radioSelection === "In-Person"}
 				onChange={onRadioSelection}
 			/>
 			<label htmlFor="inPerson"> In-Person</label>
 			<br />
-			{isMapShowing && (
+			{/* {isMapShowing && (
 				<div className="map">
-					<EventMap selectLocation={addLocation} />
+					<EventMap selectLocation={updateLocation} />
 				</div>
-			)}
+			)} */}
 			<br />
-			<p>Start</p>
+			<p>Start (saved): {setEventData.dateTimeStart}</p>
+      <br />
+      <p>New Start Time</p>
 			<DateTimePicker
 				onChange={onChangeStart}
-				value={dateTimeStart}
+				value={tempEventData.dateTimeStart}
 				disableClock={true}
 				format="MMMM dd yyyy   h:mm aa"
 			/>
 			<br />
-			<p>End</p>
+			<p>End (saved): {setEventData.dateTimeStop}</p>
+      <br />
+      <p>New Stop Time</p>
 			<DateTimePicker
 				onChange={onChangeStop}
-				value={dateTimeStop}
+				value={tempEventData.dateTimeStop}
 				disableClock={true}
 				format="MMMM dd yyyy   h:mm aa"
 			/>
@@ -340,8 +419,8 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={40}
-				value={timezone}
-				onChange={addTimezone}
+				value={tempEventData.timezone}
+				onChange={updateTimezone}
 			></input>
 			<br />
 			<label htmlFor="organizerFirstName">Organizer's First Name</label>
@@ -349,7 +428,7 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={30}
-				value={organizerData.organizerFirstName || ''}
+				value={tempEventData.organizerFirstName}
 				onChange={(event) => {
 					setOrganizerData({...organizerData, organizerFirstName: event.target.value});
 				}}
@@ -361,7 +440,7 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={30}
-				value={organizerData.organizerLastName || ''}
+				value={tempEventData.organizerLastName}
 				onChange={(event) => {
 					setOrganizerData({...organizerData, organizerLastName: event.target.value});
 				}}
@@ -373,7 +452,7 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={30}
-				value={organizerData.organizerPronouns || ""}
+				value={tempEventData.organizerPronouns}
 				onChange={(event) => {
 					setOrganizerData({...organizerData, organizerPronouns: event.target.value});
 				}}
@@ -385,7 +464,7 @@ const NewEventForm = () => {
 				type="text"
 				minLength={1}
 				maxLength={60}
-				value={organizerData.organizerEmail || ''}
+				value={tempEventData.organizerEmail}
 				onChange={(event) => {
 					setOrganizerData({...organizerData, organizerEmail: event.target.value});
 				}}
@@ -396,8 +475,8 @@ const NewEventForm = () => {
 				type="radio"
 				className="audience"
 				value="Everyone"
-				checked={targetAudience === "Everyone"}
-				onChange={handleAudience}
+				checked={tempEventData.targetAudience === "Everyone"}
+				onChange={updateAudience}
 			></input>
 			<label htmlFor="everyone"> All Black Adies</label>
 			<br />
@@ -405,8 +484,8 @@ const NewEventForm = () => {
 				type="radio"
 				className="audience"
 				value="Adie Alum"
-				checked={targetAudience === "Adie Alum"}
-				onChange={handleAudience}
+				checked={tempEventData.targetAudience === "Adie Alum"}
+				onChange={updateAudience}
 			></input>
 			<label htmlFor="adieAlum"> Black Adie Alum</label>
 			<br />
@@ -414,8 +493,8 @@ const NewEventForm = () => {
 				type="radio"
 				className="audience"
 				value="Internship Adies"
-				checked={targetAudience === "Internship Adies"}
-				onChange={handleAudience}
+				checked={tempEventData.targetAudience === "Internship Adies"}
+				onChange={updateAudience}
 			></input>
 			<label htmlFor="internshipAdies"> Internship Black Adies</label>
 			<br />
@@ -423,8 +502,8 @@ const NewEventForm = () => {
 				type="radio"
 				className="audience"
 				value="Classroom Adies"
-				checked={targetAudience === "Classroom Adies"}
-				onChange={handleAudience}
+				checked={tempEventData.targetAudience === "Classroom Adies"}
+				onChange={updateAudience}
 			></input>
 			<label htmlFor="classroomAdies"> Classroom Black Adies</label>
 			<br />
@@ -432,8 +511,8 @@ const NewEventForm = () => {
 				type="radio"
 				className="audience"
 				value="Not Black@Ada Specific"
-				checked={targetAudience === "Not Black@Ada Specific"}
-				onChange={handleAudience}
+				checked={tempEventData.targetAudience === "Not Black@Ada Specific"}
+				onChange={updateAudience}
 			></input>
 			<label htmlFor="anyone"> Not Black@Ada Specific</label>
 			<br />
@@ -450,13 +529,13 @@ const NewEventForm = () => {
 					value="Submit"
 					className="button"
 					disabled={
-						!title ||
-						!description ||
-            !dateTimeStart
+						!tempEventData.title ||
+						!tempEventData.description ||
+            !tempEventData.dateTimeStart
 					}
 				></input>
-				<button>Save Draft</button>
-				<button>Delete Event</button>
+				{/* <button type="button" onClick={saveDraft}>Save Draft</button>
+				<button type="button" onClick={deleteEvent}>Delete Event</button> */}
 			</section>
 		</form>
   );

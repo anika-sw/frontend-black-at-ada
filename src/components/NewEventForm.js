@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import EventMap from "./EventMap";
 import axios from 'axios';
 import DateTimePicker from "react-datetime-picker";
@@ -13,6 +14,11 @@ const kBaseUrl = 'http://localhost:5000';
 const NewEventForm = () => {
 
   const user = localStorage.getItem('user')
+
+  const navigate = useNavigate();
+  const routeChange = () => {
+    navigate('/events')
+  };
 
   const [userData, setUserData] = useState({});
   const [organizerData, setOrganizerData] = useState({})
@@ -35,7 +41,6 @@ const NewEventForm = () => {
   const [targetAudience, setTargetAudience] = useState("Everyone");
 
   const addNewEventToApi = (jsEvent) => {
-    console.log(jsEvent)
     const {
       imageUrl,
       dateTimeStart,
@@ -199,7 +204,7 @@ const NewEventForm = () => {
   };
 
   const handleAudience = (event) => {
-    setTargetAudience((targetAudience) => event.target.value);
+    setTargetAudience(event.target.value);
   };
 
   const createdByName = `${userData.firstName} ${userData.lastName}`
@@ -234,6 +239,7 @@ const NewEventForm = () => {
       targetAudience,
       createdById
     });
+    routeChange();
   };
   
 

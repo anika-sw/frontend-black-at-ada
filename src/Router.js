@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import EventsList from "./pages/EventsList";
 import EventDetails from "./pages/EventDetails";
+import EditEvent from "./pages/EditEvent";
 import AddEvent from "./pages/AddEvent";
 import Directory from "./pages/Directory";
 import AddUser from "./pages/AddUser";
@@ -28,7 +29,7 @@ export const routes = [
     children: [
       {
         element: <Login />,
-        path: "/login",
+        path: "/login"
       },
       {
         element: <Home />,
@@ -41,29 +42,30 @@ export const routes = [
       {
         element: <EventsList />,
         path: "/events",
-        children: [
-
-        ]
       },
       {
         element: <EventDetails />,
-        path: "/eventId",
+        path: "/events/:eventId"
       },
       {
         element: <AddEvent />,
-        path: "/new-event",
+        path: "/events/new-event"
+      },
+      {
+        element: <EditEvent />,
+        path: "/events/edit-event"
       },
       {
         element: <SalaryList />,
-        path: "/salaries",
+        path: "/salaries"
       },
       {
         element: <Directory />,
-        path: "/directory",
+        path: "/directory"
       },
       {
         element: <About />,
-        path: "/about",
+        path: "/about"
       },
       {
         path: '/404',
@@ -71,7 +73,7 @@ export const routes = [
       },
       {
         path: '*',
-        element: <Navigate to="/404" replace />,
+        element: <Navigate to="/404" replace />
       },
       {
         path: "/",
@@ -85,6 +87,6 @@ export const routes = [
   },
   {
     element: <AddUser />,
-    path: "/signup",
+    path: "/signup"
   }
 ]
