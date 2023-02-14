@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from "axios";
-import EventMap from  "../components/EventMap";
-import { AddToCalendar } from "react-add-to-calendar";
-import "../styles/EventInfo.css";
+import moment from "moment";
+import { getItemFromLocalStorage, setItemInLocalStorage } from "../utils";
+import { StaticGoogleMap, Marker } from 'react-static-google-map';
+import "../styles/EventDetails.css";
 
 const kBaseUrl = 'http://localhost:5000';
 
-//pass the map location details to Event Map
 
 const EventDetails = () => {
 
-  const location = useLocation();
-  const locPathSplit= location.pathname.split('/')
+  const userId = parseInt(getItemFromLocalStorage('user'));
+  const eventId = parseInt(getItemFromLocalStorage('event'));
+  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY2
 
-  const eventId = locPathSplit[2]
+  const navigate = useNavigate();
+
+  const passEventId = (event) => {
+    setItemInLocalStorage(eventId);
+    navigate("/events/edit-event");
+  };
+
+  const routeChange = () => {
+    navigate('/events');
+  };
   
   const [eventData, setEventData] = useState({})
   const [attending, setAttending] = useState(false)
-  const [creator, setCreator] = useState(true)
+  const [creator, setCreator] = useState(false)
 
   const convertFromApi = (apiEvent) => {
 		const {
@@ -66,81 +76,146 @@ const EventDetails = () => {
 		}; 
     return jsEvent;
 	};
-  
+
   useEffect(() => {
     axios.get(`${kBaseUrl}/events/${eventId}`, {})
       .then((response) => {
         const convertedData = convertFromApi(response.data.event);
         setEventData(convertedData);
+        const creatorBool = userId === convertedData.createdById;
+        setCreator(creatorBool)
+        const attendingBool = convertedData.users.includes(userId) || creatorBool;
+        setAttending(attendingBool)
       });
-    }, [eventId]);
+    }, [eventId, userId]);
+
+  const deleteEvent = () => {
+    axios.delete(`${kBaseUrl}/events/${eventId}`)
+      .then(response => {
+        console.log(`Event: "${eventId.title}" successfully deleted`);
+        routeChange();
+      }
+    )
+      .catch(error => {
+        console.log(error);
+      }
+    );
+  };
+
+  const eventLocation = `${eventData.locationLat} ${eventData.locationLng}`
+
+  const dateTimeStart = moment(eventData.dateTimeStart).format('MMMM Do YYYY, h:mm a');
+  const dateTimeStop = moment(eventData.dateTimeStop).format('MMMM Do YYYY, h:mm a');
+
+  const contactName = `${eventData.organizerFirstName} ${eventData.organizerLastName} ${eventData.organizerPronouns}`
+
   
+  const rsvpYes = (event) => {
+    
+    console.log(userId)
+    const requestBody = {user_id: userId}
+    console.log(requestBody)
+    axios.post(`${kBaseUrl}/events/${eventId}/users`, requestBody)
+    .then((response) => {
+      console.log(response.data)
+      console.log('RSVP yes: success')
+      setAttending(response.data.attending)
+    });
+  }
 
-
-  // const currentEvent = {
-  //   title: 'Sample Event',
-  //   description: 'This is the sample event provided as an example only',
-  //   location: 'Portland, OR',
-  //   startTime: '2016-09-16T20:15:00-04:00',
-  //   endTime: '2016-09-16T21:45:00-04:00'
-  // };
-
-/*
-   startTime and endTime can use any datetime
-   string that is acceptable by MomentJS
-*/
-
+  const rsvpNo = (event) => {
+    const requestBody = {user_id: userId}
+    axios.patch(`${kBaseUrl}/events/${eventId}/users`, requestBody)
+    .then((response) => {
+      console.log(response.data)
+      console.log('RSVP no: success')
+      setAttending(response.data.attending)
+    });
+  }
 
   return (
     <div>
-
-      <section  className="cardFlex">
+      <div className="event-color-bar">
         <h1>{eventData.title}</h1>
-        <div className="tinyFlexWrapper">
-          <p>t</p>
-        </div>
-        <div className="eventEntryMap">
-          {/* <EventMap /> */}
-        </div>
+      </div>
+      <section className="container event-details">
+        <section className="details-grid1">
+          <div>
+            <h2>Date & Time</h2>
+            <p>{dateTimeStart}</p>
+            {dateTimeStop !== dateTimeStart && <p>{dateTimeStop}</p>}
+          </div>
+          <div>
+            <h2>Time Zone</h2>
+            <p>{eventData.timezone}</p>
+          </div>
+          <div>
+            <h2>Target Audience</h2>
+            <p>{eventData.targetAudience}</p>
+          </div>
+        </section>
+        <section className="event-about">
+          <h2>About</h2>
+          <p>{eventData.description}</p>
+        </section>
+        <section className="details-grid2">
+          <div>
+            <h2>Location</h2>
+            {eventData.radioSelection === "Online" && 
+              <>
+                <h3>Online</h3><a href={eventData.videoConfLink}>{eventData.videoConfLink}</a>
+                <br />
+                <br />
+                <p>Meeting Key, if any: {eventData.meetingKey}</p>
+              </>}
+            {eventData.radioSelection === "In-Person" &&
+            <>
+              <br />
+              <br />
+              <h3>Address</h3>
+              <p>{eventData.locationAddress}</p>
+              <StaticGoogleMap size="600x600" className="img-fluid" apiKey={apiKey}>
+                <Marker location={eventLocation} color="blue" label="P" />
+              </StaticGoogleMap>
+            </>}
+          </div>
+          <div>
+            <h2>Contact Name</h2>
+            <p>{contactName}</p>
+          </div>
+          <div>
+            <h2>Contact Email</h2>
+            <p>{eventData.organizerEmail}</p>
+          </div>
+        </section>
         <br />
         <br />
+        <section className="button-flex">
+          <div>
+          {creator &&
+            <>
+              <div>
+                <button type="button" onClick={passEventId}>Edit Event</button>
+              </div>
+              <div>
+                <button type="button" onClick={deleteEvent}>Cancel Event</button>
+              </div>
+            </>}
+          </div>
+          {!attending &&
+            <button type='button' onClick={rsvpYes}>I'm Going!</button>}
+          <div>
+          {attending && !creator &&
+            <button type='button' onClick={rsvpNo}>No Longer Attending</button>}
+          </div>
+          <div>
+          {!creator &&
+              <button type='button'>Flag Event</button>}
+          </div>
+        </section>
       </section>
-      {creator && 
-        <Link to={"/events/edit-event"} state={{id: eventData.id}}>
-          <button type='button'>Edit</button>
-        </Link>}
-      <button type='button'>Attending</button>
-      {attending && <button type='button'>No Longer Attending</button>}
-      <button type='button'>Flag Event</button>
-      {/* <AddToCalendar event={currentEvent} /> */}
     </div>
   )
 };
-
-// EventDetails.propTypes = {
-//   event: PropTypes.shape({
-//     id: PropTypes.number,
-//     title: PropTypes.string,
-//     description: PropTypes.string,
-//     imageUrl: PropTypes.string,
-//     dateTimeStart: PropTypes.string,
-//     dateTimeStop: PropTypes.string,
-//     timezone: PropTypes.string,
-//     videoConfLink: PropTypes.string,
-//     meetingKey: PropTypes.string,
-//     radioSelection: PropTypes.string,
-//     isMapShowing: PropTypes.string,
-//     locationAddress: PropTypes.string,
-//     locationLat: PropTypes.string,
-//     locationLng: PropTypes.string,
-//     organizerFirstName: PropTypes.string,
-//     organizerLastName: PropTypes.string,
-//     organizerPronouns: PropTypes.string,
-//     organizerEmail: PropTypes.string,
-//     targetAudience: PropTypes.string,
-//     createdById: PropTypes.number,
-//     dateTimeCreated: PropTypes.string
-//   })
-// };
 
 export default EventDetails;

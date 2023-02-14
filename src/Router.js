@@ -1,11 +1,11 @@
 import { Outlet, Navigate } from "react-router-dom";
 
-import Layout from "./components/Layout"
+import LayoutWithNav from "./components/LayoutWithNav";
+import LayoutNoNav from "./components/LayoutNoNav";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import EventsList from "./pages/EventsList";
 import EventDetails from "./pages/EventDetails";
-import EditEvent from "./pages/EditEvent";
 import AddEvent from "./pages/AddEvent";
 import Directory from "./pages/Directory";
 import AddUser from "./pages/AddUser";
@@ -15,15 +15,33 @@ import About from "./pages/About";
 import FourOhFour from "./pages/FourOhFour";
 import { AuthProvider } from "./hooks/useAuth";
 
+
+const LoginLayout = () => (
+  <AuthProvider>
+    <LayoutNoNav>
+      <Outlet />
+    </LayoutNoNav>
+  </AuthProvider>
+)
+
 const MainLayout = () => (
   <AuthProvider>
-    <Layout>
+    <LayoutWithNav>
       <Outlet />
-    </Layout>
+    </LayoutWithNav>
   </AuthProvider>
 )
 
 export const routes = [
+  {
+    element: <LoginLayout />,
+    children: [
+      {
+        element: <Login />,
+        path: "/login"
+      },
+    ]
+  },
   {
     element: <MainLayout />,
     children: [
@@ -50,10 +68,6 @@ export const routes = [
       {
         element: <AddEvent />,
         path: "/events/new-event"
-      },
-      {
-        element: <EditEvent />,
-        path: "/events/edit-event"
       },
       {
         element: <SalaryList />,

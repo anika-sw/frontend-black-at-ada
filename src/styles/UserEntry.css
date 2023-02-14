@@ -1,0 +1,33 @@
+.directory-card-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    padding: 0px;
+    margin: 0px;
+}
+
+.directory-card {
+    max-width: 540px;
+    height: 250px;
+    background-color: #121212;
+    color: #f7b402;
+    box-shadow: -10px 7px 7px #f7b402;
+}
+
+.no-gutters {
+    padding: 0px;
+    margin: 0px;
+}
+
+.card-title{
+    margin-top: 10px;
+}
+
+.card a:link,
+.card a:visited {
+    color: #0995b5;
+}
+
+.card a:link {
+    text-decoration: none;
+}

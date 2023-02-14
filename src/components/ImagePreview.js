@@ -5,14 +5,14 @@ const ImagePreview = (props) => {
   if (!(props.src instanceof File)) {
     return (
       <div>
-        <img src={props.src} alt={props.alt} />
+        <img className="img-thumbnail" src={props.src} alt={props.alt} />
       </div>
     )
   } else {
     const objectUrl = URL.createObjectURL(props.src);
     return (
       <div>
-        <img src={objectUrl} alt={props.alt} />
+        <img className="img-thumbnail" src={objectUrl} alt={props.alt} />
       </div>
     )
   }

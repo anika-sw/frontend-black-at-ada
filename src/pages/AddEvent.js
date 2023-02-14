@@ -1,6 +1,4 @@
 import NewEventForm from "../components/NewEventForm";
-import "../styles/EventInfo.css";
-
 
 const NewEvent = () => {
   return (

@@ -9,7 +9,6 @@ import "../styles/NewForms.css";
 
 const kBaseUrl = 'http://localhost:5000';
 
-// save draft and delete event capabilities for user creating event
 
 const NewEventForm = () => {
 
@@ -22,11 +21,11 @@ const NewEventForm = () => {
 
   const [userData, setUserData] = useState({});
   const [organizerData, setOrganizerData] = useState({})
-  const [imageSaved, setImageSaved] = useState(false);
   
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState('');
+  const [imageSaved, setImageSaved] = useState(false);
   const [imageUrl, setImageUrl] = useState('')
   const [dateTimeStart, onChangeStart] = useState(new Date());
   const [dateTimeStop, onChangeStop] = useState(new Date());
@@ -82,6 +81,7 @@ const NewEventForm = () => {
     };
 
     const requestBody = {...apiEvent};
+    console.log(requestBody)
 
     axios.post(`${kBaseUrl}/events`, requestBody)
       .then(response => {
@@ -147,7 +147,7 @@ const NewEventForm = () => {
   )
       .then(response => {
         console.log('Image URL: success');
-        setImageUrl(response.data);
+        setImageUrl(response.data.url);
         setImageSaved(true);
       }
     )
@@ -160,7 +160,8 @@ const NewEventForm = () => {
   const ref = useRef();
 
   const resetImage = (event) => {
-    setImageSaved(false)
+    setImage('');
+    setImageSaved(false);
     ref.current.value = "";
   };
 
@@ -244,226 +245,281 @@ const NewEventForm = () => {
   
 
   return (
-		<form onSubmit={onFormSubmit} className="newEventForm">
-			<label htmlFor="title">Event Title</label>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={100}
-				value={title}
-				onChange={addTitle}
-			></input>
-			<br />
-			<br />
-			<label htmlFor="description">Description</label>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={300}
-				value={description}
-				onChange={addDescription}
-			></input>
-			<br />
-			<br />
-      <div>
-        <label htmlFor="image">Upload Event Image</label>
-        {image && (
-          <>
-            <ImagePreview src={image} alt="" />
-            <button type="button" onClick={resetImage}>Remove</button>
-            <button type="button" onClick={handleImageUpload}>Save</button>
-          </>
-        )}
-        <br />
-        <br />
+		<form onSubmit={onFormSubmit} className="newEventForm container">
+      <p className="instructions">All fields marked with an * are required.</p>
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="title">*Event Title</label>
         <input
-          type="file"
-          ref={ref}
-          onChange={(event) => {setImage(event.target.files[0])}}
-        />
+          type="text"
+          className="form-control"
+          id="eventTitle"
+          minLength={1}
+          maxLength={100}
+          value={title}
+          onChange={addTitle}
+        ></input>
       </div>
-			<br />
-			<br />
-			<input
-				type="radio"
-				className="location"
-				value="Online"
-				checked={radioSelection === "Online"}
-				onChange={onRadioSelection}
-			/>
-			<label htmlFor="online"> Online</label>
-			<br />
-			<p>Link or Meeting ID</p>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={60}
-				value={videoConfLink}
-				onChange={addVideoConfLink}
-			></input>
-			<p>Key, if any</p>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={40}
-				value={meetingKey}
-				onChange={addMeetingKey}
-			></input>
-			<br />
-			<input
-				type="radio"
-				className="location"
-				value="In-Person"
-				checked={radioSelection === "In-Person"}
-				onChange={onRadioSelection}
-			/>
-			<label htmlFor="inPerson"> In-Person</label>
-			<br />
-			{isMapShowing && (
-				<div className="map">
-					<EventMap selectLocation={addLocation} />
-				</div>
-			)}
-			<br />
-			<p>Start</p>
-			<DateTimePicker
-				onChange={onChangeStart}
-				value={dateTimeStart}
-				disableClock={true}
-				format="MMMM dd yyyy   h:mm aa"
-			/>
-			<br />
-			<p>End</p>
-			<DateTimePicker
-				onChange={onChangeStop}
-				value={dateTimeStop}
-				disableClock={true}
-				format="MMMM dd yyyy   h:mm aa"
-			/>
-			<br />
-			<p>Timezone</p>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={40}
-				value={timezone}
-				onChange={addTimezone}
-			></input>
-			<br />
-			<label htmlFor="organizerFirstName">Organizer's First Name</label>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={30}
-				value={organizerData.organizerFirstName || ''}
-				onChange={(event) => {
-					setOrganizerData({...organizerData, organizerFirstName: event.target.value});
-				}}
-			></input>
-			<br />
-			<br />
-			<label htmlFor="organizerLastName">Organizer's Last Name</label>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={30}
-				value={organizerData.organizerLastName || ''}
-				onChange={(event) => {
-					setOrganizerData({...organizerData, organizerLastName: event.target.value});
-				}}
-			></input>
-			<br />
-			<br />
-			<label htmlFor="organizerPronouns">Organizer's Pronouns, if known</label>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={30}
-				value={organizerData.organizerPronouns || ""}
-				onChange={(event) => {
-					setOrganizerData({...organizerData, organizerPronouns: event.target.value});
-				}}
-			></input>
-			<br />
-			<br />
-			<label htmlFor="organizerEmail">Organizer's Email</label>
-			<input
-				type="text"
-				minLength={1}
-				maxLength={60}
-				value={organizerData.organizerEmail || ''}
-				onChange={(event) => {
-					setOrganizerData({...organizerData, organizerEmail: event.target.value});
-				}}
-			></input>
-			<br />
-			<br />
-			<input
-				type="radio"
-				className="audience"
-				value="Everyone"
-				checked={targetAudience === "Everyone"}
-				onChange={handleAudience}
-			></input>
-			<label htmlFor="everyone"> All Black Adies</label>
-			<br />
-			<input
-				type="radio"
-				className="audience"
-				value="Adie Alum"
-				checked={targetAudience === "Adie Alum"}
-				onChange={handleAudience}
-			></input>
-			<label htmlFor="adieAlum"> Black Adie Alum</label>
-			<br />
-			<input
-				type="radio"
-				className="audience"
-				value="Internship Adies"
-				checked={targetAudience === "Internship Adies"}
-				onChange={handleAudience}
-			></input>
-			<label htmlFor="internshipAdies"> Internship Black Adies</label>
-			<br />
-			<input
-				type="radio"
-				className="audience"
-				value="Classroom Adies"
-				checked={targetAudience === "Classroom Adies"}
-				onChange={handleAudience}
-			></input>
-			<label htmlFor="classroomAdies"> Classroom Black Adies</label>
-			<br />
-			<input
-				type="radio"
-				className="audience"
-				value="Not Black@Ada Specific"
-				checked={targetAudience === "Not Black@Ada Specific"}
-				onChange={handleAudience}
-			></input>
-			<label htmlFor="anyone"> Not Black@Ada Specific</label>
-			<br />
-			<br />
-			<br />
-			<p>
-				Event added by: {createdByName}
-			</p>
-			<br />
-			<br />
-			<section className="buttonGrid">
-				<input
-					type="submit"
-					value="Submit"
-					className="button"
-					disabled={
-						!title ||
-						!description ||
-            !dateTimeStart
-					}
-				></input>
-				<button>Save Draft</button>
-				<button>Delete Event</button>
-			</section>
+      <div className="form-row"> 
+        <div className="col calendar">
+          <label htmlFor="startTime">*Start: Date & Time</label>
+          <DateTimePicker
+            format="MMMM dd yyyy   h:mm aa"
+            disableClock={true}
+            value={dateTimeStart}
+            onChange={onChangeStart}
+          />
+        </div>
+        <div className="col calendar">
+          <label htmlFor="endTime">End: Date & Time</label>
+          <DateTimePicker
+            format="MMMM dd yyyy   h:mm aa"
+            value={dateTimeStop}
+            disableClock={true}
+            onChange={onChangeStop}
+          />
+        </div>
+        <div className="col">
+          <label htmlFor="*timezone">*Time Zone</label>
+          <input
+            type="text"
+            className="form-control"
+            id="timezone"
+            minLength={1}
+            maxLength={40}
+            value={timezone}
+            onChange={addTimezone}
+          ></input>
+        </div>
+      </div>
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="description">Description</label>
+        <textarea
+          type="text"
+          className="form-control"
+          id="description"
+          rows="3"
+          minLength={1}
+          maxLength={500}
+          value={description}
+          onChange={addDescription}
+        ></textarea>
+      </div>
+      <fieldset className="form-row">
+        <legend className="col-form-label col-sm-1 float-sm-left pt-0">Location</legend>
+        <div className="col">
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="location"
+              id="online"
+              value="Online"
+              checked={radioSelection === "Online"}
+              onChange={onRadioSelection}
+              ></input>
+            <label className="form-check-label" htmlFor="online">Online</label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="location"
+              id="inPerson"
+              value="In-Person"
+              checked={radioSelection === "In-Person"}
+              onChange={onRadioSelection}
+            ></input>
+            <label className="form-check-label" htmlFor="inPerson">In-Person</label>
+          </div>
+        </div>
+        <div className="col">
+          <label htmlFor="linkMeetingId">Link or Meeting ID</label>
+          <input
+            type="text"
+            className="form-control"
+            id="linkMeetingId"
+            minLength={1}
+            maxLength={60}
+            value={videoConfLink}
+            onInput={addVideoConfLink}
+          ></input>
+        </div>
+        <div className="col">
+          <label htmlFor="key">Key, if any</label>
+          <input
+            type="text"
+            className="form-control"
+            id="meetingKey"
+            minLength={1}
+            maxLength={40}
+            value={meetingKey}
+            onInput={addMeetingKey}
+          ></input>
+        </div>
+      </fieldset>
+      <div className="form-row">
+        <div className="col">
+          <p>Use the map and search bar to provide an address for in-person events</p> 
+            <div className="map">
+              <EventMap selectLocation={addLocation} />
+            </div>
+        </div>
+        <div className="col">
+          <label className="form-label" htmlFor="image">Upload an event-related image</label>
+            {image ? 
+              <>
+                <ImagePreview src={image} alt="" />
+                <button type="button" onClick={resetImage}>Remove</button>
+                <button type="button" onClick={handleImageUpload}>{imageSaved ? "Saved" : "Save"}</button>
+                <p>Click save to confirm upload of your image</p>
+              </>
+            : ''}
+          <input
+            type="file"
+            className="form-control-file"
+            id="image"
+            ref={ref}
+            onChange={(event) => {setImage(event.target.files[0])}}
+          ></input>
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="col">
+          <label className="form-control-label" htmlFor="organizerFirstName">Organizer's First Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="firstName"
+            minLength={1}
+            maxLength={30}
+            value={organizerData.organizerFirstName || ''}
+            onChange={(event) => {
+              setOrganizerData({...organizerData, organizerFirstName: event.target.value});
+            }}
+          ></input>
+        </div>
+        <div className="col">
+          <label className="form-control-label" htmlFor="organizerLastName">Organizer's Last Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="lastName"
+            minLength={1}
+            maxLength={30}
+            value={organizerData.organizerLastName || ''}
+            onChange={(event) => {
+              setOrganizerData({...organizerData, organizerLastName: event.target.value});
+            }}
+          ></input>
+        </div>
+        <div className="col">
+          <label className="form-control-label" htmlFor="organizerPronouns">Organizer's Pronouns, if known</label>
+          <input
+            type="text"
+            className="form-control"
+            id="pronouns"
+            minLength={1}
+            maxLength={30}
+            value={organizerData.organizerPronouns || ""}
+            onChange={(event) => {
+              setOrganizerData({...organizerData, organizerPronouns: event.target.value});
+            }}
+          ></input>
+        </div>
+      </div>
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label"  htmlFor="organizerEmail">Organizer's Email</label>
+        <input
+          type="email"
+          className="form-control"
+          id="email"
+          minLength={1}
+          maxLength={60}
+          value={organizerData.organizerEmail || ''}
+          onChange={(event) => {
+            setOrganizerData({...organizerData, organizerEmail: event.target.value});
+          }}
+        ></input>
+      </div>
+      <fieldset className="form-group row">
+        <legend className="col-form-label col-sm-2 float-sm-left pt-0">Radios</legend>
+        <div className="col-sm-10">
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="audience"
+              id="everyone"
+              value="Everyone"
+              checked={targetAudience === "Everyone"}
+              onChange={handleAudience}
+            ></input>
+            <label className="form-check-label" htmlFor="everyone">All Black Adies</label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="audience"
+              id="adieAlum"
+              value="Adie Alum"
+              checked={targetAudience === "Adie Alum"}
+              onChange={handleAudience}
+            ></input>
+            <label className="form-check-label" htmlFor="adieAlum">Black Adie Alum</label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="audience"
+              id="internshipAdies"
+              value="Internship Adies"
+              checked={targetAudience === "Internship Adies"}
+              onChange={handleAudience}
+            ></input>
+            <label className="form-check-label" htmlFor="internshipAdies">Internship Black Adies</label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="audience"
+              id="classroomAdies"
+              value="Classroom Adies"
+              checked={targetAudience === "Classroom Adies"}
+              onChange={handleAudience}
+            ></input>
+            <label className="form-check-label" htmlFor="classroomAdies">Classroom Black Adies</label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="audience"
+              id="anyone"
+              value="Not Black@Ada Specific"
+              checked={targetAudience === "Not Black@Ada Specific"}
+              onChange={handleAudience}
+            ></input>
+            <label className="form-check-label" htmlFor="anyone">Not Black@Ada Specific</label>
+          </div>
+        </div>
+      </fieldset>
+      <p>Event added by: {createdByName}</p>
+      <br />
+      <br />
+      <input
+        type="submit"
+        value="Submit"
+        className="button"
+        disabled={
+          !title ||
+          !description ||
+          !dateTimeStart ||
+          !timezone
+        }
+      ></input>
 		</form>
   );
 };

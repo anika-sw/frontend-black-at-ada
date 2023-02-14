@@ -1,0 +1,66 @@
+.login-header p{
+    font-family: "Square Peg";
+    font-size: 75px;
+    color: #f7b402;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.login-header h1{
+    font-family: "Abril Fatface";
+    font-size: 175px;
+    color: #f7b402;
+    margin-top: 75px;
+    margin-bottom: 0px;
+}
+
+.at {
+    color: #e7165f;
+}
+
+.login-header .sm-text{
+    font-family: "Poppins";
+    font-size: 20px;
+    padding-top: 40px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.login-flex {
+    display: flex;
+    justify-content: center;
+}
+
+.loginForm {
+    width: 800px;
+    border-color: #f7b402;
+    background-color: none;
+    margin-top: 0px;
+    padding-bottom: 15px;
+    border-radius: 25px;
+}
+
+.login-btn {
+    background-color: #0ba3c1;
+    font-weight: bold;
+    width: 90px;
+}
+
+#email.form-control {
+    width: 370px;
+}
+
+.password-toggle {
+    margin-left: 10px;
+}
+
+.btn-container{
+    margin-left: 175px;
+    margin-right: 175px;
+    margin-top: 15px;;
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+}

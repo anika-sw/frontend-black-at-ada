@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EventEntry from  "../components/EventEntry";
+import "../styles/EventsList.css";
+
 
 const kBaseUrl = 'http://localhost:5000';
 
 
 const EventsList = () => {
 
-  const [eventsData, setEventsData] = useState([])
+  const navigate = useNavigate();
+  const routeChange = (event) => {
+    navigate('/events/new-event');
+  };
+
+  const [eventsData, setEventsData] = useState([]);
 
   const convertFromApi = (apiEvent) => {
 		const {
@@ -59,13 +67,17 @@ const EventsList = () => {
   useEffect(() => {
     axios.get(`${kBaseUrl}/events`, {})
       .then((response) => {
-        // const convertedData = convertFromApi(response.data);
-        setEventsData(response.data);
+        const convertedData = response.data.map((event) => {
+          return convertFromApi(event);
+        }
+        );
+      setEventsData(convertedData);
       });
     }, []);
+
+
     
-  const allEvents = eventsData.map((event) => {
-    event = convertFromApi(event)
+  const allEventsList = eventsData.map((event) => {
     return (
       <li key={event.id}>
         <EventEntry
@@ -75,66 +87,18 @@ const EventsList = () => {
     );
   });
 
-  const recentlyAddedEvents = eventsData.map((event) => {
-    event = convertFromApi(event)
-    return (
-      <li key={event.id}>
-        <EventEntry
-        event={event}
-        ></EventEntry>
-      </li>
-    );
-  });
-  const userId = localStorage.getItem('user')
-  // console.log(eventsData)
-    
-  const myEvents = () => {
-    const convertedData = convertFromApi(eventsData)
-    const filtered = convertedData.filter(event => event.createdById === userId || event.users.includes(userId))
-    console.log(convertedData)
-  }
-  
-  const myEventsList = eventsData.map((event) => {
-    event = convertFromApi(event)
-    if (event.users.includes({userId}) || event.createdById === {userId}) {
-      return (
-        <li key={event.id}>
-          <EventEntry>
-            event={event} 
-          </EventEntry>
-        </li>
-      )
-    }
-  });
 
   return (
-    <div>
-      <h1 className="header">
+    <div className="container">
+      <h1 className="header events-header">
         Upcoming Events
       </h1>
-      <section>
-        <h2>My Events</h2>
-        <ul>{myEventsList}</ul>
-      </section>
-      <section>
-        <h2>Recently Added Events</h2>
-      </section>
+      <div className="add-event-flex">
+        <button type="button" className="add-event-btn" onClick={routeChange}>Add Event</button>
+      </div>
       <section>
         <h2>All Events</h2>
-        <ul>{allEvents}</ul>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <input type="checkbox" /><label htmlFor="checkbox">Near Me</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Online</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Anyone</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Classroom Adies</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Internship Adies</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Adie Alum</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Show All Past Events</label>
-        <input type="checkbox" /><label htmlFor="checkbox">Show My Past Events</label>
+        <ul className="events-list-flex">{allEventsList}</ul>
       </section>
     </div>
   )

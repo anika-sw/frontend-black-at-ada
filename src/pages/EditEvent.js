@@ -1,6 +1,4 @@
 import UpdateEventForm from '../components/UpdateEventForm';
-import "../styles/EventInfo.css";
-
 
 const EditEvent = () => {
   return (

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
-import PlacesAutocomplete from 'react-places-autocomplete';
-import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import '../styles/EventMap.css'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng }  from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-
+import '../styles/EventMap.css'
 
 const libraries = ['places']
+
 
 const EventMap = (props) => {
 
@@ -29,18 +28,6 @@ const EventMap = (props) => {
     setEventAddress(eventAddress);
   };
 
-  // const handleSelect = (eventAddress) => {
-  //   geocodeByAddress(eventAddress)
-  //   .then(results => getLatLng(results[0]))
-  //   .then(latLng => {
-  //     console.log('Success', latLng);
-  //     setMarkerPosition(latLng);
-  //     setMapCenter(latLng);
-  //   })
-  //   .catch(error => console.error('Error', error));
-  // };
-
-
   const handleSelect = (eventAddress) => {
     geocodeByAddress(eventAddress)
     .then(results => getLatLng(results[0]))
@@ -62,7 +49,6 @@ const EventMap = (props) => {
     )
   }
 
-  // {() => props.selectLocation(eventAddress)}
   return (
     <div>
       <div>
@@ -82,15 +68,10 @@ const EventMap = (props) => {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
                     : 'suggestion-item';
-                  // inline style for demonstration purpose
-                  const style = suggestion.active
-                    ? { backgroundColor: '#fafafa', cursor: 'pointer', color: '#000000' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer', color: '#000000' };
                   return (
                     <div key={index}
                       {...getSuggestionItemProps(suggestion, {
-                        className,
-                        style,
+                        className
                       })}>
                       <span>{suggestion.description}</span>
                     </div>
@@ -103,13 +84,13 @@ const EventMap = (props) => {
       </div>
       <div>
           <GoogleMap 
-            mapContainerStyle={{ width: '300px', height: '300px' }}
+            mapContainerStyle={{ width: '400px', height: '400px' }}
             center={mapCenter} 
             zoom={12}
             options={{
               streetViewControl: false,
               mapTypeControl: false,
-              // fullscreenControl: false,
+              // fullscreenControl: false, <-- leaving this in for future options
             }}
             onLoad={map => setMap(map)}
             >
@@ -125,7 +106,6 @@ const EventMap = (props) => {
     </div>
   )
 };
-
 
 EventMap.propTypes = {
   selectLocation: PropTypes.func

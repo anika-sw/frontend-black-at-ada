@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useJsApiLoader } from '@react-google-maps/api';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-
+import '../styles/AutocompleteAddressBar.css'
 
 const libraries = ["places"]
+
 
 const AutocompleteAddressBar = (props) => {
   const { isLoaded } = useJsApiLoader({
@@ -50,15 +51,10 @@ const AutocompleteAddressBar = (props) => {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
                     : 'suggestion-item';
-                  // inline style for demonstration purpose
-                  const style = suggestion.active
-                    ? { backgroundColor: '#fafafa', cursor: 'pointer', color: '#000000' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer', color: '#000000' };
                   return (
                     <div key={index}
                       {...getSuggestionItemProps(suggestion, {
-                        className,
-                        style,
+                        className
                       })}>
                       <span>{suggestion.description}</span>
                     </div>

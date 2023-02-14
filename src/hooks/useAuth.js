@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   
   const [user, setUser] = useState(null);
+  const [eventId, setEventId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,17 +34,25 @@ export const AuthProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     setUser(null);
-    setItemInLocalStorage('user', null);
+    setItemInLocalStorage('user', null)
+    setEventId(null);
+    setItemInLocalStorage('event', null);
     navigate('/login');
   }, [navigate]);
+
+  const storeEventId = useCallback((id) => {
+    setEventId(id);
+  }, []);
 
   // memoize the value to prevent unnecessary re-renders
   const value = useMemo(
     () => ({
     user,
+    eventId,
+    storeEventId,
     login,
     logout
-  }), [user, login, logout]);
+  }), [user, eventId, storeEventId, login, logout]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 };

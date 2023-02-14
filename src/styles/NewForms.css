@@ -1,15 +1,86 @@
-form {
-    color: black;
-    font-weight: bold;
-};
+.instructions {
+    font-size: 20px;
+    margin-top: 50px;
+}
 
-.btn {
-    border-radius: 10px;
-    border-color: black;
-    border-width: 2px;
-    background-color: aqua;
+.newUserForm h1 {
     text-align: center;
-    padding: 10px;
-    display: inline-block;
-    cursor: pointer;
+    margin-bottom: 75px;
+}
+
+label {
+    color: #f7b402;
+    /* margin-bottom: 60px; */
+}
+
+p {
+    color: #f7b402;
+}
+
+legend{
+    color: #f7b402;
+}
+
+.newUserForm section {
+    margin: 10px;
+}
+
+.newUserForm button {
+    margin: 10px;
+}
+
+.newUserForm p {
+    color: #0ba3c1;
+    margin-bottom: 20px;
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 22px;
+}
+
+.attestation-flex{
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.attestation-flex .form-check {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.attestation-flex .btn {
+    background-color: #0ba3c1;
+    font-weight: bold;
+    width: 90px;
+    margin-bottom: 30px;
+}
+
+.react-datetime-picker {
+    color: #f7b402;
+}
+
+.experience {
+    background-color: black;
+    outline: none;
+    color: #f7b402;
+}
+
+.experience:hover {
+    background-color: #f7b402;
+    color: black;
+}
+
+input.button {
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background-color: #0ba3c1;
+}
+
+.sign-btn {
+    font-weight: bold;
 }

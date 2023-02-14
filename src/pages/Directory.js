@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserEntry from  "../components/UserEntry";
+import "../styles/Directory.css";
 
 const kBaseUrl = 'http://localhost:5000';
 
@@ -68,26 +69,20 @@ const Directory = () => {
     });
   };
 
-
   return (
     <>
-      <h1 className="header">
-        Black Adie Directory
+      <h1 className="header directory-header">
+        Bl<span className="at">a</span>ck Adie Directory
       </h1>
-      <section>
-        <h2>Alphabet Nav Here</h2>
-        <div id='nav' className="alphabetNav"></div>
-        <label htmlFor="sort">Sort by:
-          <select className="sort" onChange={handleSort}>
-            <option value="none"></option>
-            <option value="lastName">Last Name</option>
-            <option value="cohort">Cohort</option>
-            <option value="company">Company</option>
-            {/* <option value="nearMe">Near me</option> */}
-          </select>
-        </label>
-        <ul>{usersList}</ul>
-      </section> 
+      <div className="sort-btn-flex">
+        <select className="sort sort-btn" onChange={handleSort}>
+          <option value="none">Sort By:</option>
+          <option value="lastName">Last Name</option>
+          <option value="cohort">Cohort</option>
+          <option value="company">Company</option>
+        </select>
+      </div>
+      <ul>{usersList}</ul>
     </>
   )
 };  

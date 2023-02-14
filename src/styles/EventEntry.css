@@ -1,4 +1,27 @@
-.eventEntryMap {
-    height: 150px; /* The height is 400 pixels */
-    width: 150px; /* The width is the width of the web page */
-};
+.card-img-top {
+    width: 100%;
+    height: 30vw;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    object-fit: cover;
+}
+
+.event-card {
+    text-align: center;
+    border-radius: 25px;
+    min-height: 700px;
+    color: #f7b402;
+    background-color: #121212;
+    box-shadow: -10px 7px 7px #f7b402;
+}
+
+.card-col {  
+    min-width: 300px;
+    max-width: 350px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card-row {
+    min-height: 500px;
+}

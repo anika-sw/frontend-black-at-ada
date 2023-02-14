@@ -1,11 +1,29 @@
 * {
-    font-family: 'Courier New', Courier, monospace;
     margin-left: 1%;
     margin-right: 1%;
 }
 
 body {
-    background-color: grey;
+    padding-top: 100px;
+    background-color: #181818;
+    font-family: "Poppins"
+}
+
+h1 {
+    font-family: "Abril Fatface";
+    font-size: 120px;
+}
+
+h2 {
+    font-family: "Abril Fatface";
+    color: #f7b402;
+}
+
+h3 {
+    font-family: "Poppins";
+    color: #0995b5;
+    font-size: 16px;
+    padding-top: 10px;
 }
 
 li {
@@ -13,6 +31,12 @@ li {
 }
 
 button {
-    height: 30px;
-    border-color: black;
+    border-radius: 5px;
+    border: none;
+}
+
+.form-row,
+.form-group,
+.row {
+    padding-top: 3rem;
 }

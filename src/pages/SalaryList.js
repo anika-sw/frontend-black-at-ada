@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import SalaryEntry from '../components/SalaryEntry';
+import "../styles/SalaryList.css";
 
 const kBaseUrl = 'http://localhost:5000';
 
@@ -49,8 +50,12 @@ const SalaryList = () => {
           return convertFromApi(user);
         }
       )
-        setUsersData(convertedData);
-      });
+      setUsersData(convertedData);
+      })
+      .catch(error => {
+        console.log(error);
+      }
+    );
   }, []);
 
   const dateReformat = (string) => {
@@ -86,7 +91,11 @@ const SalaryList = () => {
   const handleSort = (event) => {
     axios.get(`${kBaseUrl}/users?sort=${event.target.value}`, {})
       .then((response) => {
-        setUsersData(response.data);
+        const convertedData = response.data.map((user) => {
+          return convertFromApi(user);
+        }
+      )
+      setUsersData(convertedData);
       })
       .catch(error => {
         console.log(error);
@@ -97,35 +106,19 @@ const SalaryList = () => {
 
   return (
     <>
-      <h1 className="header">
+      <h1 className="header salary-header">
         Salaries
       </h1>
-      <label htmlFor="sort">Sort by:
-        <select className="sort" onChange={handleSort}>
-          <option value="none"></option>
+      <div className="salary-sort-btn-flex">
+        <select className="sort sort-btn" onChange={handleSort}>
+          <option value="none">Sort By:</option>
           <option value="salaryAsc">Low to High</option>
           <option value="salaryDesc">High to Low</option>
           <option value="salaryCompany">Company</option>
         </select>
-      </label>
+      </div>
       <section>
         <ul>{salaryList}</ul>
-      </section>
-      <section>
-        <h2>Salary Range</h2>
-        <p></p>
-      </section>
-      <section>
-        <h2>Years of Experience (Mode)</h2>
-        <p></p>
-      </section>
-      <section>
-        <h3>What other salary statistics would you like to see?</h3>
-        <p>Let us know! Contact us</p>
-      </section>
-      <section>
-        <h2>Alpha List of Companies in the List</h2>
-        <p></p>
       </section>
     </>
   )

@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import "../styles/Layout.css";
 
 
-const Layout = ({children}) => {
+const LayoutWithNav = ({children}) => {
   return (
     <main>
       <Navbar />
@@ -13,4 +13,4 @@ const Layout = ({children}) => {
   )
 };  
 
-export default Layout;
+export default LayoutWithNav;

@@ -1,120 +1,145 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventEntry from  "../components/EventEntry";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 
 const kBaseUrl = 'http://localhost:5000';
 
 const Home = () => {
 
-  // axios calls from flasky-front-end updated for user and event
+  const navigate = useNavigate();
 
-  const convertFromApi = (apiUser) => {
-    // const {id, name, color, personality, pet_count, caretaker} = apiCat;
-    const {first_name, ...rest} = apiUser;
+  const userId = parseInt(localStorage.getItem('user'))
 
-    // const newCat = {id, name, color, personality, petCount: pet_count, caretaker};
-    const newUser = {firstName: first_name, ...rest};
-    return newUser;
-  };
+  const [myEventsData, setMyEventsData] = useState([])
+  const [recentAddData, setRecentAddData] = useState([])
 
-  const [eventsData, setEventsData] = useState([])
+  const convertFromApi = (apiEvent) => {
+		const {
+      image_url,
+      date_time_start,
+      date_time_stop,
+      video_conf_link,
+      meeting_key,
+      radio_selection,
+      is_map_showing,
+      location_address,
+      location_lat,
+      location_lng,
+      organizer_first_name,
+      organizer_last_name,
+      organizer_pronouns,
+      organizer_email,
+      target_audience,
+      created_by_id,
+      date_time_created,
+      users,
+			...rest
+		} = apiEvent;
 
-  const getAllUsersApi = () => {
-    return axios.get(`${kBaseUrl}/users`)
-    .then(response => {
-      return response.data.map(convertFromApi);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  };
+		const jsEvent = {
+      imageUrl: image_url || '',
+      dateTimeStart: date_time_start || '',
+      dateTimeStop: date_time_stop || '',
+      videoConfLink: video_conf_link || '',
+      meetingKey: meeting_key || '',
+      radioSelection: radio_selection || '',
+      isMapShowing: is_map_showing || '',
+      locationAddress: location_address || '',
+      locationLat: location_lat || '',
+      locationLng: location_lng || '',
+      organizerFirstName: organizer_first_name || '',
+      organizerLastName: organizer_last_name || '',
+      organizerPronouns: organizer_pronouns || '',
+      organizerEmail: organizer_email || '',
+      targetAudience: target_audience || '',
+      createdById: created_by_id || null,
+      dateTimeCreated: date_time_created || '',
+      users: users || '',
+			...rest,
+		}; 
+    return jsEvent;
+	};
 
-  // const petCatApi = (id) => {
-  //   return axios.patch(`${kBaseUrl}/cats/${id}/pet`)
-  //   .then(response => {
-  //     return convertFromApi(response.data);
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });
-  // };
-
-  const deleteUserApi = (id) => {
-    return axios.delete(`${kBaseUrl}/users/${id}`)
-    .then(response => {
-      return convertFromApi(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  };
-
-  const addNewUserApi = (userData) => {
-    const requestBody = {...userData, first_name: "",};
-  
-    return axios.post(`${kBaseUrl}/users`, requestBody)
-      .then(response => {
-        return convertFromApi(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  // const handleUserSubmit = (data) => {
-  //   addNewUserApi(data)
-  //     .then(newUser => {
-  //       setUserData([...userData, newUser])
-  //     })
-  //     .catch(e => console.log(e));
-  // }
-  
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/events", {})
+    axios.get(`${kBaseUrl}/events`, {})
       .then((response) => {
-        setEventsData(response.data);
+        const convertedData = response.data.map((event) => {
+          return convertFromApi(event);
+        }
+        );
+      const myFilteredData = convertedData.filter(event => event.createdById === userId || event.users.includes(userId))
+      setMyEventsData(myFilteredData);
+      });
+    }, [userId]);
+
+  useEffect(() => {
+    axios.get(`${kBaseUrl}/events?sort=dateTimeCreated`, {})
+    .then((response) => {
+      const convertedData = response.data.map((event) => {
+        return convertFromApi(event);
+      })
+      setRecentAddData(convertedData);
     });
   }, []);
 
-  const recentEventsList = eventsData.map((event) => {
+  const myEventsList = myEventsData.map((event) => {
     return (
-      <div key={event.id}>
+      <li key={event.id}>
+        <EventEntry
+          event={event}
+        ></EventEntry>
+      </li>
+    );
+  });
+  
+  const recentlyAddedList = recentAddData.map((event) => {
+    return (
+      <li key={event.id}>
         <EventEntry
         event={event}
         ></EventEntry>
-      </div>
+      </li>
     );
   });
 
-  const navigate = useNavigate();
-  const routeChange = (event) => {
+  const toEvents = (event) => {
+    navigate('/events');
+  }
+
+  const toDirectory = (event) => {
     navigate('/directory');
   }
 
+  // <div class="container-fluid full-width">
+  // <div class="row row-no-gutter">
+
   return (
     <main className="App">
-      <h1 className="header">
+
+      <h1 className="header-home color-bar">
         Welcome
       </h1>
-      <section>
-        <h2>Announcements</h2>
-      </section>
-      <section>
-        <h2>Recently Added Events</h2>
-        {/* <ul>{recentEventsList}</ul> */}
-      </section>
-      <section>
+      <div className="home-flex">
+        <button type="button" className="btn-lg btn-outline-warning" onClick={toEvents}>View All Events</button>
+        <button id="directory" className="btn-lg btn-outline-warning"onClick={toDirectory}><span>Black Adie Directory</span></button>
+      </div>
+      <div>
         <h2>My Events</h2>
-      </section>
-      <section>
-        <h2>All Events</h2>
-      </section>
-      <section>
-        <button id="directory" onClick={routeChange}><span>Black Adie Directory</span></button>
-      </section>
+        <h3>Events you've created or commited to attending</h3>
+        <ul>{myEventsList}</ul>
+        <div className="more-btn-flex">
+          <button type="button" className="btn-lg btn-outline-warning more-btn" onClick={toEvents}>View More Events</button>
+        </div>
+      </div>
+      <div>
+        <h2>Recently Added Events</h2>
+        <ul>{recentlyAddedList}</ul>
+        <div className="more-btn-flex">
+          <button type="button" className="btn-lg btn-outline-warning more-btn" onClick={toEvents}>View More Events</button>
+        </div>      
+      </div>
     </main>
   );
 };

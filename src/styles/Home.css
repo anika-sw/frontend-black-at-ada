@@ -1,11 +1,59 @@
-.header {
+.header-home {
+    font-family: "Abril Fatface";
+    font-size: 120px;
     text-align: center;
 }
 
-section {
-    text-align: center;
+.color-bar {
+    background-image: linear-gradient(to right,transparent, #0995b5, transparent);
 }
 
-button {
-    width: 300px;
+h2 {
+    font-family: "Abril Fatface";
+    color: #f7b402;
+}
+
+h3 {
+    font-family: "Poppins";
+    color: #0995b5;
+    font-size: 16px;
+    padding-top: 10px;
+}
+
+.home-flex {
+    margin-left: 175px;
+    margin-right: 175px;
+    margin-top: 15px;;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.home-flex button {
+    width: 400px;
+    height: 80px;
+    margin-top: 50px;
+    margin-bottom: 75px;
+    font-size: 35px;
+    background-color: #181818;
+    color: #e7165f;
+    box-shadow: 0 0 0 0.2rem #f7b402 !important;
+}
+
+.more-btn-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.more-btn {
+    width: 400px;
+    height: 80px;
+    margin-top: 75px;
+    margin-bottom: 75px;
+    font-size: 35px;
+    background-color: #181818;
+    color: #e7165f;
+    align-content: center;
+    box-shadow: 0 0 0 0.2rem #f7b402 !important;
 }

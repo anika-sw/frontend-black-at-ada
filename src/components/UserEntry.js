@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "../styles/UserEntry.css";
 
 
 const UserEntry = (props) => {
@@ -7,19 +8,25 @@ const UserEntry = (props) => {
   const url = props.user.linkedin;
   const connectLink = <a href={url}>Connect with me on LinkedIn</a>;
   const mailTo = <a href={`mailto:${props.user.email}`}>{props.user.email}</a>;
+  const namePronouns = <>{props.user.firstName} {props.user.lastName}{props.user.pronouns && <>, {props.user.pronouns}</>}</>
 
 
   return (
-    <div>
-      <img src={props.user.profilePicUrl} alt='' height="200" />
-      <section className="directoryEntry">
-        <span>{props.user.firstName} {props.user.lastName}</span>{props.user.pronouns && <span>, {props.user.pronouns}</span>}
-        <p>Cohort {props.user.cohort}</p>
-        <p>{props.user.company}</p>
-        <p>{mailTo}</p>
-        {url && connectLink}
-        <p>*********************************</p>
-      </section>
+    <div className="card mb-3 directory-card">
+      <div className="row no-gutters">
+        <div className="col">
+          <img className="directory-card-img" src={props.user.profilePicUrl} alt="..." />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title">{namePronouns}</h5>
+            <p className="card-text">Cohort {props.user.cohort}</p>
+            <p className="card-text">{props.user.company}</p>
+            <p className="card-text">{mailTo}</p>
+            <p className="card-text">{url && connectLink}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

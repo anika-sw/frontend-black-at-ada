@@ -1,7 +1,40 @@
-.mapContainer {
+.autocomplete-dropdown-container{
+    position: "absolute";
+    z-index: 1000;
+}
+
+.autocomplete-dropdown-container {
+    background-color: #fafafa;
+    cursor: pointer;
+    border-bottom: honeydew;
+    border-left: honeydew;
+    border-right: honeydew;
+    border-top: 1px solid #e6e6e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    position: absolute;
+    z-index: 1000;
+    border-radius: 0 0 2px 2px;
+}
+
+.location-search-input,
+.location-search-input:focus,
+.location-search-input:active {
+    box-shadow: 0 2px 2px 0 black, 0 0 0 1px black;
+    border: black;
+    border-width: 1px;
+    display: block;
     width: 300px;
-    height: 300px;
-};
+    font-size: 16px;
+    outline: none;
+}
+
+.suggestion-item {
+    width: 500px;
+}
+.suggestion-item--active:hover {
+    background-color: lightgrey;
+    width: 500px;
+}
 
 .marker {
     /* Set the marker size here */
