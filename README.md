@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Black@Ada web app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Black@Ada is a member-only web application fostering community by creating a digital space just for Black Adies. It's dynamic and can grow as the number of Black Adies increases, and it's virtual nature means that it can be used by any Black Adie anywhere.
 
-## Available Scripts
+[Capstone Presentation](https://youtu.be/kOpsiBWTm48)
+[Backend Repository](https://github.com/anika-sw/backend-black-at-ada)
 
-In the project directory, you can run:
+## Application Features
 
-### `npm start`
+### Technologies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This project is a React application that utilizes Google Maps API for location autocomplete and, dynamic and static mapping features, Google Cloud Storage for image storage, and Flask-Bcrypt for password hashing on the backend.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Create New User & Login
 
-### `npm test`
+Users must enter required information to create a profile and gain access to the application. A user's email and hashed password is used to login to the app on subsquent visits to the site.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Create & View Events
 
-### `npm run build`
+Any user can create an event, specifiying whether the event is online or in-person. All users can view events, opting to RSVP for an event on its details page. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### View Salaries
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Information optionally collected from users at sign-up (and updated at their discretion via their profile page) is displayed on the salary page. Salary entries can be sorted low to high, high to low, or by company.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### View User Directory
 
-### `npm run eject`
+User information, including a picture, is displayed in the directory. Each entry includes an email for direct contact and an option link to the user's LinkedIn profile. Directory entries can be sorted by last name, company, or by users' Ada cohort; default view for the directory is alpha order by first name.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Dependencies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+In addition to React app, this web app relies on the following:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Axios for API calls
+*React Router (react-router-dom)
+*@react-google-maps/api
+*react-places-autocomplete
+*react-static-google-map
+*react-datetime-picker
+*luxon
+*moment
+*dotenv-webpack
