@@ -4,6 +4,7 @@
 
 .event-color-bar h1 {
     padding-bottom: 20px;
+    text-align: center;
 }
 
 .event-details {
@@ -12,6 +13,7 @@
     border: 3px solid #0ba3c1;
     text-align: left;
     padding: 30px;
+    margin-top: 40px;
     margin-bottom: 30px;
 }
 

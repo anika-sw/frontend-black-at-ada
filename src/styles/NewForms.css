@@ -6,18 +6,6 @@
 .newUserForm h1 {
     text-align: center;
     margin-bottom: 75px;
-}
-
-label {
-    color: #f7b402;
-    /* margin-bottom: 60px; */
-}
-
-p {
-    color: #f7b402;
-}
-
-legend{
     color: #f7b402;
 }
 
@@ -37,7 +25,11 @@ legend{
     font-size: 22px;
 }
 
-.attestation-flex{
+.newUserForm section {
+    padding-bottom: 20px;
+}
+
+.attestation-flex {
     margin-left: 250px;
     margin-right: 250px;
     margin-bottom: 100px;
@@ -58,8 +50,47 @@ legend{
     margin-bottom: 30px;
 }
 
-.react-datetime-picker {
+.attestation-flex span {
     color: #f7b402;
+}
+
+.form-control-file {
+    color: #f7b402;
+}
+
+.col.calendar,
+.react-datetime-picker__wrapper {
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.react-datetime-picker__wrapper {
+    min-width: 350px;
+    min-height: 40px;
+}
+
+.react-datetime-picker__inputGroup{
+    max-width: 290px;
+}
+
+.react-datetime-picker__inputGroup__amPm,
+.react-datetime-picker__button {
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.react-datetime-picker input,
+.react-datetime-picker select {
+    color: #f7b402;
+    font-size: 14px;
+}
+
+svg {
+    stroke: #f7b402;
 }
 
 .experience {

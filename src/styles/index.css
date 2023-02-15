@@ -33,6 +33,19 @@ li {
 button {
     border-radius: 5px;
     border: none;
+    margin: 5px;
+}
+
+label {
+    color: #f7b402;
+}
+
+p {
+    color: #f7b402;
+}
+
+legend {
+    color: #f7b402;
 }
 
 .form-row,
