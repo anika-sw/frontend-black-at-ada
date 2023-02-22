@@ -304,20 +304,27 @@ const NewUserForm = () => {
                     <>
                       <ImagePreview src={image} alt='' />
                       <button type='button' onClick={resetImage}>Remove</button>
-                      <button type='button' onClick={handleImageUpload}>{imageSaved ? 'Saved' : 'Save'}</button>
-                      <p>Click save to confirm upload of your image</p>
+                      <button type='button' 
+                      className={imageSaved ? 'saved' : 'save'} 
+                      onClick={handleImageUpload}
+                      >
+                      {imageSaved ? 'Saved!' : 'Save'}
+                      </button>
+                      {!imageSaved ?
+                        <p>Click <span className='text-save'>save</span> to confirm upload of your image</p>
+                      : ''}
                     </>
                   : ''}
                   <br />
-                  <br />
-                  <input
-                    type='file'
-                    className='form-control-file'
-                    id='profilePicFile' 
-                    name='profilePicFile'
-                    ref={ref}
-                    onChange={handleChange}
-                  ></input>
+                  {!imageSaved &&
+                    <input
+                      type='file'
+                      className='form-control-file'
+                      id='profilePicFile' 
+                      name='profilePicFile'
+                      ref={ref}
+                      onChange={handleChange}
+                    ></input>}
                 </div>
               </div>
             </section>

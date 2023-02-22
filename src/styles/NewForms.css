@@ -108,6 +108,21 @@ svg {
     color: black;
 }
 
+.text-save {
+    color: #e7165f;
+    font-weight: bold;
+}
+
+.save {
+    background-color: #e7165f;
+    font-weight: bold;
+}
+
+.saved {
+    background-color: #f7b402;
+    font-weight: bold;
+}
+
 input.button {
     border-radius: 5px;
 }
