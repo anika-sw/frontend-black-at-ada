@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AutocompleteAddressBar from  '../components/AutocompleteAddressBar';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { setItemInLocalStorage } from '../utils';
+import { setItemInLocalStorage, convertToApiData } from '../utils';
 import ImagePreview from '../components/ImagePreview';
 import '../styles/NewForms.css';
 
@@ -19,8 +19,7 @@ const kDefaultFormState = {
   locationLng: '',
   email: '',
   password: '',
-  image: '',
-  profilePic: '',
+  profilePicFile: '',
   company: '',
   linkedin: '',
   jobTitle:'',
@@ -37,7 +36,7 @@ const NewUserForm = () => {
     navigate('/home')
   };
   
-    const [formData, setFormData] = useState(kDefaultFormState);
+  const [newUserData, setNewUserData] = useState(kDefaultFormState);
   
   const [adaStudentAlum, setAdaStudentAlum] = useState(false);
   const [blackIdentity, setBlackIdentity] = useState(false);
@@ -45,48 +44,6 @@ const NewUserForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [image, setImage] = useState('');
   const [imageSaved, setImageSaved] = useState(false);
-
-  const addNewUserToApi = (jsUser) => {
-    const {
-      firstName,
-      lastName,
-      locationName,
-      locationLat,
-      locationLng,
-      profilePicFile,
-      includeNameSalary,
-      jobTitle,
-      yearsExperience,
-      ...rest
-    } = jsUser;
-
-    const apiUser = {
-      first_name: firstName,
-      last_name: lastName,
-      location_name: locationName,
-      location_lat: locationLat,
-      location_lng: locationLng,
-      profile_pic_url: profilePicFile,
-      include_name_salary: includeNameSalary,
-      job_title: jobTitle,
-      years_experience: yearsExperience,
-      ...rest,
-    };
-    
-    const requestBody = {...apiUser};
-
-    axios.post(`${kBaseUrl}/signup`, requestBody)
-      .then(response => {
-        console.log('New user sign up: success');
-        setItemInLocalStorage('user', response.data.user.id);
-        routeChange();
-      }
-    )
-      .catch(error => {
-        console.log(error);
-      }
-    );
-  };
 
   const checkHandler = (event) => {
     if (event.target.id === 'adaStudentAlum') {
@@ -99,19 +56,6 @@ const NewUserForm = () => {
     const handleConfirm = (event) => {
       setConfirm(true);
     };
-  
-  const handleChange = (event) => {
-    const fieldName = event.target.name;
-    let fieldValue = event.target.value;
-    if (fieldName === 'cohort') {
-      fieldValue = parseInt(fieldValue);
-    } else if (fieldName === 'profilePicFile') {
-      setImage(event.target.files[0]);
-      return
-    }
-
-    setFormData({...formData, [fieldName]: fieldValue});
-  };
 
   // address autocomplete logic; passed as props to autocomplete component
   const getLocation = (location) => {
@@ -120,7 +64,7 @@ const NewUserForm = () => {
     .then(latLng => {
       const latStr = latLng['lat'].toString();
       const lngStr = latLng['lng'].toString();
-      setFormData({...formData,
+      setNewUserData({...newUserData,
         locationName: location,
         locationLat: latStr, 
         locationLng: lngStr})
@@ -140,19 +84,16 @@ const NewUserForm = () => {
     axios.post(`${kBaseUrl}/images/upload`, imageCloudData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-      } 
-    }
-  )
-      .then(response => {
-        console.log('Image URL: success');
-        setFormData({...formData, profilePicFile: response.data.url});
-        setImageSaved(true);
       }
-    )
-      .catch(error => {
-        console.log(error);
-      }
-    )
+    })
+    .then(response => {
+      console.log('Image URL: success');
+      setNewUserData({...newUserData, profilePicFile: response.data.url});
+      setImageSaved(true);
+    })
+    .catch(error => {
+      console.log(error);
+    })
   };
 
   const ref = useRef();
@@ -163,9 +104,36 @@ const NewUserForm = () => {
     ref.current.value = '';
   };
 
+  const handleChange = (event) => {
+    const fieldName = event.target.name;
+    let fieldValue = event.target.value;
+    if (fieldName === 'cohort') {
+      fieldValue = parseInt(fieldValue);
+    } else if (fieldName === 'profilePicFile') {
+      setImage(event.target.files[0]);
+      return;
+    }
+    setNewUserData({...newUserData, [fieldName]: fieldValue});
+  };
+
+  const addNewUserToApi = (data) => {
+    const requestBody = convertToApiData(data);
+    axios.post(`${kBaseUrl}/signup`, requestBody)
+      .then(response => {
+        console.log('New user sign up: success');
+        setItemInLocalStorage('user', response.data.user.id);
+        routeChange();
+      }
+    )
+      .catch(error => {
+        console.log(error);
+      }
+    );
+  };
+
   const onFormSubmit = (event) => {
     event.preventDefault();
-    addNewUserToApi(formData);
+    addNewUserToApi(newUserData);
   };
 
 
@@ -197,7 +165,10 @@ const NewUserForm = () => {
               name='blackIdentity'
               onChange={checkHandler}
             />
-            <label className='form-check-label' htmlFor='blackIdentity'>I identify as Black, African, African-American, Afro-Carribean, and/or as a part of the African diaspora.</label>
+            <label className='form-check-label' htmlFor='blackIdentity'>
+              I identify as Black, African, African-American, Afro-Carribean, 
+              and/or as a part of the African diaspora.
+            </label>
           </div>
           <input
             type='button'
@@ -229,7 +200,7 @@ const NewUserForm = () => {
                     id='firstName'
                     minLength={1}
                     maxLength={30}
-                    value={formData.firstName}
+                    value={newUserData.firstName}
                     name='firstName'
                     onChange={handleChange}
                   ></input>
@@ -242,7 +213,7 @@ const NewUserForm = () => {
                     id='lasttName'
                     minLength={1}
                     maxLength={30}
-                    value={formData.lastName}
+                    value={newUserData.lastName}
                     name='lastName'
                     onChange={handleChange}
                   ></input>
@@ -255,7 +226,7 @@ const NewUserForm = () => {
                     id='pronouns'
                     minLength={1}
                     maxLength={30}
-                    value={formData.pronouns}
+                    value={newUserData.pronouns}
                     name='pronouns'
                     onChange={handleChange}
                   ></input>
@@ -270,7 +241,7 @@ const NewUserForm = () => {
                     id='cohort'
                     minLength={1}
                     maxLength={3}
-                    value={formData.cohort}
+                    value={newUserData.cohort}
                     name='cohort'
                     onChange={handleChange}
                   ></input>
@@ -289,7 +260,7 @@ const NewUserForm = () => {
                     id='linkedin'
                     minLength={1}
                     maxLength={60}
-                    value={formData.linkedin}
+                    value={newUserData.linkedin}
                     name='linkedin'
                     onChange={handleChange}
                   ></input>
@@ -306,7 +277,7 @@ const NewUserForm = () => {
                     id='email'
                     minLength={1}
                     maxLength={30}
-                    value={formData.email}
+                    value={newUserData.email}
                     name='email'
                     onChange={handleChange}
                   ></input>
@@ -319,7 +290,7 @@ const NewUserForm = () => {
                     id='password' 
                     minLength={8}
                     maxLength={15}
-                    value={formData.password}
+                    value={newUserData.password}
                     name='password'
                     onChange={handleChange}
                   ></input>
@@ -367,7 +338,7 @@ const NewUserForm = () => {
                     id='company' 
                     minLength={1}
                     maxLength={30}
-                    value={formData.company}
+                    value={newUserData.company}
                     name='company'
                     onChange={handleChange}
                   ></input>
@@ -380,7 +351,7 @@ const NewUserForm = () => {
                     id='jobTitle' 
                     minLength={1}
                     maxLength={30}
-                    value={formData.jobTitle}
+                    value={newUserData.jobTitle}
                     name='jobTitle'
                     onChange={handleChange}
                   ></input>
@@ -393,7 +364,7 @@ const NewUserForm = () => {
                     id='salary' 
                     minLength={1}
                     maxLength={20}
-                    value={formData.salary || ''}
+                    value={newUserData.salary || ''}
                     name='salary'
                     onChange={handleChange}
                   ></input>
@@ -425,7 +396,7 @@ const NewUserForm = () => {
                       name='includeNameSalary'
                       id='noNameWithSalary'
                       value='No'
-                      checked={formData.includeNameSalary === 'No'}
+                      checked={newUserData.includeNameSalary === 'No'}
                       onChange={handleChange}
                     ></input>
                     <label className='form-check-label' htmlFor='noNameWithSalary'>
@@ -439,7 +410,7 @@ const NewUserForm = () => {
                       name='includeNameSalary'
                       id='yesNameWithSalary'
                       value='Yes'
-                      checked={formData.includeNameSalary === 'Yes'}
+                      checked={newUserData.includeNameSalary === 'Yes'}
                       onChange={handleChange}
                     ></input>
                     <label className='form-check-label' htmlFor='yesNameWithSalary'>
@@ -452,12 +423,12 @@ const NewUserForm = () => {
                   value='Sign Up'
                   className='btn btn-lg btn-secondary signup-btn'
                   disabled={
-                    !formData.firstName ||
-                    !formData.lastName ||
-                    !formData.cohort ||
-                    !formData.locationName ||
-                    !formData.email ||
-                    !formData.password ||
+                    !newUserData.firstName ||
+                    !newUserData.lastName ||
+                    !newUserData.cohort ||
+                    !newUserData.locationName ||
+                    !newUserData.email ||
+                    !newUserData.password ||
                     !imageSaved
                   }
                 ></input>
