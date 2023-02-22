@@ -442,7 +442,7 @@ const NewEventForm = () => {
         ></input>
       </div>
       <fieldset className="form-group row">
-        <legend className="col-form-label col-sm-2 float-sm-left pt-0">Radios</legend>
+        <legend className="col-form-label col-sm-2 float-sm-left pt-0">Target Audience</legend>
         <div className="col-sm-10">
           <div className="form-check">
             <input
@@ -515,7 +515,6 @@ const NewEventForm = () => {
         className="button"
         disabled={
           !title ||
-          !description ||
           !dateTimeStart ||
           !timezone
         }

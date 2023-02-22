@@ -1,13 +1,33 @@
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AutocompleteAddressBar from  "../components/AutocompleteAddressBar";
+import AutocompleteAddressBar from  '../components/AutocompleteAddressBar';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { setItemInLocalStorage } from "../utils";
+import { setItemInLocalStorage } from '../utils';
 import ImagePreview from '../components/ImagePreview';
-import "../styles/NewForms.css";
+import '../styles/NewForms.css';
 
 const kBaseUrl = 'http://localhost:5000';
+
+const kDefaultFormState = {
+  firstName: '',
+  lastName: '',
+  pronouns: '',
+  cohort: '',
+  locationName: '',
+  locationLat: '',
+  locationLng: '',
+  email: '',
+  password: '',
+  image: '',
+  profilePic: '',
+  company: '',
+  linkedin: '',
+  jobTitle:'',
+  salary: null,
+  yearsExperience: 'N/A',
+  includeNameSalary: 'No'
+}
 
 
 const NewUserForm = () => {
@@ -17,30 +37,14 @@ const NewUserForm = () => {
     navigate('/home')
   };
   
-  const [ada, setAda] = useState(false);
-  const [black, setBlack] = useState(false);
-
+    const [formData, setFormData] = useState(kDefaultFormState);
+  
+  const [adaStudentAlum, setAdaStudentAlum] = useState(false);
+  const [blackIdentity, setBlackIdentity] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
-  const [imageSaved, setImageSaved] = useState(false);
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [pronouns, setPronouns] = useState("");
-  const [cohort, setCohort] = useState("");
-  const [locationName, setLocationName] = useState('') 
-  const [locationLat, setLocationLat] = useState('')
-  const [locationLng, setLocationLng] = useState('')
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [image, setImage] = useState('');
-  const [profilePicUrl, setProfilePicUrl] = useState('');
-  const [company, setCompany] = useState("");
-  const [linkedin, setlinkedin] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [salary, setSalary] = useState(null);
-  const [yearsExperience, setYearsExperience] = useState("N/A");
-  const [includeNameSalary, setIncludeNameSalary] = useState("No");
+  const [imageSaved, setImageSaved] = useState(false);
 
   const addNewUserToApi = (jsUser) => {
     const {
@@ -49,7 +53,7 @@ const NewUserForm = () => {
       locationName,
       locationLat,
       locationLng,
-      profilePicUrl,
+      profilePicFile,
       includeNameSalary,
       jobTitle,
       yearsExperience,
@@ -62,7 +66,7 @@ const NewUserForm = () => {
       location_name: locationName,
       location_lat: locationLat,
       location_lng: locationLng,
-      profile_pic_url: profilePicUrl,
+      profile_pic_url: profilePicFile,
       include_name_salary: includeNameSalary,
       job_title: jobTitle,
       years_experience: yearsExperience,
@@ -73,9 +77,8 @@ const NewUserForm = () => {
 
     axios.post(`${kBaseUrl}/signup`, requestBody)
       .then(response => {
-        console.log("New user sign up: success");
+        console.log('New user sign up: success');
         setItemInLocalStorage('user', response.data.user.id);
-        console.log('url', profilePicUrl)
         routeChange();
       }
     )
@@ -86,58 +89,55 @@ const NewUserForm = () => {
   };
 
   const checkHandler = (event) => {
-    if (event.target.id === 'ada') {
-      setAda((ada) => !ada);
-    } else if (event.target.id === 'black') {
-      setBlack((black) => !black);
+    if (event.target.id === 'adaStudentAlum') {
+      setAdaStudentAlum((ada) => !ada);
+    } else if (event.target.id === 'blackIdentity') {
+      setBlackIdentity((blackIdentity) => !blackIdentity);
     }
   };
   
-  const addFirstName = (event) => {
-    setFirstName(event.target.value);
-  };
+    const handleConfirm = (event) => {
+      setConfirm(true);
+    };
   
-  const addLastName = (event) => {
-    setLastName(event.target.value);
+  const handleChange = (event) => {
+    const fieldName = event.target.name;
+    let fieldValue = event.target.value;
+    if (fieldName === 'cohort') {
+      fieldValue = parseInt(fieldValue);
+    } else if (fieldName === 'profilePicFile') {
+      setImage(event.target.files[0]);
+      return
+    }
+
+    setFormData({...formData, [fieldName]: fieldValue});
   };
 
-  const addPronouns = (event) => {
-    setPronouns(event.target.value);
-  };
-
-  const addCohort = (event) => {
-    const cohortInt = parseInt(event.target.value);
-    setCohort(cohortInt);
-  };
-
-  const addLocation = (locationName) => {
-    geocodeByAddress(locationName)
+  // address autocomplete logic; passed as props to autocomplete component
+  const getLocation = (location) => {
+    return geocodeByAddress(location)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
-      console.log('Set location: success');
-      setLocationName(locationName);
       const latStr = latLng['lat'].toString();
       const lngStr = latLng['lng'].toString();
-      setLocationLat(latStr);
-      setLocationLng(lngStr);
-    }
-  )
+      setFormData({...formData,
+        locationName: location,
+        locationLat: latStr, 
+        locationLng: lngStr})
+      console.log('Set location: success');
+      })
     .catch(error => console.error('Error', error));
   };
-
-  const addEmail = (event) => {
-      setEmail(event.target.value);
+  
+    const showHidePassword = (event) => {
+      setPasswordShown(!passwordShown);
     };
 
-  const addPassword = (event) => {
-      setPassword(event.target.value);
-    };
-
-  //upload profile pic to cloud storage
+  // send profile pic to cloud storage
   const handleImageUpload = () => {
-    const formData = new FormData();
-    formData.append('image', image);
-    axios.post(`${kBaseUrl}/images/upload`, formData, {
+    const imageCloudData = new FormData();
+    imageCloudData.append('image', image);
+    axios.post(`${kBaseUrl}/images/upload`, imageCloudData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       } 
@@ -145,7 +145,7 @@ const NewUserForm = () => {
   )
       .then(response => {
         console.log('Image URL: success');
-        setProfilePicUrl(response.data.url);
+        setFormData({...formData, profilePicFile: response.data.url});
         setImageSaved(true);
       }
     )
@@ -155,235 +155,197 @@ const NewUserForm = () => {
     )
   };
 
-  const addCompany = (event) => {
-    setCompany(event.target.value);
-  };
-
-  const addLinkedin = (event) => {
-    setlinkedin(event.target.value);
-  };
-
-  const onRadioSelection = (event) => {
-    setIncludeNameSalary(event.target.value);
-  };
-
-  const addJobTitle = (event) => {
-    setJobTitle(event.target.value);
-  };
-
-  const addSalary = (event) => {
-    setSalary(parseInt(event.target.value));
-  };
-  const addYearsExperience = (event) => {
-    setYearsExperience(event.target.value);
-  };
-
-  const showHidePassword = (event) => {
-    setPasswordShown(!passwordShown);
-  };
-
-  const handleConfirm = (event) => {
-    setConfirm(true);
-  };
-
   const ref = useRef();
 
   const resetImage = (event) => {
     setImage('');
     setImageSaved(false)
-    ref.current.value = "";
+    ref.current.value = '';
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    addNewUserToApi({  
-      firstName, 
-      lastName,
-      pronouns, 
-      cohort, 
-      locationName,
-      locationLat,
-      locationLng,
-      email,
-      password,
-      profilePicUrl,
-      includeNameSalary,
-      company,
-      linkedin,
-      jobTitle,
-      salary,
-      yearsExperience
-    });
+    addNewUserToApi(formData);
   };
 
 
   return (
-		<form onSubmit={onFormSubmit} className="newUserForm">
-			<section className="attestation">
+		<form onSubmit={onFormSubmit} className='newUserForm'>
+			<section className='attestation'>
 				<h1>Attestation</h1>
-        <div className="attestation-flex">
-          <div className="form-check">          
+        <div className='attestation-flex'>
+          <div className='form-check'>          
             <input
-            type="checkbox"
-            className="form-check-input"
-            id="ada"
-            value={ada}
+            type='checkbox'
+            className='form-check-input'
+            id='adaStudentAlum'
+            value={adaStudentAlum}
+            name='adaStudentAlum'
             onChange={checkHandler}
             ></input>
-            <label className="form-check-label" htmlFor="ada">
+            <label className='form-check-label' htmlFor='adaStudentAlum'>
               I am an Ada Developers Academy student (classroom or
               internship) or alum.
             </label>
           </div>
-          <div className="form-check">          
+          <div className='form-check'>          
             <input
-              type="checkbox"
-              className="form-check-input"
-              id="black"
-              value={black}
+              type='checkbox'
+              className='form-check-input'
+              id='blackIdentity'
+              value={blackIdentity}
+              name='blackIdentity'
               onChange={checkHandler}
             />
-            <label className="form-check-label" htmlFor="checkbox">I identify as Black.</label>
+            <label className='form-check-label' htmlFor='blackIdentity'>I identify as Black, African, African-American, Afro-Carribean, and/or as a part of the African diaspora.</label>
           </div>
           <input
-            type="button"
-            className="btn"
-            value="Confirm"
-            disabled={!ada || !black}
+            type='button'
+            className='btn'
+            value='Confirm'
+            disabled={!adaStudentAlum || !blackIdentity}
             onClick={handleConfirm}
           ></input>
-          {ada && black && confirm && <span>Continue by filling out the form below</span>}
+          {adaStudentAlum && blackIdentity && confirm && <span>Continue by filling out the form below</span>}
         </div>
 			</section>
 			<section>
-				{ada && black && confirm && (
+				{adaStudentAlum && blackIdentity && confirm && (
 					<>
             <section>              
-              <h1 className>Your Information</h1>
+              <h1>Your Information</h1>
               <p>
                 All fields marked with an * are required. Your name,
                 pronouns (if provided), cohort, LinkedIn link (if
                 provided), company (if provided), email, and picture
                 will be posted in the Black Adie Directory.
               </p>
-              <div className="form-row">
-                <div className="col">            
-                  <label htmlFor="firstName">*First Name</label>
+              <div className='form-row'>
+                <div className='col'>            
+                  <label htmlFor='firstName'>*First Name</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="firstName"
+                    type='text'
+                    className='form-control'
+                    id='firstName'
                     minLength={1}
                     maxLength={30}
-                    value={firstName}
-                    onChange={addFirstName}
+                    value={formData.firstName}
+                    name='firstName'
+                    onChange={handleChange}
                   ></input>
                 </div>
-                <div className="col"> 
-                  <label htmlFor="lastName">*Last Name</label>
+                <div className='col'> 
+                  <label htmlFor='lastName'>*Last Name</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="lasttName"
+                    type='text'
+                    className='form-control'
+                    id='lasttName'
                     minLength={1}
                     maxLength={30}
-                    value={lastName}
-                    onChange={addLastName}
+                    value={formData.lastName}
+                    name='lastName'
+                    onChange={handleChange}
                   ></input>
                 </div>
-                <div className="col"> 
-                  <label htmlFor="pronouns">Pronouns</label>
+                <div className='col'> 
+                  <label htmlFor='pronouns'>Pronouns</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="pronouns"
+                    type='text'
+                    className='form-control'
+                    id='pronouns'
                     minLength={1}
                     maxLength={30}
-                    value={pronouns}
-                    onChange={addPronouns}
+                    value={formData.pronouns}
+                    name='pronouns'
+                    onChange={handleChange}
                   ></input>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="col">             
-                  <label htmlFor="cohort">*Cohort</label>
+              <div className='form-row'>
+                <div className='col'>             
+                  <label htmlFor='cohort'>*Cohort</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="cohort"
+                    type='text'
+                    className='form-control'
+                    id='cohort'
                     minLength={1}
                     maxLength={3}
-                    value={cohort}
-                    onChange={addCohort}
+                    value={formData.cohort}
+                    name='cohort'
+                    onChange={handleChange}
                   ></input>
                 </div>
-                <div className="col">  
-                  <label htmlFor="location">
+                <div className='col'>  
+                  <label htmlFor='location'>
                     *Location (Enter city, country, zip code, or post code)
                   </label>
-                  <AutocompleteAddressBar selectLocation={addLocation} />
+                  <AutocompleteAddressBar selectLocation={getLocation} />
                 </div>
-                <div className="col">  
-                  <label htmlFor="linkedin">LinkedIn Profile URL</label>
+                <div className='col'>  
+                  <label htmlFor='linkedin'>LinkedIn Profile URL</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="linkedin"
+                    type='text'
+                    className='form-control'
+                    id='linkedin'
                     minLength={1}
                     maxLength={60}
-                    value={linkedin}
-                    onChange={addLinkedin}
+                    value={formData.linkedin}
+                    name='linkedin'
+                    onChange={handleChange}
                   ></input>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="col">                
-                  <label htmlFor="email">
+              <div className='form-row'>
+                <div className='col'>                
+                  <label htmlFor='email'>
                     *Email (for your Black@Ada login)
                   </label>
                   <input
-                    type="email"
-                    className="form-control"
-                    id="email"
+                    type='email'
+                    className='form-control'
+                    id='email'
                     minLength={1}
                     maxLength={30}
-                    value={email}
-                    onChange={addEmail}
+                    value={formData.email}
+                    name='email'
+                    onChange={handleChange}
                   ></input>
                 </div>
-                <div className="col">                
-                  <label htmlFor="password">*Password</label>
+                <div className='col'>                
+                  <label htmlFor='password'>*Password</label>
                   <input
-                    type={passwordShown ? "text" : "password"}
-                    className="form-control"
-                    id="password" 
+                    type={passwordShown ? 'text' : 'password'}
+                    className='form-control'
+                    id='password' 
                     minLength={8}
                     maxLength={15}
-                    value={password}
-                    onChange={addPassword}
+                    value={formData.password}
+                    name='password'
+                    onChange={handleChange}
                   ></input>
-                  <button type="button" className="btn btn-sm btn-secondary" onClick={showHidePassword}>
+                  <button type='button' className='btn btn-sm btn-secondary' onClick={showHidePassword}>
                     Show/Hide Password
                   </button>
                 </div>
-                <div className="col">                
-                  <label htmlFor="image">*Profile Pic</label>
+                <div className='col'>                
+                  <label htmlFor='profilePicFile'>*Profile Pic</label>
                   {image ?
                     <>
-                      <ImagePreview src={image} alt="" />
-                      <button type="button" onClick={resetImage}>Remove</button>
-                      <button type="button" onClick={handleImageUpload}>{imageSaved ? "Saved" : "Save"}</button>
+                      <ImagePreview src={image} alt='' />
+                      <button type='button' onClick={resetImage}>Remove</button>
+                      <button type='button' onClick={handleImageUpload}>{imageSaved ? 'Saved' : 'Save'}</button>
                       <p>Click save to confirm upload of your image</p>
                     </>
-                  : ""}
+                  : ''}
                   <br />
                   <br />
                   <input
-                    type="file"
-                    className="form-control-file"
-                    id="profilePic" 
+                    type='file'
+                    className='form-control-file'
+                    id='profilePicFile' 
+                    name='profilePicFile'
                     ref={ref}
-                    onChange={(event) => {setImage(event.target.files[0])}}
+                    onChange={handleChange}
                   ></input>
                 </div>
               </div>
@@ -396,98 +358,106 @@ const NewUserForm = () => {
                 default, company and salary information will be
                 posted anonmously on the Salaries page unless otherwise indicated.
               </p>
-              <div className="form-row">
-                <div className="col">                
-                  <label htmlFor="company">Company</label>
+              <div className='form-row'>
+                <div className='col'>                
+                  <label htmlFor='company'>Company</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="company" 
+                    type='text'
+                    className='form-control'
+                    id='company' 
                     minLength={1}
                     maxLength={30}
-                    value={company}
-                    onChange={addCompany}
+                    value={formData.company}
+                    name='company'
+                    onChange={handleChange}
                   ></input>
                 </div>
-                <div className="col">                
-                  <label htmlFor="jobTitle">Job Title</label>
+                <div className='col'>                
+                  <label htmlFor='jobTitle'>Job Title</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="jobTitle" 
+                    type='text'
+                    className='form-control'
+                    id='jobTitle' 
                     minLength={1}
                     maxLength={30}
-                    value={jobTitle}
-                    onChange={addJobTitle}
+                    value={formData.jobTitle}
+                    name='jobTitle'
+                    onChange={handleChange}
                   ></input>
                 </div>
-                <div className="col">                
-                  <label htmlFor="salary">Annual Salary</label>
+                <div className='col'>                
+                  <label htmlFor='salary'>Annual Salary</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    id="salary" 
+                    type='text'
+                    className='form-control'
+                    id='salary' 
                     minLength={1}
                     maxLength={20}
-                    value={salary || ""}
-                    onChange={addSalary}
+                    value={formData.salary || ''}
+                    name='salary'
+                    onChange={handleChange}
                   ></input>
                 </div>
               </div>
-              <div className="form-row">
-                <div className="col">                
-                  <label htmlFor="experience">Years of Experience:
-                    <select className="experience" onChange={addYearsExperience}>
-                      <option className="experience" value="N/A">N/A</option>
-                      <option className="experience" value="< 1">&lt; 1</option>
-                      <option className="experience" value="1 - 3">1 - 3</option>
-                      <option className="experience" value="3 - 5">3 - 5</option>
-                      <option className="experience" value="5 - 10">5 - 10</option>
-                      <option className="experience" value="10+">10+</option>
+              <div className='form-row'>
+                <div className='col'>                
+                  <label htmlFor='yearsExperience'>Years of Experience:
+                    <select 
+                      id='yearsExperience' 
+                      name='yearsExperience' 
+                      className='experience' 
+                      onChange={handleChange}
+                      >
+                      <option className='experience' value='N/A'>N/A</option>
+                      <option className='experience' value='< 1'>&lt; 1</option>
+                      <option className='experience' value='1 - 3'>1 - 3</option>
+                      <option className='experience' value='3 - 5'>3 - 5</option>
+                      <option className='experience' value='5 - 10'>5 - 10</option>
+                      <option className='experience' value='10+'>10+</option>
                     </select>
                   </label>
                 </div>
-                <div className="col">
-                  <div className="form-check">               
+                <div className='col'>
+                  <div className='form-check'>               
                     <input
-                      type="radio"
-                      className="form-check-input"
-                      name="includeName"
-                      id="noNameWithSalary"
-                      value="No"
-                      checked={includeNameSalary === "No"}
-                      onChange={onRadioSelection}
+                      type='radio'
+                      className='form-check-input'
+                      name='includeNameSalary'
+                      id='noNameWithSalary'
+                      value='No'
+                      checked={formData.includeNameSalary === 'No'}
+                      onChange={handleChange}
                     ></input>
-                    <label className="form-check-label" htmlFor="no">
+                    <label className='form-check-label' htmlFor='noNameWithSalary'>
                       No, do not include my name with my salary post.
                     </label>
                   </div>
-                  <div className="form-check">               
+                  <div className='form-check'>               
                     <input
-                      type="radio"
-                      className="form-check-input"
-                      name="includeName"
-                      id="yesNameWithSalary"
-                      value="Yes"
-                      checked={includeNameSalary === "Yes"}
-                      onChange={onRadioSelection}
+                      type='radio'
+                      className='form-check-input'
+                      name='includeNameSalary'
+                      id='yesNameWithSalary'
+                      value='Yes'
+                      checked={formData.includeNameSalary === 'Yes'}
+                      onChange={handleChange}
                     ></input>
-                    <label className="form-check-label" htmlFor="yes">
+                    <label className='form-check-label' htmlFor='yesNameWithSalary'>
                       Yes, include my name with my salary post.
                     </label>
                   </div> 
                 </div>
                 <input
-                  type="submit"
-                  value="Sign Up"
-                  className="btn btn-lg btn-secondary signup-btn"
+                  type='submit'
+                  value='Sign Up'
+                  className='btn btn-lg btn-secondary signup-btn'
                   disabled={
-                    !firstName ||
-                    !lastName ||
-                    !cohort ||
-                    !locationName ||
-                    !email ||
-                    !password ||
+                    !formData.firstName ||
+                    !formData.lastName ||
+                    !formData.cohort ||
+                    !formData.locationName ||
+                    !formData.email ||
+                    !formData.password ||
                     !imageSaved
                   }
                 ></input>

@@ -31,12 +31,12 @@ User information, including a picture, is displayed in the directory. Each entry
 
 In addition to React app, this web app relies on the following:
 
-*Axios for API calls
-*React Router (react-router-dom)
-*@react-google-maps/api
-*react-places-autocomplete
-*react-static-google-map
-*react-datetime-picker
-*luxon
-*moment
-*dotenv-webpack
+* axios for API calls
+* React Router (react-router-dom)
+* @react-google-maps/api
+* react-places-autocomplete
+* react-static-google-map
+* react-datetime-picker
+* luxon
+* moment
+* dotenv-webpack

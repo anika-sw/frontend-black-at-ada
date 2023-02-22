@@ -107,6 +107,9 @@ const EventDetails = () => {
   const dateTimeStart = moment(eventData.dateTimeStart).format('MMMM Do YYYY, h:mm a');
   const dateTimeStop = moment(eventData.dateTimeStop).format('MMMM Do YYYY, h:mm a');
 
+  const getDirections = `https://www.google.com/maps?daddr=${eventData.locationAddress}`
+
+
   const contactName = `${eventData.organizerFirstName} ${eventData.organizerLastName} ${eventData.organizerPronouns}`
 
   
@@ -174,8 +177,11 @@ const EventDetails = () => {
               <br />
               <h3>Address</h3>
               <p>{eventData.locationAddress}</p>
+              <a href={getDirections}> Get Directions</a><img className='new-tab' src="/openNewTab.svg" alt="new tab" />
+              <br />
+              <br />
               <StaticGoogleMap size="600x600" className="img-fluid" apiKey={apiKey}>
-                <Marker location={eventLocation} color="blue" label="P" />
+                <Marker location={eventLocation} color="red" />
               </StaticGoogleMap>
             </>}
           </div>

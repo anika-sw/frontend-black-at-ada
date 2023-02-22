@@ -58,3 +58,11 @@
     display: flex;
     justify-content: center;
 }
+
+.new-tab {
+    fill: #f7b402;
+    max-width: 10px;
+    max-height: 10px;
+    background-color: #f7b402;
+    stroke: #f7b402;
+}

@@ -43,6 +43,10 @@
     font-size: 20px;
 }
 
+.attestation .form-check-input{
+    margin-top: 10px;
+}
+
 .attestation-flex .btn {
     background-color: #0ba3c1;
     font-weight: bold;
