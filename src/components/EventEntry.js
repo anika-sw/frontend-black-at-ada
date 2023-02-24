@@ -42,8 +42,8 @@ const EventEntry = (props) => {
   };
 
   const passEventId = (event) => {
-    setItemInLocalStorage(props.event.id);
-    navigate("/events/edit-event");
+    setItemInLocalStorage('event', props.event.id);
+    navigate(`/events/${props.event.id}/edit-event`);
   };
 
   const deleteEvent = () => {

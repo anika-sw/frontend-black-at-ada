@@ -19,7 +19,7 @@ const EventDetails = () => {
 
   const passEventId = (event) => {
     setItemInLocalStorage(eventId);
-    navigate("/events/edit-event");
+    navigate(`/events/${eventId}/edit-event`);
   };
 
   const routeChange = () => {

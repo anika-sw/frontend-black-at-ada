@@ -68,7 +68,7 @@ export const routes = [
       },
       {
         element: <UpdateEventForm />,
-        path: "/events/:eventId/edit-evet"
+        path: "/events/:eventId/edit-event"
       },
       {
         element: <AddEvent />,
