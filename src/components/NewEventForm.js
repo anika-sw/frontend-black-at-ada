@@ -104,7 +104,6 @@ const NewEventForm = () => {
     })
   };
 
-
   const resetImage = (event) => {
     setImage('');
     setImageSaved(false);
@@ -120,7 +119,7 @@ const NewEventForm = () => {
       const lngStr = latLng['lng'].toString();
       setNewEventData({
         ...newEventData,
-        locationName: location,
+        locationAddress: location,
         locationLat: latStr, 
         locationLng: lngStr})
       console.log('Set location: success');
