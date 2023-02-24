@@ -31,10 +31,10 @@ const kDefaultFormState = {
   createdById: null
 }
 
-const getUserDataFromApi = (id) => {
-  return axios.get(`${kBaseUrl}/users/${id}`)
+const getDataFromApi = (string, id) => {
+  return axios.get(`${kBaseUrl}/${string}/${id}`)
   .then((response) => {
-    return convertFromApi(response.data.user); 
+    return convertFromApi(response.data); 
   })
   .catch(error => {
     console.log(error);
@@ -42,49 +42,69 @@ const getUserDataFromApi = (id) => {
 };
 
 
-const NewEventForm = () => {
-  
+const UpdateEventForm = () => {
+
+  const eventId = parseInt(getItemFromLocalStorage('event'));
   const userId = parseInt(getItemFromLocalStorage('user'));
-  
+
   const ref = useRef();
 
   const navigate = useNavigate();
   const routeChange = () => {
     navigate('/events')
   };
-  
-  const [newEventData, setNewEventData] = useState(kDefaultFormState);
-  
+
+  // original unmodified data stored in event data; modified data stored in
+  // tempEventData until patch request is sent and event database updated
+  const [eventData, setEventData] = useState(kDefaultFormState);
+  const [tempEventData, setTempEventData] = useState(kDefaultFormState);
+
   const [userData, setUserData] = useState({});
+  const [creator, setCreator] = useState(false);
   const [dateTimeStart, onChangeStart] = useState(new Date());
   const [dateTimeStop, onChangeStop] = useState(new Date());
   const [image, setImage] = useState('');
   const [imageSaved, setImageSaved] = useState(false);
+
+  const validateCreator = useCallback((userId) => {
+    if (userId === eventData.createdById) {
+      return setCreator(true);
+  }}, [eventData.createdById]);
   
-  const getUserData = useCallback((id) => {
-    return getUserDataFromApi(id)
-    .then(user => {
-      setUserData(user);
-      setNewEventData((previousNewEventData) => ({
-        ...previousNewEventData,
-        organizerFirstName: user.firstName,
-        organizerLastName: user.lastName,
-        organizerPronouns: user.pronouns || '',
-        organizerEmail: user.email,
-        createdById: user.id
-      }));
+  const getData = useCallback((string, id) => {
+    return getDataFromApi(string, id)
+    .then(response => {
+      if (response.data[0] === 'event') {
+        setEventData(response.data[0]);
+        setTempEventData(response.data[0]);
+      } else {
+        setUserData(response.data[0]);
+        validateCreator();
+      }
     })
     .catch((error) => {
       console.log(error);
     });
-  }, []);
-  
+  }, [validateCreator]);
+
+  // const getUserData = useCallback((id) => {
+  //   return getEventDataFromApi(id)
+  //   .then(savedEvent => {
+  //     setEventData(savedEvent);
+  //     setTempEventData(savedEvent);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    getUserData(userId)
-  }, [getUserData, userId]);
+    getData('events', eventId);
+    getData('users', userId);
+  }, [getData, eventId, userId]);
   
-  const createdByName = `${userData.firstName} ${userData.lastName}`
-  
+    const createdByName = `${userData.firstName} ${userData.lastName}`
+
   // send event pic to cloud storage
   const handleImageUpload = () => {
     const imageCloudData = new FormData();
@@ -96,7 +116,7 @@ const NewEventForm = () => {
     })
     .then(response => {
       console.log('Image URL: success');
-      setNewEventData({...newEventData, imageUrl: response.data.url});
+      setTempEventData({...tempEventData, imageUrl: response.data.url});
       setImageSaved(true);
     })
     .catch(error => {
@@ -107,57 +127,69 @@ const NewEventForm = () => {
   const resetImage = (event) => {
     setImage('');
     setImageSaved(false);
+    setTempEventData({...tempEventData, imageUrl: ''});
     ref.current.value = '';
   };
 
-  // address autocomplete logic; passed as props to autocomplete component
-  const getLocation = (location) => {
+  const updateLocation = (location) => {
     return geocodeByAddress(location)
     .then(results => getLatLng(results[0]))
     .then(latLng => {
       const latStr = latLng['lat'].toString();
       const lngStr = latLng['lng'].toString();
-      setNewEventData({
-        ...newEventData,
+      setTempEventData({
+        ...tempEventData,
         locationAddress: location,
-        locationLat: latStr, 
+        locationLat: latStr,
         locationLng: lngStr})
-      console.log('Set location: success');
-      })
+      console.log('Location update: success');
+    })
     .catch(error => console.log('Error', error));
   };
 
   // generic change event handler
-  const handleChange = (event) => {
+  const handleUpdate = (event) => {
     const fieldName = event.target.name;
     let fieldValue = event.target.value;
     if (fieldName === 'imageUrl') {
       setImage(event.target.files[0]);
       return;
     }
-    setNewEventData({...newEventData, [fieldName]: fieldValue});
+    setTempEventData({...tempEventData, [fieldName]: fieldValue});
   };
 
-  // special handler for react-datetime-picker component
-  const handleTimeStart = (event) => {
-    const eventStart = event;
-    onChangeStart(eventStart);
-    setNewEventData({...newEventData, dateTimeStart: eventStart});
-  };
-
-  // special handler for react-datetime-picker component
-  const handleTimeStop = (event) => {
-    const eventStop = event;
-    onChangeStop(eventStop);
-    setNewEventData({...newEventData, dateTimeStop: eventStop});
-  };
-
-  const addNewEventToApi = (data) => {
+    // special handler for react-datetime-picker component
+    const updateTimeStart = (event) => {
+      const eventStart = event;
+      onChangeStart(eventStart);
+      setTempEventData({...tempEventData, dateTimeStart: eventStart});
+    };
+  
+    // special handler for react-datetime-picker component
+    const updateTimeStop = (event) => {
+      const eventStop = event;
+      onChangeStop(eventStop);
+      setTempEventData({...tempEventData, dateTimeStop: eventStop});
+    };
+  
+  const updateEventInApi = (data) => {
     const requestBody = convertToApi(data);
+    console.log(requestBody)
 
-    axios.post(`${kBaseUrl}/events`, requestBody)
+    axios.patch(`${kBaseUrl}/events`, requestBody)
     .then(response => {
-      console.log('New event created: success');
+      console.log('Event update: success');
+      routeChange();
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+
+  const deleteEvent = (id) => {
+    axios.delete(`${kBaseUrl}/events/${id}`)
+    .then(response => {
+      console.log('Event delete: success');
       routeChange();
     })
     .catch(error => {
@@ -167,7 +199,7 @@ const NewEventForm = () => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    addNewEventToApi(newEventData);
+    updateEventInApi(tempEventData);
   };
   
 
@@ -182,9 +214,9 @@ const NewEventForm = () => {
           id='title'
           minLength={1}
           maxLength={100}
-          value={newEventData.title}
+          value={tempEventData.title}
           name='title'
-          onChange={handleChange}
+          onChange={handleUpdate}
         ></input>
       </div>
       <div className='form-group form-row'> 
@@ -195,7 +227,7 @@ const NewEventForm = () => {
             disableClock={true}
             id='startTime'
             value={dateTimeStart}
-            onChange={handleTimeStart}
+            onChange={updateTimeStart}
           />
         </div>
         <div className='col calendar'>
@@ -205,7 +237,7 @@ const NewEventForm = () => {
             disableClock={true}
             id='endTime'
             value={dateTimeStop}
-            onChange={handleTimeStop}
+            onChange={updateTimeStop}
           />
         </div>
         <div className='col'>
@@ -216,9 +248,9 @@ const NewEventForm = () => {
             id='timezone'
             minLength={1}
             maxLength={40}
-            value={newEventData.timezone}
+            value={tempEventData.timezone}
             name='timezone'
-            onChange={handleChange}
+            onChange={handleUpdate}
           ></input>
         </div>
       </div>
@@ -231,9 +263,9 @@ const NewEventForm = () => {
           rows='3'
           minLength={1}
           maxLength={500}
-          value={newEventData.description}
+          value={tempEventData.description}
           name='description'
-          onChange={handleChange}
+          onChange={handleUpdate}
         ></textarea>
       </div>
       <fieldset className='form-group form-row'>
@@ -246,8 +278,8 @@ const NewEventForm = () => {
               name='onlineInPerson'
               id='online'
               value='Online'
-              checked={newEventData.onlineInPerson === 'Online'}
-              onChange={handleChange}
+              checked={tempEventData.onlineInPerson === 'Online'}
+              onChange={handleUpdate}
               ></input>
             <label className='form-check-label' htmlFor='online'>Online</label>
           </div>
@@ -258,8 +290,8 @@ const NewEventForm = () => {
               name='onlineInPerson'
               id='inPerson'
               value='In-Person'
-              checked={newEventData.onlineInPerson === 'In-Person'}
-              onChange={handleChange}
+              checked={tempEventData.onlineInPerson === 'In-Person'}
+              onChange={handleUpdate}
             ></input>
             <label className='form-check-label' htmlFor='inPerson'>In-Person</label>
           </div>
@@ -272,9 +304,9 @@ const NewEventForm = () => {
             id='linkOrMeetingId'
             minLength={1}
             maxLength={60}
-            value={newEventData.videoConfLink}
+            value={tempEventData.videoConfLink}
             name='linkOrMeetingId'
-            onInput={handleChange}
+            onInput={handleUpdate}
           ></input>
         </div>
         <div className='col'>
@@ -285,9 +317,9 @@ const NewEventForm = () => {
             id='meetingKey'
             minLength={1}
             maxLength={40}
-            value={newEventData.meetingKey}
+            value={tempEventData.meetingKey}
             name='meetingKey'
-            onInput={handleChange}
+            onInput={handleUpdate}
           ></input>
         </div>
       </fieldset>
@@ -295,7 +327,7 @@ const NewEventForm = () => {
         <div className='col'>
           <p>For in-person events, enter an address or location below</p> 
             <div className='map'>
-              <EventMap selectLocation={getLocation} />
+              <EventMap selectLocation={updateLocation} />
             </div>
         </div>
         <div className='col'>
@@ -340,9 +372,9 @@ const NewEventForm = () => {
             id='firstName'
             minLength={1}
             maxLength={30}
-            value={newEventData.organizerFirstName || ''}
+            value={tempEventData.organizerFirstName || ''}
             name='organizerFirstName'
-            onChange={handleChange}
+            onChange={handleUpdate}
           ></input>
         </div>
         <div className='col'>
@@ -353,9 +385,9 @@ const NewEventForm = () => {
             id='lastName'
             minLength={1}
             maxLength={30}
-            value={newEventData.organizerLastName || ''}
+            value={tempEventData.organizerLastName || ''}
             name='organizerLastName'
-            onChange={handleChange}
+            onChange={handleUpdate}
           ></input>
         </div>
         <div className='col'>
@@ -366,9 +398,9 @@ const NewEventForm = () => {
             id='pronouns'
             minLength={1}
             maxLength={30}
-            value={newEventData.organizerPronouns || ''}
+            value={tempEventData.organizerPronouns || ''}
             name='organizerPronouns'
-            onChange={handleChange}
+            onChange={handleUpdate}
           ></input>
         </div>
         <div className='col'>
@@ -379,9 +411,9 @@ const NewEventForm = () => {
             id='email'
             minLength={1}
             maxLength={60}
-            value={newEventData.organizerEmail || ''}
+            value={tempEventData.organizerEmail || ''}
             name='organizerEmail'
-            onChange={handleChange}
+            onChange={handleUpdate}
           ></input>
         </div>
       </div>
@@ -395,8 +427,8 @@ const NewEventForm = () => {
               name='targetAudience'
               id='audienceAllBlackAdies'
               value='All Black Adies'
-              checked={newEventData.targetAudience === 'All Black Adies'}
-              onChange={handleChange}
+              checked={tempEventData.targetAudience === 'All Black Adies'}
+              onChange={handleUpdate}
             ></input>
             <label className='form-check-label audience' htmlFor='audienceAllBlackAdies'>All Black Adies</label>
           </div>
@@ -407,8 +439,8 @@ const NewEventForm = () => {
               name='targetAudience'
               id='audienceBlackAdieAlum'
               value='Black Adie Alum'
-              checked={newEventData.targetAudience === 'Black Adie Alum'}
-              onChange={handleChange}
+              checked={tempEventData.targetAudience === 'Black Adie Alum'}
+              onChange={handleUpdate}
             ></input>
             <label className='form-check-label audience' htmlFor='audienceBlackAdieAlum'>Black Adie Alum</label>
           </div>
@@ -419,8 +451,8 @@ const NewEventForm = () => {
               name='targetAudience'
               id='audienceInternBlackAdies'
               value='Internship Black Adies'
-              checked={newEventData.targetAudience === 'Internship Black Adies'}
-              onChange={handleChange}
+              checked={tempEventData.targetAudience === 'Internship Black Adies'}
+              onChange={handleUpdate}
             ></input>
             <label className='form-check-label audience' htmlFor='audienceInternBlackAdies'>Internship Black Adies</label>
           </div>
@@ -431,8 +463,8 @@ const NewEventForm = () => {
               name='targetAudience'
               id='audienceClassBlackAdies'
               value='Classroom Black Adies'
-              checked={newEventData.targetAudience === 'Classroom Black Adies'}
-              onChange={handleChange}
+              checked={tempEventData.targetAudience === 'Classroom Black Adies'}
+              onChange={handleUpdate}
             ></input>
             <label className='form-check-label audience' htmlFor='audienceClassBlackAdies'>Classroom Black Adies</label>
           </div>
@@ -443,8 +475,8 @@ const NewEventForm = () => {
               name='targetAudience'
               id='audienceAnyone'
               value='Not Black@Ada Specific'
-              checked={newEventData.targetAudience === 'Not Black@Ada Specific'}
-              onChange={handleChange}
+              checked={tempEventData.targetAudience === 'Not Black@Ada Specific'}
+              onChange={handleUpdate}
             ></input>
             <label className='form-check-label audience' htmlFor='audienceAnyone'>Not Black@Ada Specific</label>
           </div>
@@ -458,15 +490,32 @@ const NewEventForm = () => {
         value='Submit'
         className='button'
         disabled={
-          !newEventData.title ||
-          !newEventData.description ||
-          !newEventData.dateTimeStart ||
-          !newEventData.dateTimeStop ||
-          !newEventData.timezone
+          !tempEventData.title ||
+          !tempEventData.description ||
+          !tempEventData.dateTimeStart ||
+          !tempEventData.dateTimeStop ||
+          !tempEventData.timezone
         }
       ></input>
+			<br />
+			<br />
+      {creator &&
+			<section className='buttonGrid'>
+				<input
+					type='submit'
+					value='Update Event'
+					className='button'
+					disabled={
+						!tempEventData.title ||
+						!tempEventData.description ||
+            !tempEventData.dateTimeStart ||
+            !tempEventData.timezone
+					}
+				></input>
+				<button type='button' onClick={deleteEvent}>Cancel Event</button>
+			</section>}
 		</form>
   );
 };
 
-export default NewEventForm;
+export default UpdateEventForm;

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import EventsList from "./pages/EventsList";
 import EventDetails from "./pages/EventDetails";
+import UpdateEventForm from "./components/UpdateEventForm";
 import AddEvent from "./pages/AddEvent";
 import Directory from "./pages/Directory";
 import AddUser from "./pages/AddUser";
@@ -64,6 +65,10 @@ export const routes = [
       {
         element: <EventDetails />,
         path: "/events/:eventId"
+      },
+      {
+        element: <UpdateEventForm />,
+        path: "/events/:eventId/edit-evet"
       },
       {
         element: <AddEvent />,
