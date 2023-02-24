@@ -29,6 +29,10 @@
     padding-bottom: 20px;
 }
 
+.newEventForm.container {
+justify-content: center;
+}
+
 .attestation-flex {
     margin-left: 250px;
     margin-right: 250px;
@@ -64,19 +68,23 @@
 
 .col.calendar,
 .react-datetime-picker__wrapper {
-    margin-right: 0px;
-    margin-left: 0px;
+    margin-right: 2px;
+    margin-left: 2px;
     padding-right: 0px;
     padding-left: 0px;
 }
 
 .react-datetime-picker__wrapper {
-    min-width: 350px;
-    min-height: 40px;
+    min-width: 360px;
+    max-height: 40px;
+    border-radius: 5px;
 }
 
-.react-datetime-picker__inputGroup{
+.react-datetime-picker__inputGroup { 
     max-width: 290px;
+    margin-left: 0px;
+    margin-right: 0px;
+
 }
 
 .react-datetime-picker__inputGroup__amPm,
@@ -88,13 +96,33 @@
 }
 
 .react-datetime-picker input,
-.react-datetime-picker select {
+.react-datetime-picker select,
+.react-datetime-picker__inputGroup__leadingZero,
+.react-datetime-picker__inputGroup__divider {
     color: #f7b402;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 svg {
     stroke: #f7b402;
+    margin-right: 10px;
+}
+
+.form-check-inline {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.form-check-inline .form-check-label {
+    min-width: 90px;
+}
+
+.form-check-label.audience {
+    min-width: 200px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .experience {
@@ -123,8 +151,16 @@ svg {
     font-weight: bold;
 }
 
-input.button {
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    background-color: #efefef;
+    color: black;
     border-radius: 5px;
+    padding: 6px;
+    cursor: pointer;
 }
 
 .delete-btn {

@@ -69,7 +69,7 @@ const Login = () => {
             <div className="col">
               <input
                 type="email"
-                className="form-control"
+                className="form-control login-email"
                 id="email"
                 aria-describedby="email"
                 placeholder="Email"

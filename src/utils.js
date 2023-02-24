@@ -17,17 +17,7 @@ export const getItemFromLocalStorage = (keyName) => {
   }
 };
 
-// var s1 = "ThisЭтотΨόυτÜimunəՕրինակPříkladדוגמאΠαράδειγμαÉlda";
-// s2 = s1.toLowerCase();
-// result="";
-// for(i=0; i<s1.length; i++)
-// {
-//  if(s1[i]!==s2[i]) result = result +' ' +s1[i];
-//  else result = result + s2[i];
-// }
-// result.split(' ');
-
-export const convertToApiData = (data) => {
+export const convertToApi = (data) => {
   let apiData = {};
   for (const [key, value] of Object.entries(data)) {
     const keyLower = key.toLowerCase();
@@ -47,4 +37,22 @@ export const convertToApiData = (data) => {
   }
 
   return apiData;
+};  
+
+export const convertFromApi = (data) => {
+  let jsData = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (key.includes('_')) {
+      const keyArr = key.split('_');
+      let newJsKey = keyArr[0];
+      for(let i = 1; i < keyArr.length; i++) {
+        newJsKey = newJsKey + keyArr[i][0].toUpperCase() + keyArr[i].slice(1);
+      }
+      jsData = {...jsData, [newJsKey]: value};
+    } else {
+    jsData = {...jsData, [key]: value};
+    }
+  }
+
+  return jsData;
 };  

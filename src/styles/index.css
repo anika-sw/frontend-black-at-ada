@@ -38,10 +38,13 @@ button {
 
 label {
     color: #f7b402;
+    padding-left: 0px;
+    margin-left: 0px;
 }
 
 p {
     color: #f7b402;
+    margin-left: 0px;
 }
 
 legend {
@@ -52,4 +55,9 @@ legend {
 .form-group,
 .row {
     padding-top: 3rem;
+    margin-left: 0px;
+}
+
+.form-group.row {
+    max-width: 1120px;
 }

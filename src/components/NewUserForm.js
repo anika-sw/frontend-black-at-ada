@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AutocompleteAddressBar from  '../components/AutocompleteAddressBar';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { setItemInLocalStorage, convertToApiData } from '../utils';
+import { setItemInLocalStorage, convertToApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
 import '../styles/NewForms.css';
 
@@ -64,7 +64,8 @@ const NewUserForm = () => {
     .then(latLng => {
       const latStr = latLng['lat'].toString();
       const lngStr = latLng['lng'].toString();
-      setNewUserData({...newUserData,
+      setNewUserData({
+        ...newUserData,
         locationName: location,
         locationLat: latStr, 
         locationLng: lngStr})
@@ -104,6 +105,7 @@ const NewUserForm = () => {
     ref.current.value = '';
   };
 
+  // generic change event handler
   const handleChange = (event) => {
     const fieldName = event.target.name;
     let fieldValue = event.target.value;
@@ -117,18 +119,17 @@ const NewUserForm = () => {
   };
 
   const addNewUserToApi = (data) => {
-    const requestBody = convertToApiData(data);
+    const requestBody = convertToApi(data);
+
     axios.post(`${kBaseUrl}/signup`, requestBody)
-      .then(response => {
-        console.log('New user sign up: success');
-        setItemInLocalStorage('user', response.data.user.id);
-        routeChange();
-      }
-    )
-      .catch(error => {
-        console.log(error);
-      }
-    );
+    .then(response => {
+      console.log('New user sign up: success');
+      setItemInLocalStorage('user', response.data.user.id);
+      routeChange();
+    })
+    .catch(error => {
+      console.log(error);
+    });
   };
 
   const onFormSubmit = (event) => {
@@ -308,7 +309,7 @@ const NewUserForm = () => {
                       className={imageSaved ? 'saved' : 'save'} 
                       onClick={handleImageUpload}
                       >
-                      {imageSaved ? 'Saved!' : 'Save'}
+                        {imageSaved ? 'Saved!' : 'Save'}
                       </button>
                       {!imageSaved ?
                         <p>Click <span className='text-save'>save</span> to confirm upload of your image</p>
@@ -317,14 +318,18 @@ const NewUserForm = () => {
                   : ''}
                   <br />
                   {!imageSaved &&
+                  <>
+                    <label className='custom-file-upload' htmlFor='profilePicFile'>Choose Image</label>
                     <input
                       type='file'
-                      className='form-control-file'
-                      id='profilePicFile' 
+                      className='form-control-file custom-file-upload'
+                      id='profilePicFile'
                       name='profilePicFile'
                       ref={ref}
-                      onChange={handleChange}
-                    ></input>}
+                      onChange={(event) => {setImage(event.target.files[0])}}
+                    ></input>
+                  </>
+                  } 
                 </div>
               </div>
             </section>

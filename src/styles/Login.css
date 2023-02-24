@@ -49,8 +49,8 @@
     width: 90px;
 }
 
-#email.form-control {
-    width: 370px;
+.login-email{
+    min-width: 370px;
 }
 
 .password-toggle {
