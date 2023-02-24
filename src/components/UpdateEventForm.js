@@ -28,13 +28,13 @@ const kDefaultFormState = {
   organizerPronouns: '',
   organizerEmail: '',
   targetAudience: 'All Black Adies',
-  createdById: null
+  createdById: ''
 }
 
 const getDataFromApi = (string, id) => {
-  return axios.get(`${kBaseUrl}/${string}/${id}`)
+  return axios.get(`${kBaseUrl}/${string}s/${id}`)
   .then((response) => {
-    return convertFromApi(response.data); 
+    return convertFromApi(response.data[string])
   })
   .catch(error => {
     console.log(error);
@@ -66,44 +66,36 @@ const UpdateEventForm = () => {
   const [image, setImage] = useState('');
   const [imageSaved, setImageSaved] = useState(false);
 
+  // compares user id in localStorage with event creator id to confirm user is creator
   const validateCreator = useCallback((userId) => {
+    console.log(userId, eventData.createdById)
     if (userId === eventData.createdById) {
       return setCreator(true);
   }}, [eventData.createdById]);
-  
+
+  // generic function to get event or user data from api
   const getData = useCallback((string, id) => {
     return getDataFromApi(string, id)
     .then(response => {
-      if (response.data[0] === 'event') {
-        setEventData(response.data[0]);
-        setTempEventData(response.data[0]);
+      if ('dateTimeStart' in response) {
+        setEventData(response);
+        setTempEventData(response);
       } else {
-        setUserData(response.data[0]);
-        validateCreator();
+        setUserData(response);
       }
     })
     .catch((error) => {
       console.log(error);
     });
-  }, [validateCreator]);
-
-  // const getUserData = useCallback((id) => {
-  //   return getEventDataFromApi(id)
-  //   .then(savedEvent => {
-  //     setEventData(savedEvent);
-  //     setTempEventData(savedEvent);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // }, []);
+  }, []);
 
   useEffect(() => {
-    getData('events', eventId);
-    getData('users', userId);
-  }, [getData, eventId, userId]);
+    getData('event', eventId);
+    getData('user', userId);
+    validateCreator(userId);
+  }, [getData, validateCreator, eventId, userId]);
   
-    const createdByName = `${userData.firstName} ${userData.lastName}`
+  const createdByName = `${userData.firstName} ${userData.lastName}`
 
   // send event pic to cloud storage
   const handleImageUpload = () => {
@@ -202,6 +194,7 @@ const UpdateEventForm = () => {
     updateEventInApi(tempEventData);
   };
   
+  console.log(creator)
 
   return (
 		<form onSubmit={onFormSubmit} className='newEventForm container'>
@@ -484,20 +477,6 @@ const UpdateEventForm = () => {
       </fieldset>
       <br />
       <p>Event added by: {createdByName}</p>
-      <br />
-      <input
-        type='submit'
-        value='Submit'
-        className='button'
-        disabled={
-          !tempEventData.title ||
-          !tempEventData.description ||
-          !tempEventData.dateTimeStart ||
-          !tempEventData.dateTimeStop ||
-          !tempEventData.timezone
-        }
-      ></input>
-			<br />
 			<br />
       {creator &&
 			<section className='buttonGrid'>
@@ -509,6 +488,7 @@ const UpdateEventForm = () => {
 						!tempEventData.title ||
 						!tempEventData.description ||
             !tempEventData.dateTimeStart ||
+            !tempEventData.dateTimeStop ||
             !tempEventData.timezone
 					}
 				></input>
