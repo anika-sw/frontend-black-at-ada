@@ -7,6 +7,7 @@ import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { getItemFromLocalStorage, convertToApi, convertFromApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
 import '../styles/NewForms.css';
+import '../styles/react-datetime-picker.css'
 
 const kBaseUrl = 'http://localhost:5000';
 
@@ -191,9 +192,10 @@ const NewEventForm = () => {
         <div className='col calendar'>
           <label htmlFor='startTime'>*Start: Date & Time</label>
           <DateTimePicker
-            format='MMMM dd, yyyy|h:mm aa'
+            format='MMMM dd, yyyy   h:mm aa'
             disableClock={true}
             id='startTime'
+            calendarStartDay={1}
             value={dateTimeStart}
             onChange={handleTimeStart}
           />
@@ -201,7 +203,7 @@ const NewEventForm = () => {
         <div className='col calendar'>
           <label htmlFor='endTime'>*End: Date & Time</label>
           <DateTimePicker
-            format='MMMM dd, yyyy|h:mm aa'
+            format='MMMM dd, yyyy   h:mm aa'
             disableClock={true}
             id='endTime'
             value={dateTimeStop}
@@ -384,6 +386,7 @@ const NewEventForm = () => {
             onChange={handleChange}
           ></input>
         </div>
+        <p>(Organizer details are autofilled. If you are not the organizer, please update the information before saving.)</p>
       </div>
       <fieldset className='form-group form-row'>
         <legend className='col-form-label col-sm-2 float-sm-left pt-0'>*Target Audience:</legend>

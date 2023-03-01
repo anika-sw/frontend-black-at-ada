@@ -99,13 +99,8 @@ justify-content: center;
 .react-datetime-picker select,
 .react-datetime-picker__inputGroup__leadingZero,
 .react-datetime-picker__inputGroup__divider {
-    color: #f7b402;
-    font-size: 13px;
-}
-
-svg {
-    stroke: #f7b402;
-    margin-right: 10px;
+    /* color: #f7b402;
+    font-size: 14px; */
 }
 
 .form-check-inline {

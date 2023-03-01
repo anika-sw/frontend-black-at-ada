@@ -28,7 +28,7 @@ const kDefaultFormState = {
   organizerPronouns: '',
   organizerEmail: '',
   targetAudience: 'All Black Adies',
-  createdById: ''
+  createdById: null
 }
 
 const getDataFromApi = (string, id) => {
@@ -68,7 +68,6 @@ const UpdateEventForm = () => {
 
   // compares user id in localStorage with event creator id to confirm user is creator
   const validateCreator = useCallback((userId) => {
-    console.log(userId, eventData.createdById)
     if (userId === eventData.createdById) {
       return setCreator(true);
   }}, [eventData.createdById]);
@@ -152,16 +151,17 @@ const UpdateEventForm = () => {
 
     // special handler for react-datetime-picker component
     const updateTimeStart = (event) => {
+      console.log(event)
       const eventStart = event;
       onChangeStart(eventStart);
-      setTempEventData({...tempEventData, dateTimeStart: eventStart});
+      setTempEventData({...tempEventData, [dateTimeStart]: eventStart});
     };
   
     // special handler for react-datetime-picker component
     const updateTimeStop = (event) => {
       const eventStop = event;
       onChangeStop(eventStop);
-      setTempEventData({...tempEventData, dateTimeStop: eventStop});
+      setTempEventData({...tempEventData, [dateTimeStop]: eventStop});
     };
   
   const updateEventInApi = (data) => {
@@ -194,7 +194,6 @@ const UpdateEventForm = () => {
     updateEventInApi(tempEventData);
   };
   
-  console.log(creator)
 
   return (
 		<form onSubmit={onFormSubmit} className='newEventForm container'>
@@ -219,7 +218,7 @@ const UpdateEventForm = () => {
             format='MMMM dd, yyyy|h:mm aa'
             disableClock={true}
             id='startTime'
-            value={dateTimeStart}
+            value={tempEventData.dateTimeStart}
             onChange={updateTimeStart}
           />
         </div>
@@ -229,7 +228,7 @@ const UpdateEventForm = () => {
             format='MMMM dd, yyyy|h:mm aa'
             disableClock={true}
             id='endTime'
-            value={dateTimeStop}
+            value={tempEventData.dateTimeStop}
             onChange={updateTimeStop}
           />
         </div>
@@ -365,7 +364,7 @@ const UpdateEventForm = () => {
             id='firstName'
             minLength={1}
             maxLength={30}
-            value={tempEventData.organizerFirstName || ''}
+            value={tempEventData.organizerFirstName}
             name='organizerFirstName'
             onChange={handleUpdate}
           ></input>
@@ -378,7 +377,7 @@ const UpdateEventForm = () => {
             id='lastName'
             minLength={1}
             maxLength={30}
-            value={tempEventData.organizerLastName || ''}
+            value={tempEventData.organizerLastName}
             name='organizerLastName'
             onChange={handleUpdate}
           ></input>
@@ -391,7 +390,7 @@ const UpdateEventForm = () => {
             id='pronouns'
             minLength={1}
             maxLength={30}
-            value={tempEventData.organizerPronouns || ''}
+            value={tempEventData.organizerPronouns}
             name='organizerPronouns'
             onChange={handleUpdate}
           ></input>
@@ -404,7 +403,7 @@ const UpdateEventForm = () => {
             id='email'
             minLength={1}
             maxLength={60}
-            value={tempEventData.organizerEmail || ''}
+            value={tempEventData.organizerEmail}
             name='organizerEmail'
             onChange={handleUpdate}
           ></input>
