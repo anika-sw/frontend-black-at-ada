@@ -1,8 +1,19 @@
 .navbar {
-    margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-image: linear-gradient(#181818 75%, transparent);
     color: #f7b402;
-}
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15%;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    z-index: 1000;
+} 
 
 .at {
     color: #e7165f;
@@ -13,17 +24,40 @@
     font-size: 40px;
 }
 
-.btn-nav {
-    background-color: #f7b402;
-    color: black;
-    border: none;
+.MuiList-padding {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
-.dropdown-menu {
-    padding: 10px;
+.MuiPopover-root, .MuiMenu-paper {
+    top: 32px !important;
+    left: auto !important;
+    right: 5px !important;
 }
 
-.dropdown-item:active {
-    background-color: #f7b402;
-    color: black;
+.MuiButtonBase-root {
+    min-width: 162px !important
+}
+
+.dropdown-item {
+    background-color: #181818 !important;
+    color: #f7b402 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #f7b402 !important;
+    color: #181818 !important;
+}
+
+.dropdown-link, 
+.dropdown-link:visited,
+.dropdown-link:hover,
+.dropdown-link:active  {
+    text-decoration: none;
+    color: inherit;
+}
+
+.MuiInput-underline:before,
+.MuiInput-underline:after {
+    border-bottom: none !important;
 }
