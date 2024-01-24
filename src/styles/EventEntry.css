@@ -29,4 +29,9 @@
 
 .card-row {
     min-height: 500px;
+    max-width: 350px;
+}
+
+.container {
+    max-width: 400px; 
 }

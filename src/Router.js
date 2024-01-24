@@ -33,6 +33,9 @@ const theme = createTheme({
       fontFamily: 'Poppins'
     },
   },
+  mixedCaseButton: {
+    textTransform: 'none'
+  },
 })
 
 

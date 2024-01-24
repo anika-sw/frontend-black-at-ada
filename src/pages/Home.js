@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventEntry from  "../components/EventEntry";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 import "../styles/Home.css";
 
 const kBaseUrl = 'http://localhost:5000';
+
 
 const Home = () => {
 
@@ -86,21 +88,21 @@ const Home = () => {
 
   const myEventsList = myEventsData.map((event) => {
     return (
-      <li key={event.id}>
+      <span className="event-list-grid" key={event.id}>
         <EventEntry
           event={event}
         ></EventEntry>
-      </li>
+      </span>
     );
   });
   
   const recentlyAddedList = recentAddData.map((event) => {
     return (
-      <li key={event.id}>
-        <EventEntry
-        event={event}
-        ></EventEntry>
-      </li>
+        <span className="event-list-grid" key={event.id}>
+          <EventEntry
+          event={event}
+          ></EventEntry>
+        </span>
     );
   });
 
@@ -117,27 +119,54 @@ const Home = () => {
 
   return (
     <main className="App">
-
       <h1 className="header-home color-bar">
         Welcome
       </h1>
       <div className="home-flex">
-        <button type="button" className="btn-lg btn-outline-warning" onClick={toEvents}>View All Events</button>
-        <button id="directory" className="btn-lg btn-outline-warning"onClick={toDirectory}><span>Black Adie Directory</span></button>
+        <Button 
+          type="button"
+          sx={{
+            textTransform: 'none'
+          }}
+          onClick={toEvents}>
+            View All Events
+        </Button>
+        <Button 
+          type="button"
+          sx={{
+            textTransform: 'none'
+          }}
+          onClick={toDirectory}>
+            Black Adie Directory
+        </Button>
       </div>
       <div>
         <h2>My Events</h2>
         <h3>Events you've created or commited to attending</h3>
         <ul>{myEventsList}</ul>
         <div className="more-btn-flex">
-          <button type="button" className="btn-lg btn-outline-warning more-btn" onClick={toEvents}>View More Events</button>
+          <Button 
+            type="button"
+            sx={{
+              textTransform: 'none'
+            }}
+            onClick={toEvents}>
+              View More Events
+          </Button>
         </div>
       </div>
       <div>
         <h2>Recently Added Events</h2>
         <ul>{recentlyAddedList}</ul>
         <div className="more-btn-flex">
-          <button type="button" className="btn-lg btn-outline-warning more-btn" onClick={toEvents}>View More Events</button>
+          <Button 
+            type="button"
+            sx={{
+              textTransform: 'none'
+            }}
+            onClick={toEvents}>
+              View More Events
+          </Button>
         </div>      
       </div>
     </main>

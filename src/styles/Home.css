@@ -21,12 +21,10 @@ h3 {
 }
 
 .home-flex {
-    margin-left: 175px;
-    margin-right: 175px;
     margin-top: 15px;;
     display: flex;
     justify-content: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .home-flex button {
@@ -46,7 +44,7 @@ h3 {
     justify-content: center;
 }
 
-.more-btn {
+.more-btn-flex button {
     width: 400px;
     height: 80px;
     margin-top: 75px;
@@ -56,4 +54,9 @@ h3 {
     color: #e7165f;
     align-content: center;
     box-shadow: 0 0 0 0.2rem #f7b402 !important;
+}
+
+.event-list-grid {
+    display: inline-block;
+    max-width: 400px; 
 }
