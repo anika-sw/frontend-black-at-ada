@@ -29,15 +29,11 @@
     padding-bottom: 0 !important;
 }
 
-.MuiPopover-root, .MuiMenu-paper {
-    top: 32px !important;
-    left: auto !important;
-    right: 5px !important;
-}
-
-.MuiButtonBase-root {
-    min-width: 162px !important
-}
+/* .MuiPopover-root, .MuiMenu-paper {
+    top: auto !important;
+    left: inherit !important;
+    right: inherit !important;
+} */
 
 .dropdown-item {
     background-color: #181818 !important;

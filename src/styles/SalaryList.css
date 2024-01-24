@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.sort-btn {
+/* .sort-btn {
     width: 400px;
     height: 80px;
     margin-top: 50px;
@@ -21,9 +21,9 @@
     border-radius: 5px;
     font-family: "Poppins";
     text-align:center
-}
+} */
 
-.sort-btn:hover {
+/* .sort-btn:hover {
     background: #f7b402;
     color: black;  
     border: #f7b402;  
@@ -31,4 +31,4 @@
 
 .sort-btn:focus {
     outline: 0;
-}
+} */

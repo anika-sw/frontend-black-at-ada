@@ -14,7 +14,7 @@
     justify-content: center;
 }
 
-.sort-btn {
+.sort-btn-flex .sort-btn {
     width: 400px;
     height: 80px;
     margin-top: 50px;
@@ -36,6 +36,27 @@
 
 .sort-btn:focus {
     outline: 0;
+}
+
+.sort-item.MuiPaper-root, .sort-item.MuiPopover-paper, .sort-item.MuiMenu-paper {
+    top: 0 !important;
+    left: 50px !important;
+    right: auto !important;
+}
+
+.sort-item {
+    background-color: #181818 !important;
+    color: #f7b402 !important;
+}
+
+.sort-item:hover {
+    background-color: #f7b402 !important;
+    color: #181818 !important;
+}
+
+.directory-grid {
+    display: inline-block;
+    width: 400px; 
 }
 
 

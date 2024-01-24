@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserEntry from  "../components/UserEntry";
+import { Select, MenuItem } from '@material-ui/core';
 import "../styles/Directory.css";
 
 const kBaseUrl = 'http://localhost:5000';
@@ -9,6 +10,8 @@ const kBaseUrl = 'http://localhost:5000';
 const Directory = () => {
 
 	const [usersData, setUsersData] = useState([]);
+  const [selected, setSelected] = useState('Sort By:');
+
 
   const convertFromApi = (apiUser) => {
 		const {
@@ -51,16 +54,18 @@ const Directory = () => {
 
   const usersList = usersData.map((user) => {
     return (
-      <div key={user.id}>
+      <span className="directory-grid" key={user.id}>
         <UserEntry
           user={user}
         ></UserEntry>
-      </div>
+      </span>
     );
   });
 
   const handleSort = (event) => {
-    axios.get(`${kBaseUrl}/users?sort=${event.target.value}`, {})
+    const sortBy = event.target.value;
+    setSelected(sortBy);
+    axios.get(`${kBaseUrl}/users?sort=${sortBy}`, {})
     .then((response) => {
       const convertedData = response.data.map((user) => {
         return convertFromApi(user);
@@ -75,12 +80,21 @@ const Directory = () => {
         Bl<span className="at">a</span>ck Adie Directory
       </h1>
       <div className="sort-btn-flex">
-        <select className="sort sort-btn" onChange={handleSort}>
-          <option value="none">Sort By:</option>
-          <option value="lastName">Last Name</option>
-          <option value="cohort">Cohort</option>
-          <option value="company">Company</option>
-        </select>
+        <Select 
+          className='sort-btn'
+          value={selected}
+          renderValue={(value) => value ? value : "Sort By:"}
+          onChange={handleSort}>      
+            <MenuItem className="sort-item" value="lastName">
+              Last Name
+            </MenuItem>
+            <MenuItem className="sort-item" value="cohort">
+              Cohort
+            </MenuItem>
+            <MenuItem className="sort-item" value="Company">
+              Company
+            </MenuItem>
+        </Select>
       </div>
       <ul>{usersList}</ul>
     </>
