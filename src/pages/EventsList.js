@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EventEntry from  "../components/EventEntry";
+import { Button } from "@mui/material";
 import "../styles/EventsList.css";
 
 
@@ -79,28 +80,35 @@ const EventsList = () => {
     
   const allEventsList = eventsData.map((event) => {
     return (
-      <li key={event.id}>
+      <span className="event-list-grid" key={event.id}>
         <EventEntry
           event={event}
         ></EventEntry>
-      </li>
+      </span>
     );
   });
 
 
   return (
-    <div className="container">
+    <>
       <h1 className="header events-header">
         Upcoming Events
       </h1>
       <div className="add-event-flex">
-        <button type="button" className="add-event-btn" onClick={routeChange}>Add Event</button>
+        <Button 
+          type="button"
+          sx={{
+            textTransform: 'none'
+          }}
+          onClick={routeChange}>
+            Add Event
+        </Button>
       </div>
       <section>
         <h2>All Events</h2>
         <ul className="events-list-flex">{allEventsList}</ul>
       </section>
-    </div>
+    </>
   )
 };  
 

@@ -114,8 +114,6 @@ const Home = () => {
     navigate('/directory');
   }
 
-  // <div class="container-fluid full-width">
-  // <div class="row row-no-gutter">
 
   return (
     <main className="App">
