@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import SalaryEntry from '../components/SalaryEntry';
+import { Select, MenuItem } from '@material-ui/core';
 import "../styles/SalaryList.css";
 
 const kBaseUrl = 'http://localhost:5000';
@@ -9,6 +10,8 @@ const kBaseUrl = 'http://localhost:5000';
 const SalaryList = () => {
 
 	const [usersData, setUsersData] = useState([]);
+  const [selected, setSelected] = useState('Sort By:');
+
 
   const convertFromApi = (apiUser) => {
 		const {
@@ -70,7 +73,7 @@ const SalaryList = () => {
   
   const salaryList = usersWithSalary.map((user) => {
     return (
-      <li key={user.id}>
+      <span className="salary-grid" key={user.id}>
         <SalaryEntry
         firstName={user.firstName}
         lastName={user.lastName}
@@ -83,13 +86,15 @@ const SalaryList = () => {
         created={dateReformat(user.userFirstCreated)}
         updated={dateReformat(user.userFirstCreated)}
         ></SalaryEntry>
-      </li>
+      </span>
     )
   });
 
 
   const handleSort = (event) => {
-    axios.get(`${kBaseUrl}/users?sort=${event.target.value}`, {})
+    const sortBy = event.target.value;
+    setSelected(sortBy);
+    axios.get(`${kBaseUrl}/users?sort=${sortBy}`, {})
       .then((response) => {
         const convertedData = response.data.map((user) => {
           return convertFromApi(user);
@@ -109,13 +114,22 @@ const SalaryList = () => {
       <h1 className="header salary-header">
         Salaries
       </h1>
-      <div className="salary-sort-btn-flex">
-        <select className="sort sort-btn" onChange={handleSort}>
-          <option value="none">Sort By:</option>
-          <option value="salaryAsc">Low to High</option>
-          <option value="salaryDesc">High to Low</option>
-          <option value="salaryCompany">Company</option>
-        </select>
+      <div className="sort-btn-flex">
+        <Select 
+          className='sort-btn'
+          value={selected}
+          renderValue={(value) => value ? value : "Sort By:"}
+          onChange={handleSort}>      
+            <MenuItem className="sort-item" value="salaryAsc">
+              Low to High
+            </MenuItem>
+            <MenuItem className="sort-item" value="salaryDesc">
+              High to Low
+            </MenuItem>
+            <MenuItem className="sort-item" value="salaryCompany">
+              Company
+            </MenuItem>
+        </Select>
       </div>
       <section>
         <ul>{salaryList}</ul>

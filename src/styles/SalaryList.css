@@ -32,3 +32,8 @@
 .sort-btn:focus {
     outline: 0;
 } */
+
+.salary-grid {
+    display: inline-block;
+    width: 400px; 
+}

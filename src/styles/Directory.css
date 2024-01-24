@@ -38,11 +38,11 @@
     outline: 0;
 }
 
-.sort-item.MuiPaper-root, .sort-item.MuiPopover-paper, .sort-item.MuiMenu-paper {
+/* .sort-item.MuiPaper-root, .sort-item.MuiPopover-paper, .sort-item.MuiMenu-paper {
     top: 0 !important;
     left: 50px !important;
     right: auto !important;
-}
+} */
 
 .sort-item {
     background-color: #181818 !important;
