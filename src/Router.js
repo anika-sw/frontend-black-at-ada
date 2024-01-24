@@ -15,22 +15,45 @@ import UserProfile from "./pages/UserProfile";
 import About from "./pages/About";
 import FourOhFour from "./pages/FourOhFour";
 import { AuthProvider } from "./hooks/useAuth";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#f7b402' // yellow
+    },
+    secondary: {
+      main: '#0995b5' // blue
+    },
+    warning: {
+      main: '#e7165f' // pink
+    },
+    typography: {
+      fontFamily: 'Poppins'
+    },
+  },
+})
 
 
 const LoginLayout = () => (
-  <AuthProvider>
-    <LayoutNoNav>
-      <Outlet />
-    </LayoutNoNav>
-  </AuthProvider>
+  <ThemeProvider theme={theme}>
+    <AuthProvider>
+      <LayoutNoNav>
+        <Outlet />
+      </LayoutNoNav>
+    </AuthProvider>
+  </ThemeProvider>
 )
 
 const MainLayout = () => (
-  <AuthProvider>
-    <LayoutWithNav>
-      <Outlet />
-    </LayoutWithNav>
-  </AuthProvider>
+  <ThemeProvider theme={theme}>
+    <AuthProvider>
+      <LayoutWithNav>
+        <Outlet />
+      </LayoutWithNav>
+    </AuthProvider>
+  </ThemeProvider>
 )
 
 export const routes = [

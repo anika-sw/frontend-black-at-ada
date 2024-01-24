@@ -1,60 +1,66 @@
-.login-header p{
-    font-family: "Square Peg";
-    font-size: 75px;
-    color: #f7b402;
-    text-align: center;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    padding-top: 0px;
-}
-
 .login-header h1{
     font-family: "Abril Fatface";
-    font-size: 175px;
-    color: #f7b402;
-    margin-top: 75px;
-    margin-bottom: 0px;
+    font-size: 120px;
     text-align: center;
+    color: #f7b402;
+    margin: 0px;
 }
 
 .at {
     color: #e7165f;
 }
 
-.login-header .sm-text{
+.sub-heading{
     font-family: "Poppins";
     font-size: 20px;
-    padding-top: 40px;
-    margin-bottom: 0px;
-    margin-top: 0px;
+    text-align: center;
+    color: #f7b402;
+    margin-bottom: 50px;
 }
 
-.login-flex {
+.login-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.text-input-flex {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    background-color: #181818;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-top: #f7b402 solid 5px;
+    border-right: #f7b402 solid 5px;
+    border-left: #f7b402 solid 5px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
 }
 
-.loginForm {
-    width: 800px;
-    border-color: #f7b402;
-    background-color: none;
-    margin-top: 0px;
-    padding-bottom: 15px;
-    border-radius: 25px;
+.tiny-text-container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #181818;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-right: #f7b402 solid 5px;
+    border-left: #f7b402 solid 5px;
+    border-bottom: #f7b402 solid 5px;
+    padding: 20px;
+    margin-bottom: 75px;
 }
 
 .login-btn {
-    background-color: #0ba3c1;
     font-weight: bold;
-    width: 90px;
 }
 
-.login-email{
-    min-width: 370px;
+.email {
+    background-color: #FFFFFF;
 }
 
-.password-toggle {
-    margin-left: 10px;
+.password {
+    background-color: #FFFFFF;
 }
 
 .btn-container{
@@ -64,4 +70,17 @@
     display: flex;
     justify-content: center;
     justify-content: space-around;
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("DressCode-Regular"),
+    url("../fonts/DressCode-Regular.ttf") format("truetype");
+}
+
+.tiny-text-container, .span {
+    font-family: 'Regular';
+    font-size: small;
+    font-weight: bold;
+    color:#f7b402;
 }

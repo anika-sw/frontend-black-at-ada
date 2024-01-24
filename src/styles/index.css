@@ -1,7 +1,7 @@
-* {
+/* * {
     margin-left: 1%;
     margin-right: 1%;
-}
+} */
 
 body {
     padding-top: 100px;
@@ -30,7 +30,7 @@ li {
     list-style-type: none;
 }
 
-button {
+button, .btn {
     border-radius: 5px;
     border: none;
     margin: 5px;
@@ -60,4 +60,13 @@ legend {
 
 .form-group.row {
     max-width: 1120px;
+}
+
+.btn {
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    height: 30px;
+    font-size: 16px;
+    font-family: "Poppins";
 }

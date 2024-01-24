@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { TextField, InputAdornment, IconButton, Button, FormControlLabel, Checkbox, Typography } from "@mui/material";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import "../styles/Login.css";
+import "../fonts/DressCode-Medium.ttf"
 
 const kBaseUrl = 'http://localhost:5000';
 
@@ -59,44 +62,96 @@ const Login = () => {
   return (
     <>
       <div className="login-header">
-        <p>Now Entering...</p>
         <h1>Black<span className="at">@</span>Ada</h1>
-        <p className="sm-text">A virtual gathering space for Ada Developer Academy's Black Students and alum</p>
+        <p className="sub-heading">A virtual gathering space for Ada Developers Academy's Black students and alum</p>
       </div>
-      <div className="login-flex">
-        <form onSubmit={onFormSubmit} className="loginForm">
-          <div className="form-row form-inline">
-            <div className="col">
-              <input
-                type="email"
-                className="form-control login-email"
+      <div className="login-container">
+        <div className="grid-side-empty">
+        </div>
+        <form onSubmit={onFormSubmit}>
+          <div className="text-input-flex">
+            <>
+              <TextField 
+                required
+                margin='normal'
+                label="Email"
+                className="email" 
                 id="email"
+                type="email"
                 aria-describedby="email"
-                placeholder="Email"
+                variant="filled"
+                color='secondary'
                 minLength={1}
                 value={email}
-                onChange={addEmail}
-              ></input>
-            </div>
-            <div className="col">        
-              <input
+                onChange={addEmail}>
+              </TextField>
+            </>
+            <>
+              <TextField
+                required 
+                margin='normal'
+                label="Password" 
+                className="password"
+                id="password" 
                 type={passwordShown ? "text" : "password"}
-                className="form-control"
-                id="password"
                 aria-describedby="password" 
-                placeholder="Password"
+                variant='filled'
+                color='secondary'
                 minLength={1}
                 value={password}
                 onChange={addPassword}
-              ></input>
-              <button type="button" className="btn btn-sm btn-secondary password-toggle" onClick={showHidePassword}>Show/Hide Password</button>
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={showHidePassword}
+                      >
+                        {passwordShown ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}>
+              </TextField>
+            </>
+            <div>
+              <FormControlLabel 
+                control={
+                  <Checkbox 
+                    sx={{
+                      color: "white",
+                    }}/>
+                  } 
+                label={
+                  <Typography sx={{ fontFamily: 'Poppins', color: '#e7165f' }}>
+                    Keep me logged in
+                  </Typography>
+                }
+                id="checkbox">
+              </FormControlLabel>
+            </div>
+            <div>
+              <Button 
+                fullWidth
+                color='secondary'
+                type="submit"
+                variant="contained"
+                sx={{
+                  color: 'black',
+                  fontSize: '20px',
+                  fontWeight: 'semi-bold'
+                }}>
+                  Login
+              </Button>
             </div>
           </div>
-          <div className="btn-container">
-            <button type="submit" className="btn login-btn">Login</button>
-            <button type="button" className="btn login-btn" onClick={routeChange}>Sign Up</button>
+          <div className="tiny-text-container">
+            <span>Forgot password?</span>
+            <span onClick={routeChange}>New member? Register</span>
           </div>
         </form>
+        <div className="grid-side-empty">
+        </div>
       </div>
     </>
   );
