@@ -34,7 +34,7 @@ const AutocompleteAddressBar = (props) => {
 
 
   return (
-    <div>
+    <>
         <PlacesAutocomplete
           value={location}
           onChange={handleChange}
@@ -64,7 +64,7 @@ const AutocompleteAddressBar = (props) => {
             </div>
           )}
         </PlacesAutocomplete>
-    </div>
+    </>
   );
 };
 

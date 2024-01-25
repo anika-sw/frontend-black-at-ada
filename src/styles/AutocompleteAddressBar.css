@@ -12,9 +12,13 @@
 .location-search-input:focus,
 .location-search-input:active {
     display: block;
-    width: 400px;
+    width: 350px;
     font-size: 16px;
     outline: none;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 4px;
+    /* padding: 0; */
 }
 
 .suggestion-item {

@@ -54,13 +54,25 @@ legend {
     color: #f7b402;
 }
 
-.form-row,
+/* .form-row,
 .form-group,
 .row {
     padding-top: 3rem;
     margin-left: 0px;
+} */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-top: 3rem;
+    margin-left: 0px;
+    /* padding-bottom: 60px; */
 }
 
-.form-group.row {
+/* .form-group.row {
     max-width: 1120px;
-}
+} */
+
+/* .col {
+    display: inline-block
+} */

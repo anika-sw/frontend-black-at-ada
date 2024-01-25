@@ -287,12 +287,13 @@ const UpdateUser = () => {
         </div>
         <div className="col">  
           <label htmlFor="location">
-            *Location (saved): {userData.locationName}
+            *Location (saved): <span className="saved-location">{userData.locationName}</span>
           </label>
-          <label>
-            New Location (Enter city ,country, zip
-            code, or post code)
-          </label>
+          <div>
+            <label>
+              Update Location (city, country, or post code)
+            </label>
+          </div>
           <AutocompleteAddressBar selectLocation={updateLocation} />
         </div>
         <div className="col">  
@@ -326,7 +327,6 @@ const UpdateUser = () => {
           ></input>
         </div>
         <div className="col">                
-          <label htmlFor="password">*Password</label>
           <label>Change Password</label>
           <input
             type={passwordShown ? "text" : "password"} 
@@ -338,7 +338,7 @@ const UpdateUser = () => {
             onChange={changePassword}
             placeholder={"Type new password"}
           ></input>
-          <button type="button" className="btn btn-sm btn-secondary" onClick={showHidePassword}>
+          <button type="button" className="password-btn" onClick={showHidePassword}>
             Show/Hide Password
           </button>
         </div>
@@ -416,17 +416,19 @@ const UpdateUser = () => {
       </div>
       <div className="form-row">
         <div className="col">   
-          <p>Years of Experience (saved): {userData.yearsExperience}</p>
-          <label htmlFor="experience">Years of Experience:
-            <select className="experience" onChange={updateYearsExperience}>
-              <option className="experience" value="N/A">N/A</option>
-              <option className="experience" value="< 1">&lt; 1</option>
-              <option className="experience" value="1 - 3">1 - 3</option>
-              <option className="experience" value="3 - 5">3 - 5</option>
-              <option className="experience" value="5 - 10">5 - 10</option>
-              <option className="experience" value="10+">10+</option>
-            </select>
-          </label>
+          <div><label>Years of Experience (saved): <span className="saved-location">{userData.yearsExperience}</span></label></div>
+          <div>
+            <label htmlFor="experience">Years of Experience:
+              <select className="experience" onChange={updateYearsExperience}>
+                <option className="experience" value="N/A">N/A</option>
+                <option className="experience" value="< 1">&lt; 1</option>
+                <option className="experience" value="1 - 3">1 - 3</option>
+                <option className="experience" value="3 - 5">3 - 5</option>
+                <option className="experience" value="5 - 10">5 - 10</option>
+                <option className="experience" value="10+">10+</option>
+              </select>
+            </label>
+          </div>
         </div>
         <div className="col">
           <div className="form-check">           
@@ -459,10 +461,10 @@ const UpdateUser = () => {
           </div>
         </div>
         <div className="btn-flex">
-          <input  
+          <input 
             type="submit"
             value="Update Profile"
-            className="button"
+            className="update-btn"
             disabled={
               !tempUserData.firstName ||
               !tempUserData.lastName ||

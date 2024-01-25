@@ -5,8 +5,6 @@ import AutocompleteAddressBar from  '../components/AutocompleteAddressBar';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { setItemInLocalStorage, convertToApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import '../styles/NewForms.css';
 
 const kBaseUrl = 'http://localhost:5000';
@@ -186,14 +184,7 @@ const NewUserForm = () => {
 			<section>
 				{adaStudentAlum && blackIdentity && confirm && (
 					<>
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '25ch' },
-                
-              }}
-              noValidate
-              autoComplete="off">              
+            <section>              
               <h1>Your Information</h1>
               <p>
                 All fields marked with an * are required. Your name,
@@ -201,31 +192,6 @@ const NewUserForm = () => {
                 provided), company (if provided), email, and picture
                 will be posted in the Black Adie Directory.
               </p>
-              <TextField
-                required
-                id="filled-multiline-flexible"
-                label="First Name"
-                multiline
-                maxRows={4}
-                variant="filled"
-                sx={{
-                  color: "!important #f7b402"
-                }}
-              />
-              <TextField
-                id="filled-multiline-flexible"
-                label="Multiline"
-                multiline
-                maxRows={4}
-                variant="filled"
-              />
-              <TextField
-                id="filled-multiline-flexible"
-                label="Multiline"
-                multiline
-                maxRows={4}
-                variant="filled"
-              />
               <div className='form-row'>
                 <div className='col'>            
                   <label htmlFor='firstName'>*First Name</label>
@@ -366,7 +332,7 @@ const NewUserForm = () => {
                   } 
                 </div>
               </div>
-            </Box>
+            </section>
             <section>
               <h2>Company & Salary Information</h2>
               <p>
