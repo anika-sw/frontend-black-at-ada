@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <span className="navbar-brand">Black<span className="at">@</span>Ada</span>
+      <a className="navbar-brand" href="/home">Black<span className="at">@</span>Ada</a>
       <div>
         <Select 
           style={{

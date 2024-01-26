@@ -19,9 +19,12 @@
     color: #e7165f;
 }
 
-.navbar-brand {
+.navbar-brand,
+.navbar-brand:visited {
     font-family: "Abril Fatface";
     font-size: 40px;
+    text-decoration: none;
+    color: #f7b402;
 }
 
 .MuiList-padding {
