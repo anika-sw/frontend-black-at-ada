@@ -1,0 +1,211 @@
+.instructions {
+    font-size: 20px;
+    margin-top: 70px;
+    margin-bottom: 0px;
+}
+
+.title-input,
+.description-input {
+    min-width: 100%;
+    margin-left: -12px;
+    margin-right: 0;
+}
+
+.title-row,
+.description-row {
+    margin: 0;
+}
+
+.react-datetime-picker,
+.react-datetime-picker--closed,
+.react-datetime-picker--enabled {
+    margin-left: -4px;
+}
+
+.react-datetime-picker__wrapper {
+    min-width: 360px;
+    height: 31px;
+    border-radius: 2px;
+}
+
+.react-datetime-picker__inputGroup { 
+    max-width: 295px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.react-datetime-picker__inputGroup__amPm {
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.react-datetime-picker__button {
+    margin: 0 1px;
+}
+
+.timezone-input {
+    margin-left: 0px;
+}
+
+.map {
+    margin-left: -6px;
+}
+
+.submit-btn {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    cursor: pointer;
+}
+
+/* .newUserForm h1 {
+    text-align: center;
+    margin-bottom: 75px;
+    color: #f7b402;
+}
+
+.newUserForm h2 {
+    margin-top: 75px;
+}
+
+.newUserForm section {
+    margin: 10px;
+} */
+
+.newUserForm button {
+    margin: 10px;
+}
+
+
+
+.password-btn {
+    margin-left: 0px !important;
+    cursor: pointer;
+}
+
+.newUserForm p {
+    color: #0ba3c1;
+    margin-bottom: 20px;
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 22px;
+}
+
+.newUserForm section {
+    padding-bottom: 20px;
+}
+
+.newEventForm.container {
+justify-content: center;
+}
+
+.form-control-file {
+    color: #f7b402;
+}
+
+
+
+
+.form-check-inline {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.form-check-inline .form-check-label {
+    min-width: 90px;
+}
+
+.form-check-label.audience {
+    min-width: 200px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.experience {
+    background-color: black;
+    outline: none;
+    color: #f7b402;
+}
+
+.experience:hover {
+    background-color: #f7b402;
+    color: black;
+}
+
+.text-save {
+    color: #e7165f;
+    font-weight: bold;
+}
+
+.save {
+    background-color: #e7165f;
+    font-weight: bold;
+}
+
+.saved {
+    background-color: #f7b402;
+    font-weight: bold;
+}
+
+.saved-location {
+    color: #0ba3c1;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input {
+    width: 350px;
+    height: 25px;
+    font-size: 16px;
+    margin-left: -5px;
+}
+
+.custom-file-upload {
+    display: block;
+    background-color: #efefef;
+    color: black;
+    border-radius: 5px;
+    padding: 3px 6px 0px 6px;
+    cursor: pointer;
+    height: 27px;
+    margin-top: 1px;
+    width: 120px;
+    align-content: center;
+}
+
+.delete-btn {
+    background-color: #0ba3c1;
+}
+
+.signup-btn {
+    font-weight: bold;
+    width: 150px;
+    margin-left: 0;
+    cursor: pointer;
+}
+
+.form-check-input {
+    width: 20px;
+    height: 15px;
+}
+
+.form-check-label {
+    margin-top: 0px !important;
+}
+
+.update-btn {
+    width: 125px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    height: 30px;
+    font-size: 16px;
+    font-family: "Poppins";
+}

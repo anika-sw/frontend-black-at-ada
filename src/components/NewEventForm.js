@@ -6,7 +6,7 @@ import DateTimePicker from 'react-datetime-picker';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { getItemFromLocalStorage, convertToApi, convertFromApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
-import '../styles/NewForms.css';
+import '../styles/EventForms.css';
 import '../styles/react-datetime-picker.css'
 
 const kBaseUrl = 'http://localhost:5000';
@@ -173,35 +173,39 @@ const NewEventForm = () => {
   
 
   return (
-		<form onSubmit={onFormSubmit} className='newEventForm container'>
+		<form onSubmit={onFormSubmit} className='eventForm'>
       <p className='instructions'>All fields marked with an * are required.</p>
-      <div className='form-group form-row'>
-        <label className='col-form-label' htmlFor='title'>*Event Title</label>
-        <input
-          type='text'
-          className='form-control'
-          id='title'
-          minLength={1}
-          maxLength={100}
-          value={newEventData.title}
-          name='title'
-          onChange={handleChange}
-        ></input>
+      <div className='form-group'>
+        <div className='title-row'>
+          <label className='col-form-label title' htmlFor='title'>Event Title*</label>
+          <div>
+            <input
+              type='text'
+              className='form-control title-input'
+              id='title'
+              mnLength={1}
+              maxLength={100}
+              value={newEventData.title}
+              name='title'
+              onChange={handleChange}
+            ></input>
+          </div>
+        </div>
       </div>
       <div className='form-group form-row'> 
+          <div className='col calendar'>
+            <label htmlFor='startTime'>Start: Date & Time*</label>
+            <DateTimePicker
+              format='MMMM dd, yyyy   h:mm aa'
+              disableClock={true}
+              id='startTime'
+              calendarStartDay={1}
+              value={dateTimeStart}
+              onChange={handleTimeStart}
+            />
+          </div>
         <div className='col calendar'>
-          <label htmlFor='startTime'>*Start: Date & Time</label>
-          <DateTimePicker
-            format='MMMM dd, yyyy   h:mm aa'
-            disableClock={true}
-            id='startTime'
-            calendarStartDay={1}
-            value={dateTimeStart}
-            onChange={handleTimeStart}
-          />
-        </div>
-        <div className='col calendar'>
-          <label htmlFor='endTime'>*End: Date & Time</label>
+          <label htmlFor='endTime'>End: Date & Time*</label>
           <DateTimePicker
             format='MMMM dd, yyyy   h:mm aa'
             disableClock={true}
@@ -211,10 +215,10 @@ const NewEventForm = () => {
           />
         </div>
         <div className='col'>
-          <label htmlFor='timezone'>*Time Zone</label>
+          <label htmlFor='timezone'>Time Zone*</label>
           <input
             type='text'
-            className='form-control'
+            className='form-control timezone-input'
             id='timezone'
             minLength={1}
             maxLength={40}
@@ -224,22 +228,26 @@ const NewEventForm = () => {
           ></input>
         </div>
       </div>
-      <div className='form-group form-row'>
-        <label className='col-form-label' htmlFor='description'>*Description</label>
-        <textarea
-          type='text'
-          className='form-control'
-          id='description'
-          rows='3'
-          minLength={1}
-          maxLength={500}
-          value={newEventData.description}
-          name='description'
-          onChange={handleChange}
-        ></textarea>
+      <div className='form-group'>
+        <div className='description-row'>
+        <label className='col-form-label' htmlFor='description'>Description*</label>
+          <div>
+            <textarea
+              type='text'
+              className='form-control description-input'
+              id='description'
+              rows='3'
+              minLength={1}
+              maxLength={500}
+              value={newEventData.description}
+              name='description'
+              onChange={handleChange}
+            ></textarea>
+          </div>
+        </div>
       </div>
       <fieldset className='form-group form-row'>
-        <legend className='col-form-label col-sm-1 float-sm-left pt-0'>*Location:</legend>
+        <legend className='col-form-label col-sm-1 float-sm-left pt-0'>Location*</legend>
         <div className='col'>
           <div className='form-check'>
             <input
@@ -267,16 +275,16 @@ const NewEventForm = () => {
           </div>
         </div>
         <div className='col'>
-          <label htmlFor='linkOrMeetingId'>Link or Meeting ID</label>
+          <label htmlFor='videoConfLink'>Link or Meeting ID</label>
           <input
             type='text'
             className='form-control'
-            id='linkOrMeetingId'
+            id='videoConfLink'
             minLength={1}
             maxLength={60}
             value={newEventData.videoConfLink}
-            name='linkOrMeetingId'
-            onInput={handleChange}
+            name='videoConfLink'
+            onChange={handleChange}
           ></input>
         </div>
         <div className='col'>
@@ -289,107 +297,117 @@ const NewEventForm = () => {
             maxLength={40}
             value={newEventData.meetingKey}
             name='meetingKey'
-            onInput={handleChange}
+            onChange={handleChange}
           ></input>
         </div>
       </fieldset>
       <div className='form-group form-row'>
         <div className='col'>
-          <p>For in-person events, enter an address or location below</p> 
-            <div className='map'>
-              <EventMap selectLocation={getLocation} />
-            </div>
+          <label>For in-person events, enter an address or location below</label> 
+          <div className='map'>
+            <EventMap selectLocation={getLocation} />
+          </div>
         </div>
         <div className='col'>
           <label className='form-label' htmlFor='imageFile'>Upload an event-related image</label>
-            {image ? 
-              <>
-                <ImagePreview src={image} alt='' />
-                <button type='button' onClick={resetImage}>Remove</button>
-                <button type='button' 
-                className={imageSaved ? 'saved' : 'save'}
-                onClick={handleImageUpload}
-                >
-                  {imageSaved ? 'Saved!' : 'Save'}
-                </button>
-                {!imageSaved ?
-                    <p>Click <span className='text-save'>save</span> to confirm upload of your image</p>
-                : ''}
-              </>
-            : ''}
-            <br />
-            {!imageSaved &&
+          {image ?
             <>
-              <label className='custom-file-upload' htmlFor='imageFile'>Choose Image</label>
-              <input
-                type='file'
-                className='form-control-file custom-file-upload'
-                id='imageFile'
-                name='imageFile'
-                ref={ref}
-                onChange={(event) => {setImage(event.target.files[0])}}
-              ></input>
+              <ImagePreview src={image} alt='' />
+              <button type='button' onClick={resetImage}>Remove</button>
+              <button type='button' 
+              className={imageSaved ? 'saved' : 'save'} 
+              onClick={handleImageUpload}
+              >
+                {imageSaved ? 'Saved!' : 'Save'}
+              </button>
+              {!imageSaved ?
+                <p>Click <span className='text-save'>save</span> to confirm upload of your image</p>
+              : ''}
             </>
-            } 
+          : ''}
+          <br />
+          {!image &&
+          <>
+            <label className='custom-file-upload' htmlFor='imageFile'>Choose Image</label>
+            <input
+              type='file'
+              className='form-control-file custom-file-upload'
+              id='imageFile'
+              name='imageFile'
+              ref={ref}
+              onChange={(event) => {setImage(event.target.files[0])}}
+            ></input>
+          </>
+          } 
         </div>
       </div>
+      <p className='instructions'>Organizer details are autofilled. If you are not the organizer, please update the information below before saving.</p>
       <div className='form-group form-row'>
         <div className='col'>
           <label htmlFor='organizerFirstName'>Organizer's First Name</label>
-          <input
-            type='text'
-            className='form-control'
-            id='firstName'
-            minLength={1}
-            maxLength={30}
-            value={newEventData.organizerFirstName || ''}
-            name='organizerFirstName'
-            onChange={handleChange}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='firstName'
+              minLength={1}
+              maxLength={30}
+              value={newEventData.organizerFirstName || ''}
+              name='organizerFirstName'
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
         <div className='col'>
           <label htmlFor='organizerLastName'>Organizer's Last Name</label>
-          <input
-            type='text'
-            className='form-control'
-            id='lastName'
-            minLength={1}
-            maxLength={30}
-            value={newEventData.organizerLastName || ''}
-            name='organizerLastName'
-            onChange={handleChange}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='lastName'
+              minLength={1}
+              maxLength={30}
+              value={newEventData.organizerLastName || ''}
+              name='organizerLastName'
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
         <div className='col'>
           <label htmlFor='organizerPronouns'>Organizer's Pronouns, if known</label>
-          <input
-            type='text'
-            className='form-control'
-            id='pronouns'
-            minLength={1}
-            maxLength={30}
-            value={newEventData.organizerPronouns || ''}
-            name='organizerPronouns'
-            onChange={handleChange}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='pronouns'
+              minLength={1}
+              maxLength={30}
+              value={newEventData.organizerPronouns || ''}
+              name='organizerPronouns'
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
-        <div className='col'>
-          <label htmlFor='organizerEmail'>Organizer's Email</label>
-          <input
-            type='email'
-            className='form-control'
-            id='email'
-            minLength={1}
-            maxLength={60}
-            value={newEventData.organizerEmail || ''}
-            name='organizerEmail'
-            onChange={handleChange}
-          ></input>
+        <div className='form-group form-row'>
+          <div className='col'>
+            <label htmlFor='organizerEmail'>Organizer's Email</label>
+            <div>
+              <input
+                type='email'
+                className='form-control'
+                id='email'
+                minLength={1}
+                maxLength={60}
+                value={newEventData.organizerEmail || ''}
+                name='organizerEmail'
+                onChange={handleChange}
+              ></input>
+            </div>
+          </div>
         </div>
-        <p>(Organizer details are autofilled. If you are not the organizer, please update the information before saving.)</p>
       </div>
       <fieldset className='form-group form-row'>
-        <legend className='col-form-label col-sm-2 float-sm-left pt-0'>*Target Audience:</legend>
+        <legend className='col-form-label col-sm-2 float-sm-left pt-0'>Target Audience*</legend>
         <div className='col-sm-10'>
           <div className='form-check'>
             <input
@@ -459,7 +477,7 @@ const NewEventForm = () => {
       <input
         type='submit'
         value='Submit'
-        className='button'
+        className='submit-btn'
         disabled={
           !newEventData.title ||
           !newEventData.description ||

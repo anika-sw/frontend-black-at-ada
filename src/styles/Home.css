@@ -8,18 +8,6 @@
     background-image: linear-gradient(to right,transparent, #0995b5, transparent);
 }
 
-h2 {
-    font-family: "Abril Fatface";
-    color: #f7b402;
-}
-
-h3 {
-    font-family: "Poppins";
-    color: #0995b5;
-    font-size: 16px;
-    padding-top: 10px;
-}
-
 .home-flex {
     margin-top: 15px;;
     display: flex;
@@ -35,7 +23,7 @@ h3 {
     font-size: 35px;
     background-color: #181818;
     color: #e7165f;
-    box-shadow: 0 0 0 0.2rem #f7b402 !important;
+    box-shadow: 0 0 0 0.2rem #f7b402;
 }
 
 .more-btn-flex {
@@ -53,7 +41,7 @@ h3 {
     background-color: #181818;
     color: #e7165f;
     align-content: center;
-    box-shadow: 0 0 0 0.2rem #f7b402 !important;
+    box-shadow: 0 0 0 0.2rem #f7b402;
 }
 
 .event-list-grid {

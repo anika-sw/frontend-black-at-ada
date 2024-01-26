@@ -5,7 +5,7 @@ import AutocompleteAddressBar from  '../components/AutocompleteAddressBar';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { setItemInLocalStorage, convertToApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
-import '../styles/NewForms.css';
+import '../styles/UserProfile.css';
 
 const kBaseUrl = 'http://localhost:5000';
 

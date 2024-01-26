@@ -23,7 +23,7 @@ h3 {
     font-family: "Poppins";
     color: #0995b5;
     font-size: 16px;
-    padding-top: 10px;
+    /* padding-top: 10px; */
 }
 
 li {
@@ -54,18 +54,20 @@ legend {
     color: #f7b402;
 }
 
-/* .form-row,
 .form-group,
-.row {
+.form-row {
     padding-top: 3rem;
     margin-left: 0px;
-} */
+}
 
+fieldset.form-group,
+fieldset.form-row {
+    margin-top: 40px;
+    padding-top: 20px;
+}
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding-top: 3rem;
-    margin-left: 0px;
     /* padding-bottom: 60px; */
 }
 

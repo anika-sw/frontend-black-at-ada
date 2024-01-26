@@ -6,7 +6,7 @@ import DateTimePicker from 'react-datetime-picker';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { getItemFromLocalStorage, convertToApi, convertFromApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
-import '../styles/NewForms.css';
+import '../styles/EventForms.css';
 
 const kBaseUrl = 'http://localhost:5000';
 
@@ -289,16 +289,16 @@ const UpdateEventForm = () => {
           </div>
         </div>
         <div className='col'>
-          <label htmlFor='linkOrMeetingId'>Link or Meeting ID</label>
+          <label htmlFor='videoConfLink'>Link or Meeting ID</label>
           <input
             type='text'
             className='form-control'
-            id='linkOrMeetingId'
+            id='videoConfLink'
             minLength={1}
             maxLength={60}
             value={tempEventData.videoConfLink}
-            name='linkOrMeetingId'
-            onInput={handleUpdate}
+            name='videoConfLink'
+            onChange={handleUpdate}
           ></input>
         </div>
         <div className='col'>
@@ -311,7 +311,7 @@ const UpdateEventForm = () => {
             maxLength={40}
             value={tempEventData.meetingKey}
             name='meetingKey'
-            onInput={handleUpdate}
+            onChange={handleUpdate}
           ></input>
         </div>
       </fieldset>

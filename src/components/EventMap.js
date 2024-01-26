@@ -51,7 +51,7 @@ const EventMap = (props) => {
 
   return (
     <div>
-      <div>
+      <div className='event-map'>
         <PlacesAutocomplete
           value={eventAddress}
           onChange={handleChange}
@@ -84,7 +84,7 @@ const EventMap = (props) => {
       </div>
       <div>
           <GoogleMap 
-            mapContainerStyle={{ width: '400px', height: '400px' }}
+            mapContainerStyle={{ width: '354px', height: '354px', marginLeft: '-1.5px' }}
             center={mapCenter} 
             zoom={12}
             options={{
