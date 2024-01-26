@@ -54,6 +54,17 @@ legend {
     color: #f7b402;
 }
 
+input {
+    width: 350px;
+    height: 25px;
+    font-size: 16px;
+    margin-left: -5px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
 .form-group,
 .form-row {
     padding-top: 3rem;
@@ -69,6 +80,39 @@ fieldset.form-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     /* padding-bottom: 60px; */
+}
+
+.form-check-input {
+    width: 20px;
+    height: 15px;
+}
+
+.custom-file-upload {
+    display: block;
+    background-color: #efefef;
+    color: black;
+    border-radius: 5px;
+    padding: 3px 6px 0px 6px;
+    cursor: pointer;
+    height: 27px;
+    margin-top: 1px;
+    width: 120px;
+    align-content: center;
+}
+
+.text-save {
+    color: #e7165f;
+    font-weight: bold;
+}
+
+.save {
+    background-color: #e7165f;
+    font-weight: bold;
+}
+
+.saved {
+    background-color: #f7b402;
+    font-weight: bold;
 }
 
 /* .form-group.row {

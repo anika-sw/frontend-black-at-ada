@@ -126,79 +126,13 @@ justify-content: center;
     margin-right: 0px;
 }
 
-.experience {
-    background-color: black;
-    outline: none;
-    color: #f7b402;
-}
-
-.experience:hover {
-    background-color: #f7b402;
-    color: black;
-}
-
-.text-save {
-    color: #e7165f;
-    font-weight: bold;
-}
-
-.save {
-    background-color: #e7165f;
-    font-weight: bold;
-}
-
-.saved {
-    background-color: #f7b402;
-    font-weight: bold;
-}
-
-.saved-location {
-    color: #0ba3c1;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-input {
-    width: 350px;
-    height: 25px;
-    font-size: 16px;
-    margin-left: -5px;
-}
-
-.custom-file-upload {
-    display: block;
-    background-color: #efefef;
-    color: black;
-    border-radius: 5px;
-    padding: 3px 6px 0px 6px;
-    cursor: pointer;
-    height: 27px;
-    margin-top: 1px;
-    width: 120px;
-    align-content: center;
-}
-
 .delete-btn {
     background-color: #0ba3c1;
 }
 
-.signup-btn {
-    font-weight: bold;
-    width: 150px;
-    margin-left: 0;
-    cursor: pointer;
-}
-
-.form-check-input {
-    width: 20px;
-    height: 15px;
-}
-
-.form-check-label {
+/* .form-check-label {
     margin-top: 0px !important;
-}
+} */
 
 .update-btn {
     width: 125px;
