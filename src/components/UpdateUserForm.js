@@ -5,7 +5,7 @@ import axios from "axios";
 import AutocompleteAddressBar from "./AutocompleteAddressBar";
 import ImagePreview from "./ImagePreview";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import "../styles/UserProfile.css";
+import "../styles/UserForms.css";
 
 const kBaseUrl = "http://localhost:5000";
 
@@ -159,10 +159,9 @@ const UpdateUser = () => {
 
 	//update profile pic in cloud storage
 	const handleImageUpload = () => {
-		const formData = new FormData();
-		formData.append("image", image);
-		axios
-			.post(`${kBaseUrl}/images/upload`, formData, {
+		const imageCloudData = new FormData();
+		imageCloudData.append("image", image);
+		axios.post(`${kBaseUrl}/images/upload`, imageCloudData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
@@ -171,7 +170,7 @@ const UpdateUser = () => {
 				console.log("Image URL: success");
 				setTempUserData({
 					...tempUserData,
-					profilePicFile: response.data,
+					profilePicFile: response.data.url,
 				});
 				setImageSaved(true);
 			})
@@ -218,9 +217,9 @@ const UpdateUser = () => {
 	};
 
 	return (
-		<form className="updateUserForm" onSubmit={onFormSubmit}>
+		<form className="user-form" onSubmit={onFormSubmit}>
 			<h1>My Profile</h1>
-			<p>
+			<p className="instructions">
 				All fields marked with an * are required. Your name, pronouns
 				(if provided), cohort, LinkedIn link (if provided), company (if
 				provided), email, and picture will be posted in the Black Adie
@@ -306,18 +305,16 @@ const UpdateUser = () => {
           </div>
 				</div>
 				<div className="col">
+						<label>
+							Update Location (city, country, or post code)
+						</label>
+					<AutocompleteAddressBar selectLocation={updateLocation} />
 					<label htmlFor="location">
-						Location* (saved):{" "}
+						Location* (saved):{' '}
 						<span className="saved-location">
 							{userData.locationName}
 						</span>
 					</label>
-					<div>
-						<label>
-							Update Location (city, country, or post code)
-						</label>
-					</div>
-					<AutocompleteAddressBar selectLocation={updateLocation} />
 				</div>
 				<div className="col">
 					<label htmlFor="linkedin">LinkedIn Profile URL</label>
@@ -381,44 +378,41 @@ const UpdateUser = () => {
 						Show/Hide Password
 					</button>
 				</div>
-				<div className="col">
-					<label htmlFor="image">Profile Pic*</label>
-					{tempUserData.profilePicFile || image ? (
+        <div className='col'>
+          <label className='form-label' htmlFor='profilePic'>Profile Pic*</label>
+          {tempUserData.profilePicFile || image ?
 						<>
-							<ImagePreview
-								src={tempUserData.profilePicFile || image}
-								alt=""
-							/>
-							<button type="button" onClick={resetImage}>
-								Remove
-							</button>
+							<ImagePreview src={tempUserData.profilePicFile || image} alt="" />
+							<button type="button" onClick={resetImage}>Remove</button>
+              <button type='button' 
+                className={imageSaved ? 'saved' : 'save'}
+                onClick={handleImageUpload}
+              >
+                {imageSaved ? 'Saved!' : 'Save'}
+              </button>
+              {!imageSaved ?
+                  <p>Click <span className='text-save'>save</span> to confirm upload of your image</p>
+              : ''}
 						</>
-					) : (
-					<>
-            <label className='custom-file-upload' htmlFor='profilePicFile'>Choose Image</label>
-            <input
-              type="file"
-              className="form-control-file custom-file-upload"
-              id="profilePic"
-              ref={ref}
-              onChange={(event) => {
-                setImage(event.target.files[0]);
-              }}
+            : ''}
+            <br />
+            {!imageSaved &&
+            <>
+              <label className='custom-file-upload' htmlFor='profilePicFile'>Choose Image</label>
+              <input
+                type='file'
+                className='form-control-file custom-file-upload'
+                id='profilePicFile'
+                name='profilePicFile'
+                ref={ref}
+                onChange={(event) => {setImage(event.target.files[0])}}
               ></input>
-              <div>
-                <button type="button" onClick={handleImageUpload}>
-                  {imageSaved ? "Saved" : "Save"}
-                </button>
-                <label>
-                  Click save to confirm upload of your image
-                </label>
-              </div>
-          </>
-          )}
-				</div>
-			</div>
+            </>
+          } 
+        </div>
+      </div>
 			<h2>Company & Salary Information</h2>
-			<p>
+			<p className="instructions">
 				Providing information about your current company and salary can
 				be very helpful for our community. By default, company and
 				salary information will be posted anonmously unless otherwise

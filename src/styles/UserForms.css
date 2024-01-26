@@ -1,19 +1,19 @@
-.instructions {
-    font-size: 20px;
-    margin-top: 50px;
-}
-
-.newUserForm h1 {
-    text-align: center;
+.user-form h1 {
     margin-bottom: 75px;
     color: #f7b402;
 }
 
-.newUserForm h2 {
+.user-form h2 {
     margin-top: 75px;
+    margin-left: 0;
+    color: #f7b402;
 }
 
-.newUserForm section {
+.user-form .instructions {
+    margin-top: 20px;
+}
+
+.user-formsection {
     margin: 10px;
 }
 

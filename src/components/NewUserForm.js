@@ -5,7 +5,7 @@ import AutocompleteAddressBar from  '../components/AutocompleteAddressBar';
 import  { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { setItemInLocalStorage, convertToApi } from '../utils';
 import ImagePreview from '../components/ImagePreview';
-import '../styles/UserProfile.css';
+import '../styles/UserForms.css';
 
 const kBaseUrl = 'http://localhost:5000';
 
@@ -139,7 +139,7 @@ const NewUserForm = () => {
 
 
   return (
-		<form onSubmit={onFormSubmit} className='newUserForm'>
+		<form onSubmit={onFormSubmit} className='user-form'>
 			<section className='attestation'>
 				<h1>Attestation</h1>
         <div className='attestation-flex'>

@@ -12,6 +12,7 @@ body {
 h1 {
     font-family: "Abril Fatface";
     font-size: 120px;
+    text-align: center;
 }
 
 h2 {
@@ -67,6 +68,12 @@ input[type="file"] {
 
 button {
     cursor: pointer;
+}
+
+.instructions {
+    font-size: 20px;
+    margin-top: 50px;
+    color: #0995b5;
 }
 
 .form-group,

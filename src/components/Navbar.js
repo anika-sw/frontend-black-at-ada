@@ -28,6 +28,9 @@ const Navbar = () => {
           value={selected} 
           renderValue={(value) => value ? value : "Site Navigation"}
           onChange={selectionChangeHandler}>      
+            <MenuItem className="dropdown-item" value="Site Navigation">
+              Site Navigation
+            </MenuItem>
             <MenuItem className="dropdown-item" value="Home">
               <a className="dropdown-link" href="/home">Home</a>
             </MenuItem>

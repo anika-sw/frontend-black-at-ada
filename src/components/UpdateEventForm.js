@@ -343,8 +343,8 @@ const UpdateEventForm = () => {
                 <ImagePreview src={image} alt='' />
                 <button type='button' onClick={resetImage}>Remove</button>
                 <button type='button' 
-                className={imageSaved ? 'saved' : 'save'}
-                onClick={handleImageUpload}
+                  className={imageSaved ? 'saved' : 'save'}
+                  onClick={handleImageUpload}
                 >
                   {imageSaved ? 'Saved!' : 'Save'}
                 </button>
