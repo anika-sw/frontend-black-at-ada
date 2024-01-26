@@ -21,10 +21,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#f7b402' // yellow
+      main: '#0995b5' // blue
     },
     secondary: {
-      main: '#0995b5' // blue
+      main: '#f7b402' // yellow
     },
     warning: {
       main: '#e7165f' // pink
@@ -33,40 +33,6 @@ const theme = createTheme({
       fontFamily: 'Poppins'
     },
   },
-  // components: {
-  //   MuiTextField: {
-  //     styleOverrides: {
-  //       root: {
-  //         '--TextField-brandBorderColor': '#f7b402',
-  //         '--TextField-brandBorderHoverColor': '#f7b402',
-  //         '--TextField-brandBorderFocusedColor': '#f7b402',
-  //         '& label.Mui-focused': {
-  //           color: 'var(--TextField-brandBorderFocusedColor)',
-  //         },
-  //       },
-  //     },
-  //   },
-  //   MuiFilledInput: {
-  //     styleOverrides: {
-  //       root: {
-  //         '&::before, &::after': {
-  //           borderBottom: '2px solid var(--TextField-brandBorderColor)',
-  //         },
-  //         '&:hover:not(.Mui-disabled, .Mui-error):before': {
-  //           borderBottom: '2px solid var(--TextField-brandBorderHoverColor)',
-  //         },
-  //         '&.Mui-focused:after': {
-  //           borderBottom: '2px solid var(--TextField-brandBorderFocusedColor)',
-  //         },
-  //       },
-  //     },
-  //   },
-  //   MuiInputLabel: {
-  //     root: {
-  //       overflow: 'visible',
-  //     },
-  //   },
-  // },
   mixedCaseButton: {
     textTransform: 'none'
   },

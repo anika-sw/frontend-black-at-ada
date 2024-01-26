@@ -127,7 +127,7 @@ const Login = () => {
                     }}/>
                   } 
                 label={
-                  <Typography sx={{ fontFamily: 'Poppins', color: '#e7165f' }}>
+                  <Typography sx={{ fontFamily: 'Poppins', color: '#f7b402' }}>
                     Keep me logged in
                   </Typography>
                 }
@@ -137,13 +137,11 @@ const Login = () => {
             <div>
               <Button 
                 fullWidth
-                color='secondary'
                 type="submit"
                 variant="contained"
                 sx={{
                   color: 'black',
                   fontSize: '20px',
-                  fontWeight: 'semi-bold'
                 }}>
                   Login
               </Button>

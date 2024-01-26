@@ -51,10 +51,6 @@
     margin-bottom: 75px;
 }
 
-.login-btn {
-    font-weight: bold;
-}
-
 .email {
     background-color: #FFFFFF;
 }
@@ -82,9 +78,10 @@
     url("../fonts/DressCode-Regular.ttf") format("truetype");
 }
 
-.tiny-text-container, .span {
+.tiny-text-container span {
     font-family: 'Regular';
     font-size: small;
     font-weight: bold;
     color:#f7b402;
+    cursor: pointer;
 }
