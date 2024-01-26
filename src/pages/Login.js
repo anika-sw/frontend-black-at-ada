@@ -80,10 +80,12 @@ const Login = () => {
                 type="email"
                 aria-describedby="email"
                 variant="filled"
-                color='secondary'
                 minLength={1}
                 value={email}
-                onChange={addEmail}>
+                onChange={addEmail}
+                InputLabelProps={{
+                  sx: { minWidth: '100%' }
+                }}>
               </TextField>
             </>
             <>
@@ -96,10 +98,12 @@ const Login = () => {
                 type={passwordShown ? "text" : "password"}
                 aria-describedby="password" 
                 variant='filled'
-                color='secondary'
                 minLength={1}
                 value={password}
                 onChange={addPassword}
+                InputLabelProps={{
+                  sx: { minWidth: '100%' }
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

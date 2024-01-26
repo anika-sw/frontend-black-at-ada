@@ -7,8 +7,8 @@
 }
 
 .directory-card {
-    max-width: 540px;
-    height: 250px;
+    /* max-width: 540px; */
+    /* height: 250px; */
     background-color: #121212;
     color: #f7b402;
     box-shadow: -10px 7px 7px #f7b402;

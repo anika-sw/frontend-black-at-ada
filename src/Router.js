@@ -33,35 +33,40 @@ const theme = createTheme({
       fontFamily: 'Poppins'
     },
   },
-  components: {
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '--TextField-brandBorderColor': '#f7b402',
-          '--TextField-brandBorderHoverColor': '#f7b402',
-          '--TextField-brandBorderFocusedColor': '#f7b402',
-          '& label.Mui-focused': {
-            color: 'var(--TextField-brandBorderFocusedColor)',
-          },
-        },
-      },
-    },
-    MuiFilledInput: {
-      styleOverrides: {
-        root: {
-          '&::before, &::after': {
-            borderBottom: '2px solid var(--TextField-brandBorderColor)',
-          },
-          '&:hover:not(.Mui-disabled, .Mui-error):before': {
-            borderBottom: '2px solid var(--TextField-brandBorderHoverColor)',
-          },
-          '&.Mui-focused:after': {
-            borderBottom: '2px solid var(--TextField-brandBorderFocusedColor)',
-          },
-        },
-      },
-    },
-  },
+  // components: {
+  //   MuiTextField: {
+  //     styleOverrides: {
+  //       root: {
+  //         '--TextField-brandBorderColor': '#f7b402',
+  //         '--TextField-brandBorderHoverColor': '#f7b402',
+  //         '--TextField-brandBorderFocusedColor': '#f7b402',
+  //         '& label.Mui-focused': {
+  //           color: 'var(--TextField-brandBorderFocusedColor)',
+  //         },
+  //       },
+  //     },
+  //   },
+  //   MuiFilledInput: {
+  //     styleOverrides: {
+  //       root: {
+  //         '&::before, &::after': {
+  //           borderBottom: '2px solid var(--TextField-brandBorderColor)',
+  //         },
+  //         '&:hover:not(.Mui-disabled, .Mui-error):before': {
+  //           borderBottom: '2px solid var(--TextField-brandBorderHoverColor)',
+  //         },
+  //         '&.Mui-focused:after': {
+  //           borderBottom: '2px solid var(--TextField-brandBorderFocusedColor)',
+  //         },
+  //       },
+  //     },
+  //   },
+  //   MuiInputLabel: {
+  //     root: {
+  //       overflow: 'visible',
+  //     },
+  //   },
+  // },
   mixedCaseButton: {
     textTransform: 'none'
   },

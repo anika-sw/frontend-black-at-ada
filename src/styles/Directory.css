@@ -54,9 +54,13 @@
     color: #181818 !important;
 }
 
-.directory-grid {
-    display: inline-block;
+.directory-span {
     width: 400px; 
+    display: inline-block;
 }
+
+/* .directory-container {
+    max-height: 250px;
+} */
 
 

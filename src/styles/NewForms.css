@@ -23,6 +23,7 @@
 
 .password-btn {
     margin-left: 0px !important;
+    cursor: pointer;
 }
 
 .newUserForm p {
@@ -64,6 +65,7 @@ justify-content: center;
     font-weight: bold;
     width: 90px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .attestation-flex span {
@@ -164,27 +166,43 @@ input[type="file"] {
 }
 
 input {
-    width: 175px;
+    width: 350px;
+    height: 25px;
+    font-size: 16px;
+    margin-left: -5px;
 }
 
 .custom-file-upload {
+    display: block;
     background-color: #efefef;
     color: black;
     border-radius: 5px;
-    padding: 6px;
+    padding: 3px 6px 0px 6px;
     cursor: pointer;
+    height: 27px;
+    margin-top: 1px;
+    width: 120px;
+    align-content: center;
 }
 
 .delete-btn {
     background-color: #0ba3c1;
 }
 
-.sign-btn {
+.signup-btn {
     font-weight: bold;
+    width: 150px;
+    margin-left: 0;
+    cursor: pointer;
 }
 
 .form-check-input {
     width: 20px;
+    height: 15px;
+}
+
+.form-check-label {
+    margin-top: 0px !important;
 }
 
 .update-btn {

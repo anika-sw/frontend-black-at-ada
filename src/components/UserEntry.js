@@ -15,15 +15,15 @@ const UserEntry = (props) => {
     <div className="card mb-3 directory-card">
       <div className="row no-gutters">
         <div className="col">
-          <img className="directory-card-img" src={props.user.profilePicUrl} alt="..." />
+          <img className="directory-card-img" src={props.user.profilePicFile} alt="..." />
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h5 className="card-title">{namePronouns}</h5>
+            <h5 className="card-title">{namePronouns ? namePronouns : "-"}</h5>
             <p className="card-text">Cohort {props.user.cohort}</p>
-            <p className="card-text">{props.user.company}</p>
+            <p className="card-text">{props.user.company ? props.user.company : "-"}</p>
             <p className="card-text">{mailTo}</p>
-            <p className="card-text">{url && connectLink}</p>
+            <p className="card-text">{url ? url && connectLink : "-"}</p>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@ UserEntry.propTypes = {
     locationLng: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
-    profilePicUrl: PropTypes.string,
+    profilePicFile: PropTypes.string,
     company: PropTypes.string,
     linkedin: PropTypes.string,
     jobTitle: PropTypes.string,

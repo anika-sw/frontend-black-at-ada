@@ -141,7 +141,7 @@ const EventDetails = () => {
       <div className="event-color-bar">
         <h1>{eventData.title}</h1>
       </div>
-      <section className="container event-details">
+      <section className="event-details-container event-details">
         <section className="details-grid1">
           <div>
             <h2>Date & Time</h2>

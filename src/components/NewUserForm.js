@@ -194,7 +194,7 @@ const NewUserForm = () => {
               </p>
               <div className='form-row'>
                 <div className='col'>            
-                  <label htmlFor='firstName'>*First Name</label>
+                  <label htmlFor='firstName'>First Name*</label>
                   <input
                     type='text'
                     className='form-control'
@@ -207,7 +207,7 @@ const NewUserForm = () => {
                   ></input>
                 </div>
                 <div className='col'> 
-                  <label htmlFor='lastName'>*Last Name</label>
+                  <label htmlFor='lastName'>Last Name*</label>
                   <input
                     type='text'
                     className='form-control'
@@ -235,7 +235,7 @@ const NewUserForm = () => {
               </div>
               <div className='form-row'>
                 <div className='col'>             
-                  <label htmlFor='cohort'>*Cohort</label>
+                  <label htmlFor='cohort'>Cohort*</label>
                   <input
                     type='text'
                     className='form-control'
@@ -249,7 +249,7 @@ const NewUserForm = () => {
                 </div>
                 <div className='col'>  
                   <label htmlFor='location'>
-                    *Location (Enter city, country, zip code, or post code)
+                    Location* (city, country, or post code)
                   </label>
                   <AutocompleteAddressBar selectLocation={getLocation} />
                 </div>
@@ -270,7 +270,7 @@ const NewUserForm = () => {
               <div className='form-row'>
                 <div className='col'>                
                   <label htmlFor='email'>
-                    *Email (for your Black@Ada login)
+                    Email* (for your Black@Ada login)
                   </label>
                   <input
                     type='email'
@@ -295,12 +295,12 @@ const NewUserForm = () => {
                     name='password'
                     onChange={handleChange}
                   ></input>
-                  <button type='button' className='btn btn-sm btn-secondary' onClick={showHidePassword}>
+                  <button type='button' className='btn btn-sm btn-secondary password-btn' onClick={showHidePassword}>
                     Show/Hide Password
                   </button>
                 </div>
                 <div className='col'>                
-                  <label htmlFor='profilePicFile'>*Profile Pic</label>
+                  <label htmlFor='profilePicFile'>Profile Pic*</label>
                   {image ?
                     <>
                       <ImagePreview src={image} alt='' />
@@ -317,7 +317,7 @@ const NewUserForm = () => {
                     </>
                   : ''}
                   <br />
-                  {!imageSaved &&
+                  {!image &&
                   <>
                     <label className='custom-file-upload' htmlFor='profilePicFile'>Choose Image</label>
                     <input
@@ -369,7 +369,7 @@ const NewUserForm = () => {
                   ></input>
                 </div>
                 <div className='col'>                
-                  <label htmlFor='salary'>Annual Salary</label>
+                  <label htmlFor='salary'>Annual Salary (numbers only, no symbols)</label>
                   <input
                     type='text'
                     className='form-control'

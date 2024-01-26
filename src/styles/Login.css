@@ -72,6 +72,10 @@
     justify-content: space-around;
 }
 
+.MuiInputLabel-root {
+    overflow: visible;
+}
+
 @font-face {
     font-family: "Regular";
     src: local("DressCode-Regular"),
