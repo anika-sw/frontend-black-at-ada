@@ -65,6 +65,10 @@ input[type="file"] {
     display: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 .form-group,
 .form-row {
     padding-top: 3rem;

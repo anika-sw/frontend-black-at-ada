@@ -193,17 +193,17 @@ const NewEventForm = () => {
         </div>
       </div>
       <div className='form-group form-row'> 
-          <div className='col calendar'>
-            <label htmlFor='startTime'>Start: Date & Time*</label>
-            <DateTimePicker
-              format='MMMM dd, yyyy   h:mm aa'
-              disableClock={true}
-              id='startTime'
-              calendarStartDay={1}
-              value={dateTimeStart}
-              onChange={handleTimeStart}
-            />
-          </div>
+        <div className='col calendar'>
+          <label htmlFor='startTime'>Start: Date & Time*</label>
+          <DateTimePicker
+            format='MMMM dd, yyyy   h:mm aa'
+            disableClock={true}
+            id='startTime'
+            calendarStartDay={1}
+            value={dateTimeStart}
+            onChange={handleTimeStart}
+          />
+        </div>
         <div className='col calendar'>
           <label htmlFor='endTime'>End: Date & Time*</label>
           <DateTimePicker
@@ -216,16 +216,18 @@ const NewEventForm = () => {
         </div>
         <div className='col'>
           <label htmlFor='timezone'>Time Zone*</label>
-          <input
-            type='text'
-            className='form-control timezone-input'
-            id='timezone'
-            minLength={1}
-            maxLength={40}
-            value={newEventData.timezone}
-            name='timezone'
-            onChange={handleChange}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control timezone-input'
+              id='timezone'
+              minLength={1}
+              maxLength={40}
+              value={newEventData.timezone}
+              name='timezone'
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
       </div>
       <div className='form-group'>
@@ -276,29 +278,33 @@ const NewEventForm = () => {
         </div>
         <div className='col'>
           <label htmlFor='videoConfLink'>Link or Meeting ID</label>
-          <input
-            type='text'
-            className='form-control'
-            id='videoConfLink'
-            minLength={1}
-            maxLength={60}
-            value={newEventData.videoConfLink}
-            name='videoConfLink'
-            onChange={handleChange}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='videoConfLink'
+              minLength={1}
+              maxLength={60}
+              value={newEventData.videoConfLink}
+              name='videoConfLink'
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
         <div className='col'>
           <label htmlFor='meetingKey'>Meeting Key, if any</label>
-          <input
-            type='text'
-            className='form-control'
-            id='meetingKey'
-            minLength={1}
-            maxLength={40}
-            value={newEventData.meetingKey}
-            name='meetingKey'
-            onChange={handleChange}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='meetingKey'
+              minLength={1}
+              maxLength={40}
+              value={newEventData.meetingKey}
+              name='meetingKey'
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
       </fieldset>
       <div className='form-group form-row'>
@@ -341,7 +347,7 @@ const NewEventForm = () => {
           } 
         </div>
       </div>
-      <p className='instructions'>Organizer details are autofilled. If you are not the organizer, please update the information below before saving.</p>
+      <p className='instructions'>Organizer details are autofilled. If you are not the organizer, please update the information below before submitting the event.</p>
       <div className='form-group form-row'>
         <div className='col'>
           <label htmlFor='organizerFirstName'>Organizer's First Name</label>

@@ -218,7 +218,7 @@ const UpdateUser = () => {
 	};
 
 	return (
-		<form className="newUserForm" onSubmit={onFormSubmit}>
+		<form className="updateUserForm" onSubmit={onFormSubmit}>
 			<h1>My Profile</h1>
 			<p>
 				All fields marked with an * are required. Your name, pronouns

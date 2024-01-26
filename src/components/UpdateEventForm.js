@@ -178,8 +178,8 @@ const UpdateEventForm = () => {
     });
   };
 
-  const deleteEvent = (id) => {
-    axios.delete(`${kBaseUrl}/events/${id}`)
+  const deleteEvent = (event) => {
+    axios.delete(`${kBaseUrl}/events/${eventId}`)
     .then(response => {
       console.log('Event delete: success');
       routeChange();
@@ -196,26 +196,30 @@ const UpdateEventForm = () => {
   
 
   return (
-		<form onSubmit={onFormSubmit} className='newEventForm container'>
+		<form onSubmit={onFormSubmit} className='eventForm'>
       <p className='instructions'>All fields marked with an * are required.</p>
-      <div className='form-group form-row'>
-        <label className='col-form-label' htmlFor='title'>*Event Title</label>
-        <input
-          type='text'
-          className='form-control'
-          id='title'
-          minLength={1}
-          maxLength={100}
-          value={tempEventData.title}
-          name='title'
-          onChange={handleUpdate}
-        ></input>
+      <div className='form-group'>
+        <div className='title-row'>
+          <label className='col-form-label title' htmlFor='title'>Event Title*</label>
+          <div>
+            <input
+              type='text'
+              className='form-control title-input'
+              id='title'
+              minLength={1}
+              maxLength={100}
+              value={tempEventData.title}
+              name='title'
+              onChange={handleUpdate}
+            ></input>
+          </div>
+        </div>
       </div>
       <div className='form-group form-row'> 
         <div className='col calendar'>
-          <label htmlFor='startTime'>*Start: Date & Time</label>
+          <label htmlFor='startTime'>Start: Date & Time*</label>
           <DateTimePicker
-            format='MMMM dd, yyyy|h:mm aa'
+            format='MMMM dd, yyyy   h:mm aa'
             disableClock={true}
             id='startTime'
             value={tempEventData.dateTimeStart}
@@ -223,9 +227,9 @@ const UpdateEventForm = () => {
           />
         </div>
         <div className='col calendar'>
-          <label htmlFor='endTime'>*End: Date & Time</label>
+          <label htmlFor='endTime'>End: Date & Time*</label>
           <DateTimePicker
-            format='MMMM dd, yyyy|h:mm aa'
+            format='MMMM dd, yyyy   h:mm aa'
             disableClock={true}
             id='endTime'
             value={tempEventData.dateTimeStop}
@@ -233,35 +237,41 @@ const UpdateEventForm = () => {
           />
         </div>
         <div className='col'>
-          <label htmlFor='timezone'>*Time Zone</label>
-          <input
-            type='text'
-            className='form-control'
-            id='timezone'
-            minLength={1}
-            maxLength={40}
-            value={tempEventData.timezone}
-            name='timezone'
-            onChange={handleUpdate}
-          ></input>
+          <label htmlFor='timezone'>Time Zone*</label>
+          <div>
+            <input
+              type='text'
+              className='form-control timezone-input'
+              id='timezone'
+              minLength={1}
+              maxLength={40}
+              value={tempEventData.timezone}
+              name='timezone'
+              onChange={handleUpdate}
+            ></input>
+          </div>
         </div>
       </div>
-      <div className='form-group form-row'>
-        <label className='col-form-label' htmlFor='description'>*Description</label>
-        <textarea
-          type='text'
-          className='form-control'
-          id='description'
-          rows='3'
-          minLength={1}
-          maxLength={500}
-          value={tempEventData.description}
-          name='description'
-          onChange={handleUpdate}
-        ></textarea>
+      <div className='form-group'>
+        <div className='description-row'>
+          <label className='col-form-label' htmlFor='description'>Description*</label>
+          <div>
+            <textarea
+              type='text'
+              className='form-control description-input'
+              id='description'
+              rows='3'
+              minLength={1}
+              maxLength={500}
+              value={tempEventData.description}
+              name='description'
+              onChange={handleUpdate}
+            ></textarea>
+          </div>
+        </div>
       </div>
       <fieldset className='form-group form-row'>
-        <legend className='col-form-label col-sm-1 float-sm-left pt-0'>*Location:</legend>
+        <legend className='col-form-label col-sm-1 float-sm-left pt-0'>Location*</legend>
         <div className='col'>
           <div className='form-check'>
             <input
@@ -290,37 +300,41 @@ const UpdateEventForm = () => {
         </div>
         <div className='col'>
           <label htmlFor='videoConfLink'>Link or Meeting ID</label>
-          <input
-            type='text'
-            className='form-control'
-            id='videoConfLink'
-            minLength={1}
-            maxLength={60}
-            value={tempEventData.videoConfLink}
-            name='videoConfLink'
-            onChange={handleUpdate}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='videoConfLink'
+              minLength={1}
+              maxLength={60}
+              value={tempEventData.videoConfLink}
+              name='videoConfLink'
+              onChange={handleUpdate}
+            ></input>
+          </div>
         </div>
         <div className='col'>
           <label htmlFor='meetingKey'>Meeting Key, if any</label>
-          <input
-            type='text'
-            className='form-control'
-            id='meetingKey'
-            minLength={1}
-            maxLength={40}
-            value={tempEventData.meetingKey}
-            name='meetingKey'
-            onChange={handleUpdate}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='meetingKey'
+              minLength={1}
+              maxLength={40}
+              value={tempEventData.meetingKey}
+              name='meetingKey'
+              onChange={handleUpdate}
+            ></input>
+          </div>
         </div>
       </fieldset>
       <div className='form-group form-row'>
         <div className='col'>
-          <p>For in-person events, enter an address or location below</p> 
-            <div className='map'>
-              <EventMap selectLocation={updateLocation} />
-            </div>
+          <label>For in-person events, enter an address or location below</label> 
+          <div className='map'>
+            <EventMap selectLocation={updateLocation} />
+          </div>
         </div>
         <div className='col'>
           <label className='form-label' htmlFor='imageFile'>Upload an event-related image</label>
@@ -358,59 +372,69 @@ const UpdateEventForm = () => {
       <div className='form-group form-row'>
         <div className='col'>
           <label htmlFor='organizerFirstName'>Organizer's First Name</label>
-          <input
-            type='text'
-            className='form-control'
-            id='firstName'
-            minLength={1}
-            maxLength={30}
-            value={tempEventData.organizerFirstName}
-            name='organizerFirstName'
-            onChange={handleUpdate}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='firstName'
+              minLength={1}
+              maxLength={30}
+              value={tempEventData.organizerFirstName}
+              name='organizerFirstName'
+              onChange={handleUpdate}
+            ></input>
+          </div>
         </div>
         <div className='col'>
           <label htmlFor='organizerLastName'>Organizer's Last Name</label>
-          <input
-            type='text'
-            className='form-control'
-            id='lastName'
-            minLength={1}
-            maxLength={30}
-            value={tempEventData.organizerLastName}
-            name='organizerLastName'
-            onChange={handleUpdate}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='lastName'
+              minLength={1}
+              maxLength={30}
+              value={tempEventData.organizerLastName}
+              name='organizerLastName'
+              onChange={handleUpdate}
+            ></input>
+          </div>
         </div>
         <div className='col'>
           <label htmlFor='organizerPronouns'>Organizer's Pronouns, if known</label>
-          <input
-            type='text'
-            className='form-control'
-            id='pronouns'
-            minLength={1}
-            maxLength={30}
-            value={tempEventData.organizerPronouns}
-            name='organizerPronouns'
-            onChange={handleUpdate}
-          ></input>
+          <div>
+            <input
+              type='text'
+              className='form-control'
+              id='pronouns'
+              minLength={1}
+              maxLength={30}
+              value={tempEventData.organizerPronouns}
+              name='organizerPronouns'
+              onChange={handleUpdate}
+            ></input>
+          </div>
         </div>
-        <div className='col'>
-          <label htmlFor='organizerEmail'>Organizer's Email</label>
-          <input
-            type='email'
-            className='form-control'
-            id='email'
-            minLength={1}
-            maxLength={60}
-            value={tempEventData.organizerEmail}
-            name='organizerEmail'
-            onChange={handleUpdate}
-          ></input>
+        <div className='form-group form-row'>
+          <div className='col'>
+            <label htmlFor='organizerEmail'>Organizer's Email</label>
+            <div>
+              <input
+                type='email'
+                className='form-control'
+                id='email'
+                minLength={1}
+                maxLength={60}
+                value={tempEventData.organizerEmail}
+                name='organizerEmail'
+                onChange={handleUpdate}
+              ></input>
+            </div>
+          </div>
         </div>
       </div>
       <fieldset className='form-group form-row'>
-        <legend className='col-form-label col-sm-2 float-sm-left pt-0'>*Target Audience:</legend>
+        <legend className='col-form-label col-sm-2 float-sm-left pt-0'>Target Audience*</legend>
         <div className='col-sm-10'>
           <div className='form-check'>
             <input
@@ -482,7 +506,7 @@ const UpdateEventForm = () => {
 				<input
 					type='submit'
 					value='Update Event'
-					className='button'
+					className='update-btn'
 					disabled={
 						!tempEventData.title ||
 						!tempEventData.description ||
@@ -491,7 +515,7 @@ const UpdateEventForm = () => {
             !tempEventData.timezone
 					}
 				></input>
-				<button type='button' onClick={deleteEvent}>Cancel Event</button>
+				<button type='button' className='delete-btn' onClick={deleteEvent}>Cancel Event</button>
 			</section>}
 		</form>
   );
