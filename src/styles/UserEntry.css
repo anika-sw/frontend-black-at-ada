@@ -1,33 +1,42 @@
-.directory-card-img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    padding: 0px;
-    margin: 0px;
-}
-
-.directory-card {
-    /* max-width: 540px; */
-    /* height: 250px; */
+.directory-card-container {
+    display: flex;
+    width: 350px;
+    height: 150px;
+    margin: 30px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
     background-color: #121212;
     color: #f7b402;
-    box-shadow: -10px 7px 7px #f7b402;
+    box-shadow: -10px 7px 7px #e7165f;
 }
 
-.no-gutters {
+.directory-card-img {
+    padding: 0px;
+    margin: 0px;
+}
+.directory-card-img img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     padding: 0px;
     margin: 0px;
 }
 
-.card-title{
-    margin-top: 10px;
+.directory-card-body {
+    width: 200px;
+    margin-left: 10px;
 }
 
-.card a:link,
-.card a:visited {
+.directory-card-body p {
+    font-size: 12px;
+    margin: 10px 0px;
+}
+
+.directory-card-body a:link,
+.directory-card-body a:visited {
     color: #0995b5;
-}
-
-.card a:link {
     text-decoration: none;
 }

@@ -34,17 +34,17 @@ const Navbar = () => {
             <MenuItem className="dropdown-item" value="Home">
               <a className="dropdown-link" href="/home">Home</a>
             </MenuItem>
-            <MenuItem className="dropdown-item" value="My Profile">
-              <a className="dropdown-link" href="/profile">My Profile</a>
-            </MenuItem>
-            <MenuItem className="dropdown-item" value="Directory">
-              <a className="dropdown-link" href="/directory">Directory</a>
-            </MenuItem>
             <MenuItem className="dropdown-item" value="Events">
               <a className="dropdown-link" href="/events">Events</a>
             </MenuItem>
             <MenuItem className="dropdown-item" value="Salaries">
               <a className="dropdown-link" href="/salaries">Salaries</a>
+            </MenuItem>
+            <MenuItem className="dropdown-item" value="Directory">
+              <a className="dropdown-link" href="/directory">Directory</a>
+            </MenuItem>
+            <MenuItem className="dropdown-item" value="My Profile">
+              <a className="dropdown-link" href="/profile">My Profile</a>
             </MenuItem>
             <MenuItem className="dropdown-item" onClick={logout}>Logout</MenuItem>
         </Select>

@@ -12,20 +12,16 @@ const UserEntry = (props) => {
 
 
   return (
-    <div className="card mb-3 directory-card">
-      <div className="row no-gutters">
-        <div className="col">
-          <img className="directory-card-img" src={props.user.profilePicFile} alt="..." />
-        </div>
-        <div className="col-md-8">
-          <div className="card-body">
-            <h5 className="card-title">{namePronouns ? namePronouns : "-"}</h5>
-            <p className="card-text">Cohort {props.user.cohort}</p>
-            <p className="card-text">{props.user.company ? props.user.company : "-"}</p>
-            <p className="card-text">{mailTo}</p>
-            <p className="card-text">{url ? url && connectLink : "-"}</p>
-          </div>
-        </div>
+    <div className="directory-card-container directory-card-flex">
+      <div className="directory-card-img">
+        <img src={props.user.profilePicFile} alt="..." />
+      </div>
+      <div className="directory-card-body">
+        <p className="card-title">{namePronouns}</p>
+        <p className="card-text">Cohort {props.user.cohort}</p>
+        <p className="card-text">{props.user.company ? props.user.company : "-"}</p>
+        <p className="card-text">{mailTo}</p>
+        <p className="card-text">{url ? url && connectLink : "-"}</p>
       </div>
     </div>
   );

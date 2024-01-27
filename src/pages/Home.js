@@ -77,7 +77,7 @@ const Home = () => {
     }, [userId]);
 
   useEffect(() => {
-    axios.get(`${kBaseUrl}/events?sort=dateTimeCreated`, {})
+    axios.get(`${kBaseUrl}/events?sort=date_time_created`, {})
     .then((response) => {
       const convertedData = response.data.map((event) => {
         return convertFromApi(event);

@@ -55,12 +55,14 @@
 }
 
 .directory-span {
-    width: 400px; 
+    width: 350px; 
     display: inline-block;
+    margin: 0 20px;
 }
 
-/* .directory-container {
-    max-height: 250px;
-} */
+.directory-container {
+    margin: 0px;
+    padding: 0px;
+}
 
 
