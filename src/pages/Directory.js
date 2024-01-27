@@ -58,7 +58,7 @@ const Directory = () => {
 
 	const handleSort = (event) => {
 		const sortBy = event.target.value;
-		// setSelected(sortBy);
+		setSelected("Sort By: ");
 		axios.get(`${kBaseUrl}/users?sort=${sortBy}`, {}).then((response) => {
 			const convertedData = response.data.map((user) => {
 				return convertFromApi(user);
@@ -76,16 +76,19 @@ const Directory = () => {
 				<Select
 					className="sort-btn"
 					value={selected}
-					renderValue={(value) => (value ? value : "Sort By:")}
+					renderValue={(value) => (value ? value : {setSelected})}
 					onChange={handleSort}
 				>
+					<MenuItem className="sort-item" value="Sort By:">
+						Sort By:
+					</MenuItem>
 					<MenuItem className="sort-item" value="lastName">
 						Last Name
 					</MenuItem>
 					<MenuItem className="sort-item" value="cohort">
 						Cohort
 					</MenuItem>
-					<MenuItem className="sort-item" value="Company">
+					<MenuItem className="sort-item" value="company">
 						Company
 					</MenuItem>
 				</Select>

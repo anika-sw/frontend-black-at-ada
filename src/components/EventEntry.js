@@ -8,6 +8,8 @@ import "../styles/EventEntry.css";
 
 const kBaseUrl = 'http://localhost:5000';
 
+const apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const EventEntry = (props) => {
 
@@ -23,18 +25,24 @@ const EventEntry = (props) => {
   const dateTime = moment(props.event.dateTimeStart).format('MMMM Do YYYY, h:mm a');
 
   useEffect(() => {
-    if (props.event.radioSelection === "In-Person") {
+    if (props.event.onlineInPerson === "In-Person") {
       setLoading(true);
-      axios.get(`${kBaseUrl}/events/${props.event.id}/locale`)
+      axios.get(`${kBaseUrl}/events/${props.event.id}/latlng`)
       .then((response) => {
         const rd = response.data;
-        const formattedLocale = `${rd.locale[0].name}, ${rd.locale[0].admin1}, ${rd.locale[0].cc}`;
+        return axios.get(`${apiUrl}${rd.coordinates}&key=${apiKey}`)
+      })
+      .then((response) => {
+        const latLngData = response.data;
+        const parsedLocale = latLngData.plus_code.compound_code.split(' ').slice(1);
+        const formattedLocale = parsedLocale.join(' ');
         setLocale(formattedLocale);
         setLoading(false);
       })
-      .catch(err=>console.log(err)) 
+      .catch(err=>console.log(err))
     };
-  }, [props.event.id, props.event.radioSelection]);
+
+  }, [props.event.id, props.event.onlineInPerson]);
   
   const tempStoreEventId = (event) => {
     setItemInLocalStorage('event', props.event.id);
@@ -74,7 +82,7 @@ const EventEntry = (props) => {
                 <h5 className="card-title">{props.event.title}</h5>
                 <p className="card-text">{dateTime}</p>
                 <p className="card-text">Time Zone: {props.event.timezone}</p>
-                <p>{props.event.radioSelection === "Online" ? "Virtual" : locale}</p>
+                <p>{props.event.onlineInPerson === "Online" ? "Virtual" : locale}</p>
                 <p className="card-text">{props.event.targetAudience}</p>
                 {props.event.createdById !== userId && <button type="button" onClick={tempStoreEventId}>Details</button>}
                 {props.event.createdById === userId &&
@@ -105,7 +113,7 @@ EventEntry.propTypes = {
     timezone: PropTypes.string,
     videoConfLink: PropTypes.string,
     meetingKey: PropTypes.string,
-    radioSelection: PropTypes.string,
+    onlineInPerson: PropTypes.string,
     isMapShowing: PropTypes.string,
     locationAddress: PropTypes.string,
     locationLat: PropTypes.string,

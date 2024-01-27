@@ -10,10 +10,11 @@ const kBaseUrl = 'http://localhost:5000';
 
 
 const EventDetails = () => {
-
   const userId = parseInt(getItemFromLocalStorage('user'));
   const eventId = parseInt(getItemFromLocalStorage('event'));
-  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY2
+  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+
+  console.log(apiKey)
 
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ const EventDetails = () => {
   const [eventData, setEventData] = useState({})
   const [attending, setAttending] = useState(false)
   const [creator, setCreator] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const convertFromApi = (apiEvent) => {
 		const {
@@ -37,7 +39,7 @@ const EventDetails = () => {
       date_time_stop,
       video_conf_link,
       meeting_key,
-      radio_selection,
+      online_in_person,
       is_map_showing,
       location_address,
       location_lat,
@@ -59,7 +61,7 @@ const EventDetails = () => {
       dateTimeStop: date_time_stop || '',
       videoConfLink: video_conf_link || '',
       meetingKey: meeting_key || '',
-      radioSelection: radio_selection || '',
+      onlineInPerson: online_in_person || '',
       isMapShowing: is_map_showing || '',
       locationAddress: location_address || '',
       locationLat: location_lat || '',
@@ -78,6 +80,9 @@ const EventDetails = () => {
 	};
 
   useEffect(() => {
+    if (convertFromApi.online_in_person === 'In-Person') {
+      setLoading(true);
+    }
     axios.get(`${kBaseUrl}/events/${eventId}`, {})
       .then((response) => {
         const convertedData = convertFromApi(response.data.event);
@@ -86,6 +91,7 @@ const EventDetails = () => {
         setCreator(creatorBool)
         const attendingBool = convertedData.users.includes(userId) || creatorBool;
         setAttending(attendingBool)
+        setLoading(false);
       });
     }, [eventId, userId]);
 
@@ -109,10 +115,8 @@ const EventDetails = () => {
 
   const getDirections = `https://www.google.com/maps?daddr=${eventData.locationAddress}`
 
-
   const contactName = `${eventData.organizerFirstName} ${eventData.organizerLastName} ${eventData.organizerPronouns}`
 
-  
   const rsvpYes = (event) => {
     
     console.log(userId)
@@ -136,91 +140,103 @@ const EventDetails = () => {
     });
   }
 
+  if (loading) { 
+    return (<div>Gathering event details...</div>);
+  }
+
   return (
-    <div>
-      <div className="event-color-bar">
-        <h1>{eventData.title}</h1>
-      </div>
-      <section className="event-details-container event-details">
-        <section className="details-grid1">
-          <div>
-            <h2>Date & Time</h2>
-            <p>{dateTimeStart}</p>
-            {dateTimeStop !== dateTimeStart && <p>{dateTimeStop}</p>}
+    <>
+      {!loading &&
+        <>
+          <div className="event-color-bar">
+            <h1>{eventData.title}</h1>
           </div>
-          <div>
-            <h2>Time Zone</h2>
-            <p>{eventData.timezone}</p>
-          </div>
-          <div>
-            <h2>Target Audience</h2>
-            <p>{eventData.targetAudience}</p>
-          </div>
-        </section>
-        <section className="event-about">
-          <h2>About</h2>
-          <p>{eventData.description}</p>
-        </section>
-        <section className="details-grid2">
-          <div>
-            <h2>Location</h2>
-            {eventData.radioSelection === "Online" && 
-              <>
-                <h3>Online</h3><a href={eventData.videoConfLink}>{eventData.videoConfLink}</a>
-                <br />
-                <br />
-                <p>Meeting Key, if any: {eventData.meetingKey}</p>
-              </>}
-            {eventData.radioSelection === "In-Person" &&
-            <>
-              <br />
-              <br />
-              <h3>Address</h3>
-              <p>{eventData.locationAddress}</p>
-              <a href={getDirections}> Get Directions</a><img className='new-tab' src="/openNewTab.svg" alt="new tab" />
-              <br />
-              <br />
-              <StaticGoogleMap size="600x600" className="img-fluid" apiKey={apiKey}>
-                <Marker location={eventLocation} color="red" />
-              </StaticGoogleMap>
-            </>}
-          </div>
-          <div>
-            <h2>Contact Name</h2>
-            <p>{contactName}</p>
-          </div>
-          <div>
-            <h2>Contact Email</h2>
-            <p>{eventData.organizerEmail}</p>
-          </div>
-        </section>
-        <br />
-        <br />
-        <section className="button-flex">
-          <div>
-          {creator &&
-            <>
-              <div>
-                <button type="button" onClick={passEventId}>Edit Event</button>
+          <div className="event-details-flex">
+            <div className="event-details-container">
+              <div className="details-grid1">
+                <div>
+                  <h2>Date & Time</h2>
+                  <p>{dateTimeStart}</p>
+                  {dateTimeStop !== dateTimeStart && <p>{dateTimeStop}</p>}
+                </div>
+                <div>
+                  <h2>Time Zone</h2>
+                  <p>{eventData.timezone}</p>
+                </div>
+                <div>
+                  <h2>Target Audience</h2>
+                  <p>{eventData.targetAudience}</p>
+                </div>
               </div>
-              <div>
-                <button type="button" onClick={deleteEvent}>Cancel Event</button>
+              <div className="details-description">
+                <h2>About This Event</h2>
+                <div>
+                  <p>{eventData.description}</p>
+                </div>
               </div>
-            </>}
+              <div className="details-grid2">
+                <div>
+                  <h2>Location</h2>
+                  {eventData.onlineInPerson === "Online" &&
+                    <>
+                      <h3>Online</h3><a href={eventData.videoConfLink}>{eventData.videoConfLink}</a>
+                      <br />
+                      <br />
+                      <p>Meeting Key, if any: {eventData.meetingKey}</p>
+                    </>}
+                  {eventData.onlineInPerson === "In-Person" &&
+                  <>
+                    <h3>Address</h3>
+                    <div>
+                      <p>{eventData.locationAddress}</p>
+                    </div>
+                    <a href={getDirections}>Get Directions <img className='new-tab' src="/images/new-tab.png" alt="new tab" /></a>
+                    <br />
+                    <br />
+                    <StaticGoogleMap size="350x350" className="img-fluid" apiKey={apiKey}>
+                      <Marker location={eventLocation} color="red" />
+                    </StaticGoogleMap>
+                  </>}
+                </div>
+                <div>
+                  <h2>Contact Name</h2>
+                  <p>{contactName}</p>
+                </div>
+                <div>
+                  <h2>Contact Email</h2>
+                  <p>{eventData.organizerEmail}</p>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div className="button-flex">
+                <div>
+                {creator &&
+                  <>
+                    <div>
+                      <button type="button" onClick={passEventId}>Edit Event</button>
+                    </div>
+                    <div>
+                      <button type="button" onClick={deleteEvent}>Cancel Event</button>
+                    </div>
+                  </>}
+                </div>
+                {!attending &&
+                  <button type='button' onClick={rsvpYes}>I'm Going!</button>}
+                <div>
+                {attending && !creator &&
+                  <button type='button' onClick={rsvpNo}>No Longer Attending</button>}
+                </div>
+                <div>
+                {/* {!creator &&
+                    <button type='button'>Flag Event</button>} */}
+                </div>
+              </div>
+            </div>
           </div>
-          {!attending &&
-            <button type='button' onClick={rsvpYes}>I'm Going!</button>}
-          <div>
-          {attending && !creator &&
-            <button type='button' onClick={rsvpNo}>No Longer Attending</button>}
-          </div>
-          <div>
-          {!creator &&
-              <button type='button'>Flag Event</button>}
-          </div>
-        </section>
-      </section>
-    </div>
+        </>
+      }
+    </>
   )
 };
 

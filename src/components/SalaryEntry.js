@@ -14,8 +14,8 @@ const SalaryEntry = (props) => {
           <p className="card-text">Company: {props.company}</p>
           <p className="card-text">Job Title: {props.jobTitle}</p>
           <p className="card-text">Years of Experience: {props.yearsExperience}</p>
-          <p className="card-text">{props.includeNameSalary === "Yes" ? <p>{namePronouns}</p> : "-"}</p>
-          <p className="card-text"><small class="text-muted">Updated: {props.updated ? props.updated : props.created}</small></p>
+          <p className="card-text">{props.includeNameSalary === "Yes" ? <span>{namePronouns}</span> : "-"}</p>
+          <p className="card-text"><small className="text-muted">Updated: {props.updated ? props.updated : props.created}</small></p>
         </div>
       </div>
     </div>

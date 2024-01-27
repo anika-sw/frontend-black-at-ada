@@ -24,7 +24,6 @@ h3 {
     font-family: "Poppins";
     color: #0995b5;
     font-size: 16px;
-    /* padding-top: 10px; */
 }
 
 li {
@@ -161,4 +160,13 @@ input {
     margin-right: 5px;
     margin-left: 5px;
     cursor: pointer;
+}
+
+.MuiPaper-root {
+    margin-left: -13px;
+    width: auto !important;
+}
+
+.MuiMenuItem-root {
+    font-family: 'Poppins' !important;
 }

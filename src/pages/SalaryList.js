@@ -88,7 +88,7 @@ const SalaryList = () => {
 
 	const handleSort = (event) => {
 		const sortBy = event.target.value;
-		// setSelected(sortBy);
+    setSelected('Sort By:')
 		axios
 			.get(`${kBaseUrl}/users?sort=${sortBy}`, {})
 			.then((response) => {
@@ -109,8 +109,8 @@ const SalaryList = () => {
 				<Select
 					className="salary-sort-btn"
 					value={selected}
-					renderValue={(value) => (value ? value : "Sort By:")}
-					onChange={handleSort}
+					renderValue={(value) => (value ? value : {setSelected})}
+          onChange={handleSort}
 				>
 					<MenuItem className="sort-item" value="Sort By:">
 						Sort By:
