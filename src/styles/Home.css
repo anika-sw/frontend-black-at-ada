@@ -40,8 +40,10 @@
     font-size: 35px;
     background-color: #181818;
     color: #e7165f;
-    align-content: center;
     box-shadow: 0 0 0 0.2rem #f7b402;
+    border-radius: 5px;
+    font-family: "Poppins";
+    text-align: center;
 }
 
 .event-list-grid {

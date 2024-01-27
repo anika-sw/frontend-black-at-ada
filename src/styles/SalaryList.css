@@ -9,10 +9,9 @@
     justify-content: center;
 }
 
-/* .sort-btn {
+.salary-sort-btn-flex .salary-sort-btn {
     width: 400px;
     height: 80px;
-    margin-top: 50px;
     margin-bottom: 75px;
     font-size: 35px;
     background-color: #181818;
@@ -20,18 +19,8 @@
     box-shadow: 0 0 0 0.2rem #f7b402;
     border-radius: 5px;
     font-family: "Poppins";
-    text-align:center
-} */
-
-/* .sort-btn:hover {
-    background: #f7b402;
-    color: black;  
-    border: #f7b402;  
+    text-align: center;
 }
-
-.sort-btn:focus {
-    outline: 0;
-} */
 
 .salary-grid {
     display: inline-block;

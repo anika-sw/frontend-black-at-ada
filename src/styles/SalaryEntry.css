@@ -1,6 +1,25 @@
+.salary-card-container {
+    max-width: 400px;
+    margin-bottom: 30px 0px;
+    border-color: #00671a;
+    border-style: solid; 
+    border-width: 2px;
+    border-radius: 10px;
+    box-shadow: -10px 7px 7px #00671a;
+}
+
+.salary-card-col {  
+    width: 400px;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .salary-card {
-    color: #f7b402;
-    max-width: 300px;
-    margin-bottom: 30px;
-    box-shadow: -10px 7px 7px #255f2f;
+    padding: 5px 20px;
+    margin: 0px;
+}
+
+.salary-card-title {
+    color: #00cc33;
+    font-size: 20px;
 }

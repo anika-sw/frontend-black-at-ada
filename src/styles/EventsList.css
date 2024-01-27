@@ -1,6 +1,5 @@
 .events-header {
     color: #0ba3c1;
-    padding-bottom: 50px;
     text-align: center;
 }
 
@@ -17,8 +16,10 @@
     font-size: 35px;
     background-color: #181818;
     color: #e7165f;
-    align-content: center;
-    box-shadow: 0 0 0 0.2rem #f7b402 !important;
+    box-shadow: 0 0 0 0.2rem #f7b402;
+    border-radius: 5px;
+    font-family: "Poppins";
+    text-align: center;
 }
 
 .events-list-flex {
@@ -26,7 +27,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     padding: 0;
-    justify-content: center;
 }
 
 

@@ -7,14 +7,16 @@ const SalaryEntry = (props) => {
   const namePronouns = <>{props.firstName} {props.lastName}{props.pronouns && <>, {props.pronouns}</>}</>
 
   return (
-    <div class="card border-success bg-transparent salary-card">
-      <div class="card-body">
-        <h5 class="card-title">Salary: ${props.salary}</h5>
-        <p class="card-text">Company: {props.company}</p>
-        <p class="card-text">Job Title: {props.jobTitle}</p>
-        <p class="card-text">Years of Experience: {props.yearsExperience}</p>
-        <p class="card-text">{props.includeNameSalary === "Yes" && <p>{namePronouns}</p>}</p>
-        <p class="card-text"><small class="text-muted">Updated: {props.updated ? props.updated : props.created}</small></p>
+    <div className="card border-success bg-transparent salary-card-container">
+      <div className="salary-card-col">
+        <div className="salary-card">
+          <p className="salary-card-title">Salary: ${props.salary}</p>
+          <p className="card-text">Company: {props.company}</p>
+          <p className="card-text">Job Title: {props.jobTitle}</p>
+          <p className="card-text">Years of Experience: {props.yearsExperience}</p>
+          <p className="card-text">{props.includeNameSalary === "Yes" ? <p>{namePronouns}</p> : "-"}</p>
+          <p className="card-text"><small class="text-muted">Updated: {props.updated ? props.updated : props.created}</small></p>
+        </div>
       </div>
     </div>
   );
