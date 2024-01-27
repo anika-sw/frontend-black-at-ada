@@ -458,7 +458,7 @@ const UpdateUser = () => {
           </div>
 				</div>
 				<div className="col">
-					<label htmlFor="salary">Annual Salary</label>
+					<label htmlFor="salary">Annual Salary (numbers only, no symbols)</label>
 					<div>
             <input
               type="text"

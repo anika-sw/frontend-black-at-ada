@@ -98,19 +98,6 @@ fieldset.form-row {
     height: 15px;
 }
 
-.custom-file-upload {
-    display: block;
-    background-color: #efefef;
-    color: black;
-    border-radius: 5px;
-    padding: 3px 6px 0px 6px;
-    cursor: pointer;
-    height: 27px;
-    margin-top: 1px;
-    width: 120px;
-    align-content: center;
-}
-
 .text-save {
     color: #e7165f;
     font-weight: bold;
@@ -126,11 +113,53 @@ fieldset.form-row {
     font-weight: bold;
 }
 
-/* .form-group.row {
-    max-width: 1120px;
-} */
+.saved-location {
+    color: #0ba3c1;
+}
 
-/* .col {
-    display: inline-block
-} */
+input[type="file"] {
+    display: none;
+}
+
+input {
+    width: 350px;
+    height: 25px;
+    font-size: 16px;
+    margin-left: -5px;
+}
+
+.custom-file-upload {
+    display: block;
+    background-color: #efefef;
+    color: black;
+    border-radius: 5px;
+    padding: 3px 6px 0px 6px;
+    cursor: pointer;
+    height: 27px;
+    margin-top: 1px;
+    width: 120px;
+    align-content: center;
+}
+
+.update-btn {
+    width: 125px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    height: 30px;
+    font-size: 16px;
+    font-family: "Poppins";
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #0ba3c1;
+    cursor: pointer;
+}
+
+.card button {
+    margin-right: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
 

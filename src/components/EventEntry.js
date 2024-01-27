@@ -18,7 +18,7 @@ const EventEntry = (props) => {
   const [loading, setLoading] = useState(false);
   const [locale, setLocale] = useState('');
   
-  const defaultImg = "https://storage.googleapis.com/img_store_black_at/2d3f57df-f170-4074-9a43-28a307675d0f.png";
+  const defaultImg = "https://storage.googleapis.com/img_store_black_at/Black%40Ada_logo.png";
 
   const dateTime = moment(props.event.dateTimeStart).format('MMMM Do YYYY, h:mm a');
 
@@ -64,12 +64,12 @@ const EventEntry = (props) => {
   
   return (
     <>
-      <div className="container">
+      <div className="event-card-container">
         {!loading &&
-        <div className="row card-row">
-          <div className="col card-col">
-            <div className="card .h100 event-card">
-              <img src={props.event.imageUrl || defaultImg} className="card-img-top" alt="..." />
+        <div className="row event-card-row">
+          <div className="col event-card-col">
+            <div className="card h100 event-card">
+              <img src={props.event.imageUrl || defaultImg} className="event-card-img-top" alt="..." />
               <div className="card-body">
                 <h5 className="card-title">{props.event.title}</h5>
                 <p className="card-text">{dateTime}</p>
