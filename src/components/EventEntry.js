@@ -79,11 +79,11 @@ const EventEntry = (props) => {
             <div className="card h100 event-card">
               <img src={props.event.imageUrl || defaultImg} className="event-card-img-top" alt="..." />
               <div className="card-body">
-                <h5 className="card-title">{props.event.title}</h5>
+                <p className="event-card-title">{props.event.title}</p>
                 <p className="card-text">{dateTime}</p>
                 <p className="card-text">Time Zone: {props.event.timezone}</p>
-                <p>{props.event.onlineInPerson === "Online" ? "Virtual" : locale}</p>
-                <p className="card-text">{props.event.targetAudience}</p>
+                <p className="event-card-locale">{props.event.onlineInPerson === "Online" ? "Virtual" : locale}</p>
+                <p className="event-card-audience">{props.event.targetAudience}</p>
                 {props.event.createdById !== userId && <button type="button" onClick={tempStoreEventId}>Details</button>}
                 {props.event.createdById === userId &&
                   <>

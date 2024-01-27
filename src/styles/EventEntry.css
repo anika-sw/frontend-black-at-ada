@@ -12,7 +12,7 @@
 .event-card {
     text-align: center;
     border-radius: 25px;
-    height: 675px;
+    height: 725px;
     color: #f7b402;
     background-color: black;
     box-shadow: -10px 7px 7px #f7b402;
@@ -25,4 +25,15 @@
     border-top-left-radius: 25px;
     object-fit: cover;
     margin: 0px;
+}
+
+.event-card-title {
+    font-size: 20px;
+}
+.event-card-locale {
+    color: #e7165f;
+    font-weight: bold;
+}
+.event-card-audience {
+    color: #0ba3c1;
 }

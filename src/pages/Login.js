@@ -143,7 +143,7 @@ const Login = () => {
                   color: 'black',
                   fontSize: '20px',
                 }}>
-                  Login
+                  Log in
               </Button>
             </div>
           </div>
