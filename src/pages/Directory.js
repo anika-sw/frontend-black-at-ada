@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import UserEntry from "../components/UserEntry";
-import { Select, MenuItem } from "@material-ui/core";
-import "../styles/Directory.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import UserEntry from '../components/UserEntry';
+import { Select, MenuItem } from '@material-ui/core';
+import FloatingActionButton from '../components/FloatingActionButton';
+import '../styles/Directory.css';
 
-const kBaseUrl = "http://localhost:5000";
+const kBaseUrl = 'http://localhost:5000';
 
 const Directory = () => {
 	const [usersData, setUsersData] = useState([]);
-	const [selected, setSelected] = useState("Sort By:");
+	const [selected, setSelected] = useState('Sort By:');
 
 	const convertFromApi = (apiUser) => {
 		const {
@@ -50,7 +51,7 @@ const Directory = () => {
 
 	const usersList = usersData.map((user) => {
 		return (
-			<span className="directory-span" key={user.id}>
+			<span className='directory-span' key={user.id}>
 				<UserEntry user={user}></UserEntry>
 			</span>
 		);
@@ -58,7 +59,7 @@ const Directory = () => {
 
 	const handleSort = (event) => {
 		const sortBy = event.target.value;
-		setSelected("Sort By: ");
+		setSelected('Sort By: ');
 		axios.get(`${kBaseUrl}/users?sort=${sortBy}`, {}).then((response) => {
 			const convertedData = response.data.map((user) => {
 				return convertFromApi(user);
@@ -69,31 +70,36 @@ const Directory = () => {
 
 	return (
 		<>
-			<h1 className="header directory-header">
-				Bl<span className="at">a</span>ck Adie Directory
+			<h1 className='header directory-header'>
+				Bl<span className='at'>a</span>ck Adie Directory
 			</h1>
-			<div className="sort-btn-flex">
+			<div className='sort-btn-flex'>
 				<Select
-					className="sort-btn"
+					className='sort-btn'
 					value={selected}
-					renderValue={(value) => (value ? value : {setSelected})}
+					renderValue={(value) => (value ? value : { setSelected })}
 					onChange={handleSort}
 				>
-					<MenuItem className="sort-item" value="Sort By:">
+					<MenuItem className='sort-item' value='Sort By:'>
 						Sort By:
 					</MenuItem>
-					<MenuItem className="sort-item" value="lastName">
+					<MenuItem className='sort-item' value='lastName'>
 						Last Name
 					</MenuItem>
-					<MenuItem className="sort-item" value="cohort">
+					<MenuItem className='sort-item' value='cohort'>
 						Cohort
 					</MenuItem>
-					<MenuItem className="sort-item" value="company">
+					<MenuItem className='sort-item' value='company'>
 						Company
 					</MenuItem>
 				</Select>
 			</div>
-			<ul className="directory-container">{usersList}</ul>
+			<ul className='directory-container'>{usersList}</ul>
+			<div className='floating-btn-flex'>
+				<div className='floating-btn'>
+					<FloatingActionButton showBelow={400} />
+				</div>
+			</div>
 		</>
 	);
 };

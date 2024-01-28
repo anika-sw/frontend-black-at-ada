@@ -6,22 +6,22 @@
 body {
     padding-top: 60px;
     background-color: #181818;
-    font-family: "Poppins"
+    font-family: 'Poppins'
 }
 
 h1 {
-    font-family: "Abril Fatface";
+    font-family: 'Abril Fatface';
     font-size: 120px;
     text-align: center;
 }
 
 h2 {
-    font-family: "Abril Fatface";
+    font-family: 'Abril Fatface';
     color: #f7b402;
 }
 
 h3 {
-    font-family: "Poppins";
+    font-family: 'Poppins';
     color: #0995b5;
     font-size: 16px;
 }
@@ -36,7 +36,7 @@ button, .btn {
     margin: 5px;
     height: 30px;
     font-size: 16px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
 }
 
 label {
@@ -61,7 +61,7 @@ input {
     margin-left: -5px;
 }
 
-input[type="file"] {
+input[type='file'] {
     display: none;
 }
 
@@ -116,7 +116,7 @@ fieldset.form-row {
     color: #0ba3c1;
 }
 
-input[type="file"] {
+input[type='file'] {
     display: none;
 }
 
@@ -147,7 +147,7 @@ input {
     margin: 5px;
     height: 30px;
     font-size: 16px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     cursor: pointer;
 }
 
@@ -160,6 +160,17 @@ input {
     margin-right: 5px;
     margin-left: 5px;
     cursor: pointer;
+}
+
+.floating-btn-flex {
+    display: flex;
+    justify-content: right;
+}
+
+.floating-btn {
+    position: fixed;
+    bottom: 2.5%;
+    right: 2.5%;
 }
 
 .MuiPaper-root {

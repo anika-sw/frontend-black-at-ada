@@ -1,5 +1,5 @@
 .header-home {
-    font-family: "Abril Fatface";
+    font-family: 'Abril Fatface';
     font-size: 120px;
     text-align: center;
 }
@@ -42,7 +42,7 @@
     color: #e7165f;
     box-shadow: 0 0 0 0.2rem #f7b402;
     border-radius: 5px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
     text-align: center;
 }
 

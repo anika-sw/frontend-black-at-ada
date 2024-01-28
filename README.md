@@ -1,6 +1,6 @@
 # Black@Ada web app
 
-Black@Ada is a member-only web application fostering community by creating a digital space just for Black Adies. It's dynamic and can grow as the number of Black Adies increases, and it's virtual nature means that it can be used by any Black Adie anywhere.
+Black@Ada is a member-only web application fostering community by creating a digital space just for Black Adies. It"s dynamic and can grow as the number of Black Adies increases, and it"s virtual nature means that it can be used by any Black Adie anywhere.
 
 [Capstone Presentation](https://youtu.be/kOpsiBWTm48)
 [Backend Repository](https://github.com/anika-sw/backend-black-at-ada)
@@ -13,7 +13,7 @@ This project is a React application that utilizes Google Maps API for location a
 
 ### Create New User & Login
 
-Users must enter required information to create a profile and gain access to the application. A user's email and hashed password is used to login to the app on subsquent visits to the site.
+Users must enter required information to create a profile and gain access to the application. A user"s email and hashed password is used to login to the app on subsquent visits to the site.
 
 ### Create & View Events
 
@@ -25,7 +25,7 @@ Information optionally collected from users at sign-up (and updated at their dis
 
 ### View User Directory
 
-User information, including a picture, is displayed in the directory. Each entry includes an email for direct contact and an option link to the user's LinkedIn profile. Directory entries can be sorted by last name, company, or by users' Ada cohort; default view for the directory is alpha order by first name.
+User information, including a picture, is displayed in the directory. Each entry includes an email for direct contact and an option link to the user"s LinkedIn profile. Directory entries can be sorted by last name, company, or by users" Ada cohort; default view for the directory is alpha order by first name.
 
 ## Dependencies
 

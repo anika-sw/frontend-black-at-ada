@@ -1,0 +1,7 @@
+.toTop {
+    z-index: 2;
+    position: fixed;
+    background-color: #f7b402 !important;
+    font-family: 'Poppins' !important;
+    font-weight: bold !important;
+}

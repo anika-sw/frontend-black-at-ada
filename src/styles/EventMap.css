@@ -1,5 +1,5 @@
 .autocomplete-dropdown-container{
-    position: "absolute";
+    position: 'absolute';
     z-index: 1000;
 }
 
@@ -55,7 +55,7 @@
 }
 /* inner circle (optional if you don't need the central dot) */
 .marker::before {
-    content: "";
+    content: '';
     background: white;
     width: 50%;
     height: 50%;
@@ -70,7 +70,7 @@
 }
 /* shadow (optional if you don't need a shadow) */
 .marker::after {
-    content: "";
+    content: '';
     background: rgba(128, 128, 128, 0.2);
     width: 75%;
     height: 75%;

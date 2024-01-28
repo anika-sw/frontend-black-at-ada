@@ -1,11 +1,11 @@
-import NewEventForm from "../components/NewEventForm";
+import NewEventForm from '../components/NewEventForm';
 
 const NewEvent = () => {
-  return (
-    <div>
-      <NewEventForm />
-    </div>
-  )
-};  
+	return (
+		<div>
+			<NewEventForm />
+		</div>
+	);
+};
 
 export default NewEvent;

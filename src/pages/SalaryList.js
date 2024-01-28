@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import SalaryEntry from "../components/SalaryEntry";
-import { Select, MenuItem } from "@material-ui/core";
-import "../styles/SalaryList.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import SalaryEntry from '../components/SalaryEntry';
+import { Select, MenuItem } from '@material-ui/core';
+import FloatingActionButton from '../components/FloatingActionButton';
+import '../styles/SalaryList.css';
 
-const kBaseUrl = "http://localhost:5000";
+const kBaseUrl = 'http://localhost:5000';
 
 const SalaryList = () => {
 	const [usersData, setUsersData] = useState([]);
-	const [selected, setSelected] = useState("Sort By:");
+	const [selected, setSelected] = useState('Sort By:');
 
 	const convertFromApi = (apiUser) => {
 		const {
@@ -61,7 +62,7 @@ const SalaryList = () => {
 		if (!string) {
 			return;
 		}
-		const dateArray = string.split(" ");
+		const dateArray = string.split(' ');
 		return `${dateArray[2]} ${dateArray[3]}`;
 	};
 
@@ -69,7 +70,7 @@ const SalaryList = () => {
 
 	const salaryList = usersWithSalary.map((user) => {
 		return (
-			<span className="salary-grid" key={user.id}>
+			<span className='salary-grid' key={user.id}>
 				<SalaryEntry
 					firstName={user.firstName}
 					lastName={user.lastName}
@@ -88,7 +89,7 @@ const SalaryList = () => {
 
 	const handleSort = (event) => {
 		const sortBy = event.target.value;
-    setSelected('Sort By:')
+		setSelected('Sort By:');
 		axios
 			.get(`${kBaseUrl}/users?sort=${sortBy}`, {})
 			.then((response) => {
@@ -104,31 +105,34 @@ const SalaryList = () => {
 
 	return (
 		<>
-			<h1 className="header salary-header">Salaries</h1>
-			<div className="salary-sort-btn-flex">
+			<h1 className='header salary-header'>Salaries</h1>
+			<div className='salary-sort-btn-flex'>
 				<Select
-					className="salary-sort-btn"
+					className='salary-sort-btn'
 					value={selected}
-					renderValue={(value) => (value ? value : {setSelected})}
-          onChange={handleSort}
+					renderValue={(value) => (value ? value : { setSelected })}
+					onChange={handleSort}
 				>
-					<MenuItem className="sort-item" value="Sort By:">
+					<MenuItem className='sort-item' value='Sort By:'>
 						Sort By:
 					</MenuItem>
-					<MenuItem className="sort-item" value="salaryAsc">
+					<MenuItem className='sort-item' value='salaryAsc'>
 						Low to High
 					</MenuItem>
-					<MenuItem className="sort-item" value="salaryDesc">
+					<MenuItem className='sort-item' value='salaryDesc'>
 						High to Low
 					</MenuItem>
-					<MenuItem className="sort-item" value="salaryCompany">
+					<MenuItem className='sort-item' value='salaryCompany'>
 						Company
 					</MenuItem>
 				</Select>
 			</div>
-			<section>
-				<ul>{salaryList}</ul>
-			</section>
+			<ul>{salaryList}</ul>
+			<div className='floating-btn-flex'>
+				<div className='floating-btn'>
+					<FloatingActionButton showBelow={400} />
+				</div>
+			</div>
 		</>
 	);
 };

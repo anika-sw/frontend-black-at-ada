@@ -6,14 +6,14 @@
     display: flex;
     flex-direction: column;
     justify-items: center;
-    /* max-width: 800px; */
 }
 
 .event-details-container {
     border: 3px solid #0ba3c1;
     text-align: left;
     padding: 30px 0px;
-    margin: 40px 0 30px 0;
+    margin: 40px auto 30px auto;
+    width: 1150px;
 }
 
 .event-details-container p {
@@ -29,6 +29,10 @@
 
 .details-description {
     padding-bottom: 60px;
+}
+
+.details-description h2 {
+    margin-left: 7px;
 }
 
 .details-grid2 {

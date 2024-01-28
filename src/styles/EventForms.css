@@ -49,8 +49,26 @@
     margin-left: 0px;
 }
 
+.saved-location {
+    font-size: 20px;
+    margin-left: 0px;
+}
+
+.map-toggle {
+    margin: 0px 0px 4px 0px;
+}
+
+.remove-location {
+    background-color: #e7165f;
+    font-weight: bold;
+}
+
 .map {
     margin-left: -6px;
+}
+
+.button-grid {
+    margin-left: 0px;
 }
 
 .submit-btn {
@@ -69,10 +87,10 @@
     width: 125px;
     border-radius: 5px;
     border: none;
-    margin: 5px;
+    margin: 5px 5px 5px 0px;
     height: 30px;
     font-size: 16px;
-    font-family: "Poppins";
+    font-family: 'Poppins';
 }
 
 
