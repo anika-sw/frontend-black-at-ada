@@ -6,7 +6,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import '../styles/EventEntry.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;

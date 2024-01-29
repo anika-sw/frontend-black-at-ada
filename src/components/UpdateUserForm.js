@@ -7,7 +7,7 @@ import ImagePreview from './ImagePreview';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import '../styles/UserForms.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const UpdateUser = () => {
 	const user = localStorage.getItem('user');

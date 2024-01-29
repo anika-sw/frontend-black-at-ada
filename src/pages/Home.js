@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import FloatingActionButton from '../components/FloatingActionButton';
 import '../styles/Home.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const Home = () => {
 	const navigate = useNavigate();

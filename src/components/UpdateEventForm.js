@@ -12,7 +12,7 @@ import {
 import ImagePreview from '../components/ImagePreview';
 import '../styles/EventForms.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const kDefaultFormState = {
 	title: '',

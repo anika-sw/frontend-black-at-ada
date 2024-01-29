@@ -15,7 +15,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import '../styles/Login.css';
 import '../fonts/DressCode-Medium.ttf';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const Login = () => {
 	const { login } = useAuth();

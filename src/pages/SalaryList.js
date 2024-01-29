@@ -5,7 +5,7 @@ import { Select, MenuItem } from '@material-ui/core';
 import FloatingActionButton from '../components/FloatingActionButton';
 import '../styles/SalaryList.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const SalaryList = () => {
 	const [usersData, setUsersData] = useState([]);

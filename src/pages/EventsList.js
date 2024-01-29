@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import FloatingActionButton from '../components/FloatingActionButton';
 import '../styles/EventsList.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const EventsList = () => {
 	const navigate = useNavigate();

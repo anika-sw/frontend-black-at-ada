@@ -9,7 +9,7 @@ import ImagePreview from '../components/ImagePreview';
 import '../styles/EventForms.css';
 import '../styles/react-datetime-picker.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const kDefaultFormState = {
 	title: '',

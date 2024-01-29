@@ -7,7 +7,7 @@ import { StaticGoogleMap, Marker } from 'react-static-google-map';
 import PropTypes from 'prop-types';
 import '../styles/EventDetails.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const EventDetails = (props) => {
 	const userId = parseInt(getItemFromLocalStorage('user'));

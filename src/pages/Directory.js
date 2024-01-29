@@ -5,7 +5,7 @@ import { Select, MenuItem } from '@material-ui/core';
 import FloatingActionButton from '../components/FloatingActionButton';
 import '../styles/Directory.css';
 
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = process.env.REACT_APP_BE_URL;
 
 const Directory = () => {
 	const [usersData, setUsersData] = useState([]);
