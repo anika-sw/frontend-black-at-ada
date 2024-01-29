@@ -309,7 +309,10 @@ const UpdateUser = () => {
 				</div>
 				<div className='col'>
 					<label>Update Location (city, country, or post code)</label>
-					<AutocompleteAddressBar selectLocation={updateLocation} />
+					<AutocompleteAddressBar 
+            name="location"
+            selectLocation={updateLocation}>
+          </AutocompleteAddressBar>
 					<label htmlFor='location'>
 						Location* (saved):{' '}
 						<span className='saved-location'>

@@ -264,6 +264,7 @@ const NewUserForm = () => {
 										Location* (city, country, or post code)
 									</label>
 									<AutocompleteAddressBar
+                    name="location"
 										selectLocation={getLocation}
 									/>
 								</div>
