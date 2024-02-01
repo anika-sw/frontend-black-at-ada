@@ -273,6 +273,9 @@ const EventDetails = (props) => {
 								</div>
 							</div>
 						</div>
+            <div className='return-to-events'>
+              <a className='back' href='\events'>{'<  '}Back to Events</a>
+            </div>
 					</div>
 				</>
 			)}
