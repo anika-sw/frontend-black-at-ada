@@ -156,7 +156,8 @@ const UpdateUser = () => {
 					locationLng: lngStr,
 				});
 			})
-			.catch((error) => console.error('Error', error));
+			.catch((error) => console.log());
+      //  ZERO_RESULTS, INVALID_REQUEST
 	};
 
 	//update profile pic in cloud storage

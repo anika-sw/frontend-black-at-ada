@@ -28,6 +28,7 @@ const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordShown, setPasswordShown] = useState(false);
+  const [incorrectLogin, setIncorrectLogin] = useState(false)
 
 	const addEmail = (event) => {
 		setEmail(event.target.value);
@@ -42,9 +43,11 @@ const Login = () => {
 			.post(`${kBaseUrl}/login`, requestBody)
 			.then((response) => {
 				if (Number.isInteger(response.data)) {
+          console.log(response.data)
 					login(response.data);
 				} else {
 					console.log(response.data);
+          setIncorrectLogin(true)
 					return response.data;
 				}
 			})
@@ -79,6 +82,9 @@ const Login = () => {
 				<form onSubmit={onFormSubmit}>
 					<div className='text-input-flex'>
 						<>
+              {incorrectLogin ?
+              (<span className='incorrect'>Incorrect email or password</span>)
+              : (<span className='incorrect-empty'></span>)}
 							<TextField
 								required
 								margin='normal'

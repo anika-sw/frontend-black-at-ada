@@ -59,6 +59,18 @@
     background-color: #FFFFFF;
 }
 
+.incorrect {
+    color: #e7165f;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+.incorrect-empty {
+    padding: 7px;
+    margin: 7.5px;
+}
+
 .btn-container{
     margin-left: 175px;
     margin-right: 175px;
