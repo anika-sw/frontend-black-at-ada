@@ -82,12 +82,12 @@ const EventsList = () => {
 
 	const allEventsList = eventsData.map((event) => {
 		return (
-			<div className='event-list-grid' key={event.id}>
+			<span className='event-list-grid' key={event.id}>
 				<EventEntry
 					event={event}
 					onEventDeletion={handleDeletedEvent}
 				></EventEntry>
-			</div>
+			</span>
 		);
 	});
 

@@ -82,7 +82,7 @@ const EventEntry = (props) => {
 
 	return (
 		<>
-			<div className='event-card-container'>
+			<span className='event-card-container'>
 				{!loading && (
 					<div className='row event-card-row'>
 						<div className='col event-card-col'>
@@ -131,7 +131,7 @@ const EventEntry = (props) => {
 						</div>
 					</div>
 				)}
-			</div>
+			</span>
 		</>
 	);
 };
