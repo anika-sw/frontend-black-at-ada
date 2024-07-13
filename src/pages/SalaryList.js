@@ -106,9 +106,9 @@ const SalaryList = () => {
 	return (
 		<>
 			<h1 className='header salary-header'>Salaries</h1>
-			<div className='salary-sort-btn-flex'>
+			<div className='sort-btn-flex'>
 				<Select
-					className='salary-sort-btn'
+					className='sort-btn'
 					value={selected}
 					renderValue={(value) => (value ? value : { setSelected })}
 					onChange={handleSort}

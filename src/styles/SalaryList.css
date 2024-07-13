@@ -3,25 +3,6 @@
     text-align: center;
 }
 
-.salary-sort-btn-flex {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.salary-sort-btn-flex .salary-sort-btn {
-    width: 400px;
-    height: 80px;
-    margin-bottom: 75px;
-    font-size: 35px;
-    background-color: #181818;
-    color: #e7165f;
-    box-shadow: 0 0 0 0.2rem #f7b402;
-    border-radius: 5px;
-    font-family: 'Poppins';
-    text-align: center;
-}
-
 .salary-grid {
     display: inline-block;
     width: 350px; 
