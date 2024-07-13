@@ -3,6 +3,10 @@
     margin: 30px 0px; 
 }
 
+.event-card-container:first-child {
+    margin-top: 0px !important;
+}
+
 .event-card-col {  
     width: 350px;
     justify-content: space-around;
