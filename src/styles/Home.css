@@ -48,5 +48,6 @@
 
 .event-list-grid {
     display: inline-block;
+    vertical-align: top;
     max-width: 400px; 
 }
